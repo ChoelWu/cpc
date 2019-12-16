@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joe.dao.IndexArticleMapper">
+    <resultMap id="BaseResultMap" type="com.joe.pojo.Article">
+        <id column="article_id" property="articleId"/>
+        <result column="article_no" property="articleNo"/>
+        <result column="article_name" property="articleName"/>
+        <result column="article_type" property="articleType"/>
+        <result column="article_url" property="articleUrl"/>
+        <result column="channel_no" property="channelNo"/>
+        <result column="is_top" property="isTop"/>
+        <result column="is_bold" property="isBold"/>
+        <result column="article_status" property="articleStatus"/>
+        <result column="article_summary" property="articleSummary"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_content" property="articleContent"/>
+        <result column="article_source" property="articleSource"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="bak" property="bak"/>
+        <result column="add_time" property="addTime"/>
+        <result column="add_user_no" property="addUserNo"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user_no" property="updateUserNo"/>
+    </resultMap>
+
+    <select id="countArticle" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(*)
+        FROM cpc_index_article cia LEFT JOIN cpc_index_channel cic ON cia.channel_no = cic.channel_no
+        <where>
+            1=1
+            <if test="articleName != null and articleName != ''">
+                AND cia.article_name like concat("%", #{articleName}, "%")
+            </if>
+            <if test="channelNo != null and channelNo != ''">
+                AND cia.channel_no = #{channelNo}
+            </if>
+            <if test="articleType != null and articleType != ''">
+                AND cia.article_type = #{articleType}
+            </if>
+            <if test="isTop != null and isTop != ''">
+                AND cia.is_top = #{isTop}
+            </if>
+            <if test="isBold != null and isBold != ''">
+                AND cia.is_bold = #{isBold}
+            </if>
+            <if test="articleStatus != null and articleStatus != ''">
+                AND cia.article_status = #{articleStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="listArticle" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        cia.article_id,
+        cia.article_no,
+        cia.article_name,
+        cia.article_type,
+        cia.article_url,
+        cia.channel_no,
+        cia.is_top,
+        cia.is_bold,
+        cia.article_status,
+        cia.article_summary,
+        cia.article_cover,
+        cia.article_content,
+        cia.article_source,
+        cia.publish_time,
+        cia.bak,
+        cia.add_time,
+        cia.add_user_no,
+        cia.update_time,
+        cia.update_user_no,
+        cic.channel_name
+        FROM cpc_index_article cia LEFT JOIN cpc_index_channel cic ON cia.channel_no = cic.channel_no
+        <where>
+            1=1
+            <if test="articleName != null and articleName != ''">
+                AND cia.article_name like concat("%", #{articleName}, "%")
+            </if>
+            <if test="channelNo != null and channelNo != ''">
+                AND cia.channel_no = #{channelNo}
+            </if>
+            <if test="articleType != null and articleType != ''">
+                AND cia.article_type = #{articleType}
+            </if>
+            <if test="isTop != null and isTop != ''">
+                AND cia.is_top = #{isTop}
+            </if>
+            <if test="isBold != null and isBold != ''">
+                AND cia.is_bold = #{isBold}
+            </if>
+            <if test="articleStatus != null and articleStatus != ''">
+                AND cia.article_status = #{articleStatus}
+            </if>
+        </where>
+        ORDER BY cia.article_no DESC
+        LIMIT #{startRow}, #{rowNum}
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joe.dao.IndexChapterMapper">
+    <resultMap id="BaseResultMap" type="com.joe.pojo.Chapter">
+        <id column="chapter_id" property="chapterId"/>
+        <result column="chapter_no" property="chapterNo"/>
+        <result column="chapter_name" property="chapterName"/>
+        <result column="course_no" property="courseNo"/>
+        <result column="course_name" property="courseName"/>
+        <result column="chapter_index" property="chapterIndex"/>
+        <result column="bak" property="bak"/>
+        <result column="add_time" property="addTime"/>
+        <result column="add_user_no" property="addUserNo"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user_no" property="updateUserNo"/>
+    </resultMap>
+
+    <select id="listChapter" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        cich.chapter_id,
+        cich.chapter_no,
+        cich.chapter_name,
+        cich.course_no,
+        cich.chapter_index,
+        cich.bak,
+        cich.add_time,
+        cich.add_user_no,
+        cich.update_time,
+        cich.update_user_no,
+        cico.course_name
+        FROM cpc_index_chapter cich LEFT JOIN cpc_index_course cico ON cich.course_no = cico.course_no
+        <where>
+            1=1
+            <if test="courseNo != null and courseNo != ''">
+                AND cich.course_no = #{courseNo}
+            </if>
+        </where>
+        ORDER BY cich.chapter_index ASC
+    </select>
+</mapper>
