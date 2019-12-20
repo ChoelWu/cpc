@@ -80,7 +80,7 @@
                                 </td>
                                 <td>${adminRole_index + 1}</td>
                                 <td>${adminRole.roleName}</td>
-                                <td><a class="layui-btn layui-btn-primary layui-btn-mini" onclick="xadmin.open('管理角色权限','/admin/role/auth_page.do',600,400)">权限管理</a></td>
+                                <td><a class="layui-btn layui-btn-primary layui-btn-mini" onclick="xadmin.open('管理角色权限','/admin/role/auth_page.do',400,600)">权限管理</a></td>
                                 <td class="td-status">
                                     <#if adminRole.roleStatus == "1">
                                         <a class="layui-btn layui-btn-normal layui-btn-mini" onclick="changeStatus('disable','${adminRole.roleNo}')">已启用</a>

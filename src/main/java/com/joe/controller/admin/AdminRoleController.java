@@ -16,9 +16,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
+import com.joe.entity.AdminAuth;
+import com.joe.entity.AdminMenu;
 import com.joe.entity.AdminRole;
+import com.joe.pojo.AdminMenuPOJO;
+import com.joe.pojo.AuthPOJO;
+import com.joe.pojo.Menu;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
+import com.joe.service.system.AdminAuthService;
+import com.joe.service.system.AdminMenuService;
 import com.joe.service.system.AdminRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -45,6 +52,12 @@ public class AdminRoleController {
 
     @Resource
     private PageService pageService;
+
+    @Resource
+    private AdminMenuService adminMenuService;
+
+    @Resource
+    private AdminAuthService adminAuthService;
 
     /**
      * 列表页面显示
@@ -285,5 +298,57 @@ public class AdminRoleController {
         // 更新状态
         adminRoleService.updateById(adminRole);
         return AppResponse.success("禁用角色成功！");
+    }
+
+    /**
+     * 权限列表
+     *
+     * @param roleNo 角色编号
+     * @param model  model
+     * @return 返回页面视图
+     */
+    @RequestMapping("/auth_page.do")
+    public String authPage(String roleNo, Model model) {
+        // 查询出所有的菜单
+        QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
+        adminMenuQueryWrapper.orderByAsc("menu_level", "menu_index");
+        List<AdminMenu> adminMenuList = adminMenuService.list(adminMenuQueryWrapper);
+
+        // 创建前台输出的权限列表
+        List<AuthPOJO> authPOJOList = Lists.newArrayList();
+
+        // 循环遍历菜单，生成前台格式
+        for (AdminMenu adminMenu : adminMenuList) {
+            if (StringUtils.equals("1", adminMenu.getMenuLevel())) {
+                // 创建菜单权限
+                AuthPOJO authPOJO = new AuthPOJO();
+
+                // 子菜单权限列表
+                List<AdminMenuPOJO> adminMenuPOJOList = Lists.newArrayList();
+
+                // 循环组织子菜单
+                for (AdminMenu adminChildMenu : adminMenuList) {
+                    AdminMenuPOJO adminMenuPOJO = new AdminMenuPOJO();
+                    if (StringUtils.equals(adminMenu.getMenuNo(), adminChildMenu.getParentMenuNo())) {
+                        QueryWrapper<AdminAuth> adminAuthQueryWrapper = new QueryWrapper<>();
+                        adminAuthQueryWrapper.eq("menu_no", adminChildMenu.getMenuNo());
+                        List<AdminAuth> adminAuthList = adminAuthService.list(adminAuthQueryWrapper);
+
+                        adminMenuPOJO.setMenu(adminChildMenu);
+                        adminMenuPOJO.setAdminAuthList(adminAuthList);
+                        adminMenuPOJOList.add(adminMenuPOJO);
+                    }
+                }
+
+                authPOJO.setChildMenuPOJOList(adminMenuPOJOList);
+                authPOJO.setParentMenu(adminMenu);
+            }
+        }
+
+        // 绑定数据
+        model.addAttribute("authPOJOList", authPOJOList);
+
+        // 返回页面视图
+        return "/Admin/Role/auth_page";
     }
 }
