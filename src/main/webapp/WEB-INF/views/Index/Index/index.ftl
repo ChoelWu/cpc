@@ -47,65 +47,9 @@
         </div>
         <div class="dh">
             <ul>
-                <li class="no"><a href="index.html"><p>网站</p>
-                    <p>首页</p></a></li>
-                <li>
-                    <a href="html/zhongxinshenqingshu.html"><p>中心</p>
-                        <p>申请书</p></a>
-                    <dl>
-                        <dd><a href="html/zhongxinshenqingshu.html">中心申请书</a></dd>
-                    </dl>
-                </li>
-                <li>
-                    <a href="html/zhongxinzhuren.html"><p>中心</p>
-                        <p>简介</p></a>
-                    <dl>
-                        <dd><a href="html/zhongxinzhuren.html">中心主任</a></dd>
-                        <dd><a href="html/zhongxinchengyuanjianjie.html">中心成员简介</a></dd>
-                        <dd><a href="html/zhongxingaikuang.html">中心概况</a></dd>
-                        <dd><a href="html/shipinzhongxinjianjie.html">中心简介视频</a></dd>
-                    </dl>
-                </li>
-                <li>
-                    <a href="../course/index.html" target="_blank"><p>教学</p>
-                        <p>课程</p></a>
-                </li>
-                <li>
-                    <a href="html/xionghoudeshizililiang.html"><p>教学</p>
-                        <p>体系</p></a>
-                    <dl>
-                        <dd><a href="html/xionghoudeshizililiang.html">雄厚的师资力量</a></dd>
-                        <dd><a href="html/shiyanjiaoxuexintixi.html">实验教学新体系</a></dd>
-                        <dd><a href="html/shiyanmulujijiangyi.html">实验目录及讲义</a></dd>
-                        <dd><a href="html/zongheshejishiyan.html">综合设计实验</a></dd>
-                        <dd><a href="html/jiaoxueluxiang.html">教学录像</a></dd>
-                    </dl>
-                </li>
-                <li>
-                    <a href="html/xueshenghuojiang.html"><p>教学</p>
-                        <p>成果</p></a>
-                    <dl>
-                        <dd><a href="html/xueshenghuojiang.html">学生获奖</a></dd>
-                        <dd><a href="html/jiaoshijiaogai.html">教师教改</a></dd>
-                    </dl>
-                </li>
-                <li>
-                    <a href="html/guizhangzhidumulu.html"><p>规章</p>
-                        <p>制度</p></a>
-                    <dl>
-                        <dd><a href="html/guizhangzhidumulu.html">规章制度目录</a></dd>
-                        <dd><a href="html/guizhangzhiduwenjian.html">规章制度文件</a></dd>
-                    </dl>
-                </li>
-                <li>
-                    <a href="html/zhongxinhuanjingyuanquan.html"><p>环境</p>
-                        <p>安全</p></a>
-                    <dl>
-                        <dd><a href="html/zhongxinhuanjingyuanquan.html">中心环境与安全</a></dd>
-                        <dd><a href="html/zhongxinshiyanshitiaojian.html">中心实验室条件</a></dd>
-                        <dd><a href="html/zhongxinshebeiyugongxiangshebei.html">中心设备与共享设备</a></dd>
-                    </dl>
-                </li>
+                <#list navList as nav>
+                    <li><a href="/index/index/cate.do?no=${nav.indexChannel.channelNo}"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a></li>
+                </#list>
             </ul>
         </div>
     </div>
@@ -126,16 +70,16 @@
         <div id="slideBox" class="slideBox" style="">
             <div class="hd">
                 <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
+                    <#list sliderArticleList as article>
+                        <li>${article_index + 1}</li>
+                    </#list>
                 </ul>
             </div>
             <div class="bd">
                 <ul>
-                    <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/index/images/IMG_1243.JPG"/></a></li>
-                    <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/index/images/IMG_1244.JPG"/></a></li>
-                    <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/index/images/IMG_1245.JPG"/></a></li>
+                    <#list sliderArticleList as article>
+                    <li><a href="/index/index/article.do?no=${article.articleNo}" target="_blank"><img src="${article.articleCover}"/></a></li>
+                    </#list>
                 </ul>
             </div>
 
@@ -146,33 +90,26 @@
         </div>
     </div>
     <div class="left" style="float: left;border:0; margin-left: 140px; padding-right: 0;" aos="fade-left">
-        <div><h2>教育教学成果</h2></div>
+        <div><a href="/index/index/cate.do?no=${newArticleList[0].channelNo}"><h2>新闻通知</h2></a></div>
         <div class="below-left-text">
             <div class="left-text-1">
                 <dl>
-                    <dt> <a href="/2019/1023/c910a130698/page.htm"><img src="/static/index/index/images/shebei6.jpg" width="145" height="73"></a> </dt>
+                    <dt> <a href="/index/index/article.do?no=${newArticleList[0].articleNo}"><img src="<#if !(newArticleList[0].articleCover?? && "" != newArticleList[0].articleCover)>/static/index/index/images/IMG_1243.JPG<#else>${newArticleList[0].articleCover}</#if>" width="145" height="73"></a> </dt>
                     <dd>
-                        <p class="text-title"><a href="/2019/1023/c910a130698/page.htm" target="_blank" title="河北省投入产出与大数据研究院宋辉研究员应邀来我院作学术交流">河北省投入产出与大数据研究院宋辉研究员应邀来我院作...</a></p>
-                        <p class="text-elli"><a href="/2019/1023/c910a130698/page.htm" target="_blank" title="河北省投入产出与大数据研究院宋辉研究员应邀来我院作学术交流">河北省投入产出与大数据研究院宋辉研究员应邀来我院作...</a></p>
-                        <p style="color: #ccc; font-size: 12px;">[2019-11-01]</p>
+                        <p class="text-title"><a href="/index/index/article.do?no=${newArticleList[0].articleNo}" target="_blank" title="${newArticleList[0].articleName}">${newArticleList[0].articleName}</a></p>
+                        <p class="text-elli"><a href="/index/index/article.do?no=${newArticleList[0].articleNo}" target="_blank">${newArticleList[0].articleSummary}...</a></p>
+                        <p style="color: #ccc; font-size: 12px;">[${newArticleList[0].publishTime?string("yyyy-MM-dd")}]</p>
                     </dd>
                 </dl>
 
             </div>
             <div class="left-text-2">
                 <ul>
-
-                    <li><a href="/2019/1023/c910a130698/page.htm" target="_blank" title="河北省投入产出与大数据研究院宋辉研究员应邀来我院作学术交流">河北省投入产出与大数据研究院宋辉研究员应邀来我院...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2019-11-01]</a></li>
-
-                    <li><a href="/2019/1018/c910a130290/page.htm" target="_blank" title="南方科技大学王俊坚副研究员应邀来我院作学术交流">南方科技大学王俊坚副研究员应邀来我院作学术交流&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2019-11-01]</a></li>
-
-                    <li><a href="/2019/1018/c910a130289/page.htm" target="_blank" title="汕头大学赖忠平教授应邀来我院作学术交流">汕头大学赖忠平教授应邀来我院作学术交流&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2019-11-01]</a></li>
-
-                    <li><a href="/2019/1018/c910a130288/page.htm" target="_blank" title="大连理工大学唐春安教授应邀来我院作学术交流">大连理工大学唐春安教授应邀来我院作学术交流&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2019-11-01]</a></li>
-
-                    <li><a href="/2019/1016/c910a129509/page.htm" target="_blank" title="南京大学庞洪喜教授来我院作学术交流">南京大学庞洪喜教授来我院作学术交流&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2019-11-01]</a></li>
-
-
+                    <#list newArticleList as article>
+                        <#if article_index != 0>
+                            <li><a href="/index/index/article.do?no=${article.articleNo}" target="_blank" title="${article.articleName}"><#if (article.articleName?length > 24)>${article.articleName?substring(0,24)} ...<#else>${article.articleName}</#if> <span style="height: 35px;display: block;line-height: 50px;">[${article.publishTime?string("yyyy-MM-dd")}]</span></a></li>
+                        </#if>
+                    </#list>
                 </ul>
             </div>
         </div>
@@ -190,80 +127,21 @@
         <div class="left" aos="fade-right">
             <div><h2>社会服务</h2></div>
             <div class="gonggao-list" id="gonggao-list">
-
+                <#list trendArticleList as article>
                 <dl>
-                    <a href="/2019/0929/c380a128619/page.htm">
-                        <dt>
-                            <p class="riqi">29</p>
-                            <p class="nian">2019-09</p>
-                        </dt>
-                        <dd>
-                            <p class="hd-title">&nbsp;化学化工学院2019年国庆节值班安排表</p>
-                        </dd>
+                    <a href="/index/index/article.do?no=${article.articleNo}">
+                        <dt><p class="riqi">${article.publishTime?string("dd")}</p><p class="nian">${article.publishTime?string("yyyy-MM")}</p></dt>
+                        <dd><p class="hd-title">&nbsp;${article.articleName}</p></dd>
                         <div class="clear"></div>
                     </a>
                 </dl>
-
-                <dl>
-                    <a href="/2019/0912/c380a126136/page.htm">
-                        <dt>
-                            <p class="riqi">12</p>
-                            <p class="nian">2019-09</p>
-                        </dt>
-                        <dd>
-                            <p class="hd-title">&nbsp;北京师范大学-西北师范大学化学化工类人才培养研讨会暨西北师大化工学院第三届中学校长论坛会议日程</p>
-                        </dd>
-                        <div class="clear"></div>
-                    </a>
-                </dl>
-
-                <dl>
-                    <a href="/2019/0911/c380a126010/page.htm">
-                        <dt>
-                            <p class="riqi">11</p>
-                            <p class="nian">2019-09</p>
-                        </dt>
-                        <dd>
-                            <p class="hd-title">&nbsp;化学化工学院2019年中秋节值班安排表</p>
-                        </dd>
-                        <div class="clear"></div>
-                    </a>
-                </dl>
-
-                <dl style="border-bottom: none;">
-                    <a href="/2019/0908/c380a125717/page.htm">
-                        <dt>
-                            <p class="riqi">08</p>
-                            <p class="nian">2019-09</p>
-                        </dt>
-                        <dd>
-                            <p class="hd-title">&nbsp;西北师范大学化学化工学院推荐免试攻读硕士研究生实施细则（试行）</p>
-                        </dd>
-                        <div class="clear"></div>
-                    </a>
-                </dl>
-
-                <dl>
-                    <a href="/2019/0911/c380a126010/page.htm">
-                        <dt>
-                            <p class="riqi">11</p>
-                            <p class="nian">2019-09</p>
-                        </dt>
-                        <dd>
-                            <p class="hd-title">&nbsp;化学化工学院2019年中秋节值班安排表</p>
-                        </dd>
-                        <div class="clear"></div>
-                    </a>
-                </dl>
+                </#list>
             </div>
         </div>
         <div class="left" style="float: right;border:0; padding-right: 0;" aos="fade-left">
-            <div><h2>新闻通知</h2></div>
+            <div><h2>更多信息</h2></div>
             <div class="paragraph" style="margin-top: 15px;">
-                制订多项教育教学改革的方案，注重虚拟仿真实验项目的开发，以及实验教学中心的现代化、信息化建设。提高学生利用专业知识解决应用问题的能力。培养学生的知识创新能力，加强学生自主发现新知识、明确知识规律的能力。近年来，中心负责人权正军应邀在第十七届全国高等师范院校化学课程结构与教学改革研讨会、甘肃省大学生化学竞赛、兰州城市学院化学化工学院举办首届中学校长论坛以及其他兄弟院校的实验教学示范中心的座谈会上作大会发言及分会报告，介绍教学改革经验和体会，得到了与会代表的肯定和好评。中心成员参编出版实验教材2部（无机物制备、有机物制备），参编的“化学化工信息检索及网络资源检索与利用”先后获2018年获省级教学成果二等奖，2017年获教育厅级教学成果奖和西北师范大学教学成果奖。在“大学化学”、“化学教育”等专业杂志发表教学研究论文10余篇。
-            </div>
-            <div class="paragraph">
-                在实践能力和创新能力的实践过程中，学院化学(师范)专业学生先后参加学校 ...&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" style="color: #999; font-size: 12px;">>>&nbsp;阅读更多</a>
+                ${indexMoreInfoChannel.channelIntro} ...&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" style="color: #999; font-size: 12px;">>>&nbsp;阅读更多</a>
             </div>
         </div>
     </div>

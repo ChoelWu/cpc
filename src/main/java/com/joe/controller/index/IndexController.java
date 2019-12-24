@@ -7,18 +7,197 @@ package com.joe.controller.index;
 // +----------------------------------------------------------------------
 // | Author: Joe
 // +----------------------------------------------------------------------
-// | Description: 
+// | Description: 门户首页
 // +----------------------------------------------------------------------
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Lists;
+import com.joe.entity.IndexArticle;
+import com.joe.entity.IndexChannel;
+import com.joe.pojo.Channel;
+import com.joe.service.system.IndexArticleService;
+import com.joe.service.system.IndexChannelService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/index/index")
 public class IndexController {
+    @Resource
+    private IndexChannelService indexChannelService;
+
+    @Resource
+    private IndexArticleService indexArticleService;
 
     @RequestMapping("/index.do")
-    public String index() {
+    public String index(Model model) {
+        // 获取列表
+        List<Channel> navList = getNav();
+
+        // 获取内容模块
+        List<IndexChannel> blockList = getBlockList();
+
+        // 查询出新闻所有内容块的文章
+        List<IndexArticle> newArticleList = getArticleListByChannelNo("ICNO20191223205146D59614", "6", false);
+
+        // 查询出新闻所有内容块的文章
+        List<IndexArticle> trendArticleList = getArticleListByChannelNo("ICNO20191224165632X76631", "5", false);
+
+        // 查询出首页轮播图所有内容块的文章
+        List<IndexArticle> sliderArticleList = getArticleListByChannelNo("ICNO20191224175705V72125", "3", true);
+
+        // 查询栏目 更多信息
+        QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
+        indexChannelQueryWrapper.eq("channel_no", "ICNO20191224175107Y66991");
+        IndexChannel indexMoreInfoChannel = indexChannelService.getOne(indexChannelQueryWrapper);
+
+        // 绑定文章列表数据
+        model.addAttribute("newArticleList", newArticleList);
+        model.addAttribute("trendArticleList", trendArticleList);
+        model.addAttribute("indexMoreInfoChannel", indexMoreInfoChannel);
+        model.addAttribute("sliderArticleList", sliderArticleList);
+        model.addAttribute("navList", navList);
+        model.addAttribute("blockList", blockList);
+
         return "Index/Index/index";
+    }
+
+    /**
+     * 查询导航列表
+     *
+     * @return 返回导航列表
+     */
+    private List<Channel> getNav() {
+        // 查询出所有的菜单
+        QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
+        indexChannelQueryWrapper.orderByAsc("channel_level", "channel_index").eq("is_nav", "1");
+        List<IndexChannel> indexChannelList = indexChannelService.list(indexChannelQueryWrapper);
+
+        // 创建前台输出的栏目列表
+        List<Channel> channelList = Lists.newArrayList();
+
+        // 循环遍历栏目，生成前台需要的格式
+        for (IndexChannel indexChannel : indexChannelList) {
+            if (StringUtils.equals("1", indexChannel.getChannelLevel())) {
+                // 创建栏目对象
+                Channel channel = new Channel();
+                // 子栏目列表
+                List<IndexChannel> adminChildChannelList = Lists.newArrayList();
+
+                // 循环组织子栏目
+                for (IndexChannel adminChildChannel : indexChannelList) {
+                    if (StringUtils.equals(indexChannel.getChannelNo(), adminChildChannel.getParentChannelNo())) {
+                        adminChildChannelList.add(adminChildChannel);
+                    }
+                }
+
+                // 存储父栏目
+                channel.setIndexChannel(indexChannel);
+                // 存储子栏目
+                channel.setChildChannelList(adminChildChannelList);
+
+                // 存储栏目
+                channelList.add(channel);
+            }
+        }
+
+        return channelList;
+    }
+
+    /**
+     * 获取首页内容块
+     *
+     * @return 返回内容块栏目列表
+     */
+    private List<IndexChannel> getBlockList() {
+        // 查询非菜单
+        QueryWrapper<IndexChannel> indexChannelBlockQueryWrapper = new QueryWrapper<>();
+        indexChannelBlockQueryWrapper.orderByAsc("channel_level", "channel_index").eq("is_nav", "0");
+        return indexChannelService.list(indexChannelBlockQueryWrapper);
+    }
+
+    /**
+     * 根据栏目编号查询文章列表
+     *
+     * @param channelNo 栏目编号
+     * @param hasPic    是否只查询包含图片的文章
+     * @return 返回文章列表
+     */
+    private List<IndexArticle> getArticleListByChannelNo(String channelNo, String num, boolean hasPic) {
+        QueryWrapper<IndexArticle> indexArticleQueryWrapper = new QueryWrapper<>();
+        if (hasPic) {
+            indexArticleQueryWrapper.isNotNull("article_cover");
+        }
+        indexArticleQueryWrapper.eq("channel_no", channelNo).orderByDesc("is_top", "publish_time", "article_no").eq("article_status", "1").last("limit " + num);
+        return indexArticleService.list(indexArticleQueryWrapper);
+    }
+
+    @RequestMapping("/article.do")
+    public String article(Model model, String no) {
+        // 获取列表
+        List<Channel> navList = getNav();
+
+        QueryWrapper<IndexArticle> indexArticleQueryWrapper = new QueryWrapper<>();
+        indexArticleQueryWrapper.eq("article_no", no).eq("article_status", "1");
+        IndexArticle indexArticle = indexArticleService.getOne(indexArticleQueryWrapper);
+
+        QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
+        indexChannelQueryWrapper.eq("channel_no", indexArticle.getChannelNo());
+        IndexChannel indexChannel = indexChannelService.getOne(indexChannelQueryWrapper);
+
+        Channel leftChannel = getLeftNavList(indexChannel.getChannelNo());
+
+        model.addAttribute("indexArticle", indexArticle);
+        model.addAttribute("indexChannel", indexChannel);
+        model.addAttribute("leftChannel", leftChannel);
+        model.addAttribute("navList", navList);
+
+        return "Index/Index/article";
+    }
+
+    /**
+     * 查询出相关菜单
+     *
+     * @param channelNo 菜单编号
+     * @return 返回相关菜单
+     */
+    private Channel getLeftNavList(String channelNo) {
+        QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
+        indexChannelQueryWrapper.eq("channel_no", channelNo);
+        IndexChannel indexChannel = indexChannelService.getOne(indexChannelQueryWrapper);
+
+        Channel channel = new Channel();
+
+        // 父级菜单
+        if (StringUtils.equals(indexChannel.getChannelLevel(), "1")) {
+            channel.setIndexChannel(indexChannel);
+            // 查询出子级菜单
+            QueryWrapper<IndexChannel> indexChildChannelQueryWrapper = new QueryWrapper<>();
+            indexChildChannelQueryWrapper.eq("parent_channel_no", indexChannel.getChannelNo());
+            List<IndexChannel> indexChannelList = indexChannelService.list(indexChildChannelQueryWrapper);
+
+            channel.setChildChannelList(indexChannelList);
+        } else {
+            // 查询出父级菜单
+            QueryWrapper<IndexChannel> indexParentChannelQueryWrapper = new QueryWrapper<>();
+            indexParentChannelQueryWrapper.eq("channel_no", indexChannel.getParentChannelNo());
+            IndexChannel indexParentChannel = indexChannelService.getOne(indexParentChannelQueryWrapper);
+
+            channel.setIndexChannel(indexParentChannel);
+
+            // 查询出子级菜单
+            QueryWrapper<IndexChannel> indexChildChannelQueryWrapper = new QueryWrapper<>();
+            indexChildChannelQueryWrapper.eq("parent_channel_no", indexParentChannel.getChannelNo());
+            List<IndexChannel> indexChannelList = indexChannelService.list(indexChildChannelQueryWrapper);
+
+            channel.setChildChannelList(indexChannelList);
+        }
+
+        return channel;
     }
 }

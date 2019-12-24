@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/static/admin/css/font.css">
     <link rel="stylesheet" href="/static/admin/css/xadmin.css">
     <link rel="stylesheet" href="/static/admin/lib/layui-v2.5.5/css/layui.css">
-<#--    <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>-->
+    <#--    <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>-->
     <script type="text/javascript" src="/static/admin/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
     <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
@@ -24,18 +24,18 @@
 <body>
 <div class="layui-fluid">
     <div class="layui-row">
-
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>基本演示</legend>
-            </fieldset>
-            <div class="layui-btn-container">
-                <button type="button" class="layui-btn layui-btn-sm" lay-demo="getChecked">获取选中节点数据</button>
-                <button type="button" class="layui-btn layui-btn-sm" lay-demo="setChecked">勾选指定节点</button>
-                <button type="button" class="layui-btn layui-btn-sm" lay-demo="reload">重载实例</button>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择权限</label>
+            <div class="layui-input-block">
+                <div id="LAY-auth-tree-index"></div>
             </div>
-
-            <div id="test12" class="demo-tree-more"></div>
-
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit" lay-submit lay-filter="LAY-auth-tree-submit">提交</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -45,153 +45,8 @@
         var form = layui.form,
             layer = layui.layer,
             tree = layui.tree,
-            util = layui.util,
-
             //模拟数据
-            data = [{
-                title: '一级1',
-                id: 1,
-                field: 'name1',
-                checked: true,
-                spread: true,
-                children: [{
-                    title: '二级1-1 可允许跳转'
-                    , id: 3
-                    , field: 'name11'
-                    , href: 'https://www.layui.com/'
-                    , children: [{
-                        title: '三级1-1-3'
-                        , id: 23
-                        , field: ''
-                        , children: [{
-                            title: '四级1-1-3-1'
-                            , id: 24
-                            , field: ''
-                            , children: [{
-                                title: '五级1-1-3-1-1'
-                                , id: 30
-                                , field: ''
-                            }, {
-                                title: '五级1-1-3-1-2'
-                                , id: 31
-                                , field: ''
-                            }]
-                        }]
-                    }, {
-                        title: '三级1-1-1'
-                        , id: 7
-                        , field: ''
-                        , children: [{
-                            title: '四级1-1-1-1 可允许跳转'
-                            , id: 15
-                            , field: ''
-                            , href: 'https://www.layui.com/doc/'
-                        }]
-                    }, {
-                        title: '三级1-1-2'
-                        , id: 8
-                        , field: ''
-                        , children: [{
-                            title: '四级1-1-2-1'
-                            , id: 32
-                            , field: ''
-                        }]
-                    }]
-                }, {
-                    title: '二级1-2'
-                    , id: 4
-                    , spread: true
-                    , children: [{
-                        title: '三级1-2-1'
-                        , id: 9
-                        , field: ''
-                        , disabled: true
-                    }, {
-                        title: '三级1-2-2'
-                        , id: 10
-                        , field: ''
-                    }]
-                }, {
-                    title: '二级1-3'
-                    , id: 20
-                    , field: ''
-                    , children: [{
-                        title: '三级1-3-1'
-                        , id: 21
-                        , field: ''
-                    }, {
-                        title: '三级1-3-2'
-                        , id: 22
-                        , field: ''
-                    }]
-                }]
-            }, {
-                title: '一级2'
-                , id: 2
-                , field: ''
-                , spread: true
-                , children: [{
-                    title: '二级2-1'
-                    , id: 5
-                    , field: ''
-                    , spread: true
-                    , children: [{
-                        title: '三级2-1-1'
-                        , id: 11
-                        , field: ''
-                    }, {
-                        title: '三级2-1-2'
-                        , id: 12
-                        , field: ''
-                    }]
-                }, {
-                    title: '二级2-2'
-                    , id: 6
-                    , field: ''
-                    , children: [{
-                        title: '三级2-2-1'
-                        , id: 13
-                        , field: ''
-                    }, {
-                        title: '三级2-2-2'
-                        , id: 14
-                        , field: ''
-                        , disabled: true
-                    }]
-                }]
-            }, {
-                title: '一级3'
-                , id: 16
-                , field: ''
-                , children: [{
-                    title: '二级3-1'
-                    , id: 17
-                    , field: ''
-                    , fixed: true
-                    , children: [{
-                        title: '三级3-1-1'
-                        , id: 18
-                        , field: ''
-                    }, {
-                        title: '三级3-1-2'
-                        , id: 19
-                        , field: ''
-                    }]
-                }, {
-                    title: '二级3-2'
-                    , id: 27
-                    , field: ''
-                    , children: [{
-                        title: '三级3-2-1'
-                        , id: 28
-                        , field: ''
-                    }, {
-                        title: '三级3-2-2'
-                        , id: 29
-                        , field: ''
-                    }]
-                }]
-            }];
+            data = ${tree};
 
         // 基本演示
         tree.render({
@@ -206,52 +61,44 @@
             }
         });
 
-
-
-
-        //按钮事件
-        util.event('lay-demo', {
-            getChecked: function (othis) {
-                var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
-
-                layer.alert(JSON.stringify(checkedData), {shade: 0});
-                console.log(checkedData);
-            }
-            , setChecked: function () {
-                tree.setChecked('demoId1', [12, 16]); //勾选指定节点
-            }
-            , reload: function () {
-                //重载实例
-                tree.reload('demoId1', {});
-
+        // switch 开关监听
+        form.on('switch(switch)', function (data) {
+            if (data.elem.checked || "true" === data.elem.checked) {
+                $("input[name=roleStatus]").val("1");
+            } else {
+                $("input[name=roleStatus]").val("0");
             }
         });
 
-        //自定义验证规则
-        form.verify({
-            roleName: function (value) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (value.length > 16 || value.length < 6) {
-                    return '用户名长度在6 - 16字符之间';
-                }
-            }
-        });
+        $("#sb-button").click(function() {
+            var checkData = tree.getChecked('demoId1');
+            // console.log(checkData);
+            // var auth = [];
+            // checkData.forEach((item,index,array)=>{
+            //     if("undefined" !== typeof(item.children)) {
+            //         item.children.forEach((item1,index1,array1)=>{
+            //             if("undefined" !== typeof(item1.children)) {
+            //                 item1.children.forEach((item2,index2,array2)=>{
+            //                     console.log();
+            //                     if(item2.checked) {
+            //                         console.log(item2);
+            //                         auth.push(item2.id);
+            //                     }
+            //                 });
+            //             }
+            //         });
+            //     }
+            // });
 
-        //监听提交
-        $("#sb-button").click(function (event) {
-            event.preventDefault();
-        });
 
-        form.on('submit(add)', function (data) {
+            // console.log(JSON.stringify(auth));
             $.ajax({
-                url: '/admin/role/edit.do',
+                url: '/admin/role/edit_auth.do',
                 type: 'post',
-                data: {data: JSON.stringify(data.field)},
+                data: {auth: JSON.stringify(checkData)},
                 success: function (res) {
                     var icon = 5;
-                    if (1 === res.status || "1" === res.status) {
+                    if(1 === res.status || "1" === res.status) {
                         icon = 6;
                     }
 
@@ -268,15 +115,6 @@
                     );
                 }
             });
-        });
-
-        // switch 开关监听
-        form.on('switch(switch)', function (data) {
-            if (data.elem.checked || "true" === data.elem.checked) {
-                $("input[name=roleStatus]").val("1");
-            } else {
-                $("input[name=roleStatus]").val("0");
-            }
         });
     });
 </script>

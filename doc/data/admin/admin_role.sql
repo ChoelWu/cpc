@@ -4,7 +4,7 @@ CREATE TABLE `cpc_admin_role`
     `role_id`        bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '角色ID',
     `role_no`        char(24)    NOT NULL COMMENT '角色编号 ARNO+yyyymmddhhmmss+1位随机大写字母+5位随机数字',
     `role_name`      varchar(50) NOT NULL COMMENT '角色名称',
-    `role_auth`      varchar(512) COMMENT '拥有权限编号',
+    `role_auth`      varchar(1024) COMMENT '拥有权限编号',
     `role_status`    char(1)     NOT NULL COMMENT '角色状态 0-禁用 1-启用',
     `bak`            varchar(50) COMMENT '备用字段',
     `add_time`       datetime COMMENT '添加时间',

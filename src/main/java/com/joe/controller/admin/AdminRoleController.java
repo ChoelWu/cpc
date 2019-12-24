@@ -19,15 +19,17 @@ import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminAuth;
 import com.joe.entity.AdminMenu;
 import com.joe.entity.AdminRole;
+import com.joe.entity.IndexUser;
 import com.joe.pojo.AdminMenuPOJO;
 import com.joe.pojo.AuthPOJO;
-import com.joe.pojo.Menu;
 import com.joe.pojo.Page;
+import com.joe.pojo.Tree;
 import com.joe.service.common.PageService;
 import com.joe.service.system.AdminAuthService;
 import com.joe.service.system.AdminMenuService;
 import com.joe.service.system.AdminRoleService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -309,46 +311,80 @@ public class AdminRoleController {
      */
     @RequestMapping("/auth_page.do")
     public String authPage(String roleNo, Model model) {
+        // 查询出已经有的权限
+        QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
+        adminRoleQueryWrapper.eq("role_no", roleNo);
+        AdminRole adminRole = adminRoleService.getOne(adminRoleQueryWrapper);
+
+        String authString = adminRole.getRoleAuth();
+
         // 查询出所有的菜单
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.orderByAsc("menu_level", "menu_index");
         List<AdminMenu> adminMenuList = adminMenuService.list(adminMenuQueryWrapper);
 
-        // 创建前台输出的权限列表
-        List<AuthPOJO> authPOJOList = Lists.newArrayList();
-
-        // 循环遍历菜单，生成前台格式
+        List<Tree> level1TreeList = Lists.newArrayList();
         for (AdminMenu adminMenu : adminMenuList) {
             if (StringUtils.equals("1", adminMenu.getMenuLevel())) {
-                // 创建菜单权限
-                AuthPOJO authPOJO = new AuthPOJO();
+                Tree level1Tree = new Tree();
+                level1Tree.setTitle(adminMenu.getMenuName());
+                level1Tree.setId(adminMenu.getMenuNo());
+                level1Tree.setField(adminMenu.getMenuNo());
 
-                // 子菜单权限列表
-                List<AdminMenuPOJO> adminMenuPOJOList = Lists.newArrayList();
-
-                // 循环组织子菜单
+                List<Tree> level2TreeList = Lists.newArrayList();
                 for (AdminMenu adminChildMenu : adminMenuList) {
-                    AdminMenuPOJO adminMenuPOJO = new AdminMenuPOJO();
                     if (StringUtils.equals(adminMenu.getMenuNo(), adminChildMenu.getParentMenuNo())) {
+                        Tree level2Tree = new Tree();
+                        level2Tree.setTitle(adminChildMenu.getMenuName());
+                        level2Tree.setId(adminChildMenu.getMenuNo());
+                        level2Tree.setField(adminChildMenu.getMenuNo());
+
                         QueryWrapper<AdminAuth> adminAuthQueryWrapper = new QueryWrapper<>();
                         adminAuthQueryWrapper.eq("menu_no", adminChildMenu.getMenuNo());
                         List<AdminAuth> adminAuthList = adminAuthService.list(adminAuthQueryWrapper);
 
-                        adminMenuPOJO.setMenu(adminChildMenu);
-                        adminMenuPOJO.setAdminAuthList(adminAuthList);
-                        adminMenuPOJOList.add(adminMenuPOJO);
+                        List<Tree> level3TreeList = Lists.newArrayList();
+                        for(AdminAuth adminAuth : adminAuthList) {
+                            Tree level3Tree = new Tree();
+
+                            level3Tree.setTitle(adminAuth.getAuthName());
+                            level3Tree.setId(adminAuth.getAuthNo());
+                            level3Tree.setField(adminAuth.getAuthNo());
+
+                            if(StringUtils.contains("," + authString + ",", "," + adminAuth.getAuthNo() + ",")) {
+                                level3Tree.setChecked(true);
+                            }
+                            level3TreeList.add(level3Tree);
+                        }
+
+                        level2Tree.setChildren(level3TreeList);
+                        level2TreeList.add(level2Tree);
                     }
                 }
 
-                authPOJO.setChildMenuPOJOList(adminMenuPOJOList);
-                authPOJO.setParentMenu(adminMenu);
+                level1Tree.setChildren(level2TreeList);
+                level1TreeList.add(level1Tree);
             }
         }
 
+
+        Gson gson = new Gson();
+        String tree = gson.toJson(level1TreeList);
         // 绑定数据
-        model.addAttribute("authPOJOList", authPOJOList);
+        model.addAttribute("tree", tree);
 
         // 返回页面视图
         return "/Admin/Role/auth_page";
+    }
+
+    @RequestMapping("/edit_auth.do")
+    @ResponseBody
+    public AppResponse<AdminRole> editAuth(String auth) {
+        String a = "[{\\\"title\\\":\\\"个人中心\\\",\\\"id\\\":\\\"AMNO20191211230142T78011\\\",\\\"field\\\":\\\"AMNO20191211230142T78011\\\",\\\"spread\\\":true,\\\"checked\\\":false,\\\"disabled\\\":false,\\\"children\\\":[{\\\"title\\\":\\\"个人信息\\\",\\\"id\\\":\\\"AMNO20191211230245L20373\\\",\\\"field\\\":\\\"AMNO20191211230245L20373\\\",\\\"spread\\\":true,\\\"checked\\\":false,\\\"disabled\\\":false,\\\"children\\\":[]}]}]";
+        String b = "{\"title\":\"张三\",\"id\":\"24\"}";
+        Gson gson = new Gson();
+        List<Map<String, Object>> treeList = gson.fromJson(auth, new TypeToken<List<Map<String, Object>>>() {
+        }.getType());
+        return AppResponse.success();
     }
 }
