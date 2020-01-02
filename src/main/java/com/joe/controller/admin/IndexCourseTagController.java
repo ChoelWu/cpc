@@ -70,7 +70,7 @@ public class IndexCourseTagController {
         int indexCourseTagNum = indexCourseTagService.count(indexCourseTagQueryWrapper);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, indexCourseTagNum);
+        Page page = pageService.Pagination(currentPage, indexCourseTagNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

@@ -27,7 +27,12 @@
 				<div class="dh">
 					<ul>
 						<#list navList as nav>
-							<li><a href="/index/index/cate.do?no=${nav.indexChannel.channelNo}"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a></li>
+							<li>
+								<a href="<#if nav.indexChannel.channelType='3'>${nav.indexChannel.channelUrl}<#else>/index/index/cate.do?no=${nav.indexChannel.channelNo}</#if>"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a>
+								<#list nav.childChannelList as childNav>
+									<dl><dd><a href="<#if childNav.channelType='3'>${childNav.channelUrl}<#else>/index/index/cate.do?no=${childNav.channelNo}</#if>">${childNav.channelName}</a></dd></dl>
+								</#list>
+							</li>
 						</#list>
 					</ul>
 				</div>
@@ -53,11 +58,11 @@ $(".head .dh ul li").hover(function(){
 			<h3 class="biaot">${leftChannel.indexChannel.channelName}</h3>
 			<ul>
 				<#list leftChannel.childChannelList as channel>
-					<li><a href="/index/index/cate.do?no=${channel.channelNo}">${channel.channelName}</a></li>
+					<li><a href="<#if channel.channelType='3'>${channel.channelUrl}<#else>/index/index/cate.do?no=${channel.channelNo}</#if>">${channel.channelName}</a></li>
 				</#list>
 			</ul>
 		</div>
-		<div class="right" aos="fade-up-left">
+		<div class="right" aos="fade-up-left" style="min-height: 600px;">
 			 <div class="right_biaot">
 			 	<i></i>
 			 	<h2>${indexChannel.channelName}</h2>
@@ -65,8 +70,9 @@ $(".head .dh ul li").hover(function(){
 			 </div>
 			 <!-- 详情内容 -->
 			 <div class="jianj_k">
-				 <h2 style="text-align: center;padding-bottom: 30px;">${indexArticle.articleName}</h2>
-				 ${indexArticle.articleContent}
+				 <h2 style="text-align: center;padding-bottom: 30px;color: #666;">${indexArticle.articleName}</h2>
+				 <span style="color: #666; display: block; font-size: 1em; line-height: 24px; border-bottom: 1px solid #CCC; padding-bottom: 5px; text-align: center; width: 100%;">[来源：${indexArticle.articleSource}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：${indexArticle.publishTime?string('yyyy-MM-dd')}]</span>
+				 <div style="padding-top: 20px;">${indexArticle.articleContent}</div>
 			 </div>
 			 <!-- 详情内容介绍 -->
 		</div>

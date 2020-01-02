@@ -69,7 +69,7 @@ public class AdminDictController {
         int adminDictNum = adminDictService.countDict(conditionMap);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminDictNum);
+        Page page = pageService.Pagination(currentPage, adminDictNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

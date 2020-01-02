@@ -13,5 +13,5 @@ package com.joe.service.common;
 import com.joe.pojo.Page;
 
 public interface PageService {
-    public Page Pagination(int currentPage, int rowNum);
+    public Page Pagination(int currentPage, int rowNum, int recordNum);
 }

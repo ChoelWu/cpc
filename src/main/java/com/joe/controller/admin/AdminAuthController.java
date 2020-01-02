@@ -69,7 +69,7 @@ public class AdminAuthController {
         int adminAuthNum = adminAuthService.countAuth(conditionMap);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminAuthNum);
+        Page page = pageService.Pagination(currentPage, adminAuthNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

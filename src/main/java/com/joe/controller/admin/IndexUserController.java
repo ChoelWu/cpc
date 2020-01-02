@@ -86,7 +86,7 @@ public class IndexUserController {
         int adminMenuNum = indexUserService.count(indexUserQueryWrapper);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminMenuNum);
+        Page page = pageService.Pagination(currentPage, adminMenuNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

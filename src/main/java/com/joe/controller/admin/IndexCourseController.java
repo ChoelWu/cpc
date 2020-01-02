@@ -81,7 +81,7 @@ public class IndexCourseController {
         int adminCourseNum = indexCourseService.countCourse(conditionMap);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminCourseNum);
+        Page page = pageService.Pagination(currentPage, adminCourseNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

@@ -12,18 +12,24 @@ package com.joe.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.joe.entity.IndexArticle;
 import com.joe.entity.IndexChannel;
+import com.joe.pojo.Article;
 import com.joe.pojo.Channel;
+import com.joe.pojo.Page;
+import com.joe.service.common.PageService;
 import com.joe.service.system.IndexArticleService;
 import com.joe.service.system.IndexChannelService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/index/index")
@@ -33,6 +39,9 @@ public class IndexController {
 
     @Resource
     private IndexArticleService indexArticleService;
+
+    @Resource
+    private PageService pageService;
 
     @RequestMapping("/index.do")
     public String index(Model model) {
@@ -199,5 +208,49 @@ public class IndexController {
         }
 
         return channel;
+    }
+
+    /**
+     * 显示文章列表
+     *
+     * @param model model
+     * @param no    菜单编号
+     * @return 返回文章列表数据与视图
+     */
+    @RequestMapping("cate.do")
+    public String cate(Model model, String no, @RequestParam(value="currentPage", defaultValue="1")int currentPage) {
+        // 获取列表
+        List<Channel> navList = getNav();
+
+        Map<String, Object> conditionMap = Maps.newHashMap();
+        conditionMap.put("channel_no", no);
+
+        // 查询条数
+        int adminArticleNum = indexArticleService.countArticle(conditionMap);
+
+        // 分页
+        Page page = pageService.Pagination(currentPage, adminArticleNum, 20);
+
+        // 获取文章列表
+        int start = page.getRecordNum() * (page.getCurrentPage() - 1);
+        Map<String, Integer> pageInfoMap = Maps.newHashMap();
+        pageInfoMap.put("startRow", start);
+        pageInfoMap.put("rowNum", page.getRecordNum());
+        List<Article> articleList = indexArticleService.listArticle(conditionMap, pageInfoMap);
+
+        Channel leftChannel = getLeftNavList(no);
+
+        // 获取栏目信息
+        QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
+        indexChannelQueryWrapper.eq("channel_no", no);
+        IndexChannel indexChannel = indexChannelService.getOne(indexChannelQueryWrapper);
+
+        model.addAttribute("navList", navList);
+        model.addAttribute("articleList", articleList);
+        model.addAttribute("page", page);
+        model.addAttribute("leftChannel", leftChannel);
+        model.addAttribute("indexChannel", indexChannel);
+        model.addAttribute("adminArticleNum", adminArticleNum);
+        return "Index/Index/cate";
     }
 }

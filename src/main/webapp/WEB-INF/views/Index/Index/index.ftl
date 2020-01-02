@@ -48,7 +48,12 @@
         <div class="dh">
             <ul>
                 <#list navList as nav>
-                    <li><a href="/index/index/cate.do?no=${nav.indexChannel.channelNo}"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a></li>
+                    <li>
+                        <a href="<#if nav.indexChannel.channelType='3'>${nav.indexChannel.channelUrl}<#else>/index/index/cate.do?no=${nav.indexChannel.channelNo}</#if>"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a>
+                        <#list nav.childChannelList as childNav>
+                            <dl><dd><a href="<#if childNav.channelType='3'>${childNav.channelUrl}<#else>/index/index/cate.do?no=${childNav.channelNo}</#if>">${childNav.channelName}</a></dd></dl>
+                        </#list>
+                    </li>
                 </#list>
             </ul>
         </div>
@@ -125,7 +130,7 @@
 <div class="px1200 cgNews" style="margin-top: 30px;">
     <div class="newsTop">
         <div class="left" aos="fade-right">
-            <div><h2>社会服务</h2></div>
+            <div><a href="/index/index/cate.do?no=${trendArticleList[0].channelNo}"><h2>社会服务</h2></a></div>
             <div class="gonggao-list" id="gonggao-list">
                 <#list trendArticleList as article>
                 <dl>

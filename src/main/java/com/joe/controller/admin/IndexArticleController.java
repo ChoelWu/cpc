@@ -80,7 +80,7 @@ public class IndexArticleController {
         int adminArticleNum = indexArticleService.countArticle(conditionMap);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminArticleNum);
+        Page page = pageService.Pagination(currentPage, adminArticleNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

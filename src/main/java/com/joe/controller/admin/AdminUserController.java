@@ -73,7 +73,7 @@ public class AdminUserController {
         int adminUserNum = adminUserService.countAdminUser(conditionMap);
 
         // 分页
-        Page page = pageService.Pagination(currentPage, adminUserNum);
+        Page page = pageService.Pagination(currentPage, adminUserNum, 10);
 
         // 获取用户列表
         int start = page.getRecordNum() * (page.getCurrentPage() - 1);

@@ -23,10 +23,8 @@ public class PageServiceImpl implements PageService {
      * @param rowNum      查询出的所有数据数目
      * @return 返回分页结果
      */
-    public Page Pagination(int currentPage, int rowNum) {
+    public Page Pagination(int currentPage, int rowNum, int recordNum) {
         Page page = new Page();
-
-        int recordNum = 10;
 
         int totalNum = (int) Math.floor(rowNum * 1.0 / recordNum) + 1;
         // 当前页

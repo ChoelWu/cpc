@@ -185,7 +185,6 @@
 	line-height: 30px;
 	font-size: 16px;
 	color: #313131;
-	text-indent: 2em;
 }
 
 .jianj_k img{
@@ -1095,4 +1094,38 @@ height:inherit;
 .zs_text p{
 	line-height: 25px; 
 	text-indent: 2em;
+}
+
+.ziye .right .jianj_k ul li {
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	display: block;
+	border-bottom: 1px dashed #ccc;
+}
+
+.ziye .right .jianj_k ul li a {
+	color: #666;
+	background: #fff url(/static/index/index/images/dian.png) 5px center no-repeat;
+	padding-left: 25px;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	position: relative;
+	text-align: justify;
+}
+
+.ziye .right .jianj_k ul li a:hover {
+	color: #0075bd;
+	transition: all 200ms ease 0s;
+	transform: translate(2px,0);
+}
+
+.ziye .right .jianj_k ul li a .article-title {
+	float: left;
+}
+
+.ziye .right .jianj_k ul li a .publish-time {
+	float: right;
 }
