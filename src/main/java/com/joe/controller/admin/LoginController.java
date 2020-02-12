@@ -55,7 +55,7 @@ public class LoginController {
      */
     @RequestMapping("/login.do")
     @ResponseBody
-    public AppResponse login(String data, HttpSession session) {
+    public AppResponse<String> login(String data, HttpSession session) {
         // 将表单数据转化为对象
         Gson gson = new Gson();
         AdminUser user = gson.fromJson(data, new TypeToken<AdminUser>() {
@@ -96,7 +96,7 @@ public class LoginController {
      */
     @RequestMapping("/logout.do")
     @ResponseBody
-    public AppResponse logout(HttpSession session) {
+    public AppResponse<String> logout(HttpSession session) {
         // 销毁 session 信息
         AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
         session.removeAttribute("adminUser");

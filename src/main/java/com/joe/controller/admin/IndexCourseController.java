@@ -26,6 +26,7 @@ import com.joe.service.system.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +65,9 @@ public class IndexCourseController {
 
     @Resource
     private AdminDictService adminDictService;
+
+    @Resource
+    private IndexCourseTagService indexCourseTagService;
 
     /**
      * 栏目列表显示
@@ -290,6 +294,7 @@ public class IndexCourseController {
         model.addAttribute("roleList", roleList);
         model.addAttribute("courseIsTopAdminDictList", courseIsTopAdminDictList);
         model.addAttribute("courseRoleAdminDictList", courseRoleAdminDictList);
+
         return "Admin/Course/edit";
     }
 
@@ -455,5 +460,38 @@ public class IndexCourseController {
         }
 
         return AppResponse.success("课程名称不可用！", "false");
+    }
+
+    /**
+     * 标签配置
+     *
+     * @param courseNo 课程标签
+     * @param model    model
+     * @return 返回视图文件
+     */
+    @RequestMapping("course_tags_page.do")
+    public String course_tags_page(String courseNo, Model model) {
+        QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+        indexCourseQueryWrapper.eq("course_no", courseNo);
+        IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
+
+        String courseTags = null;
+        if (null != indexCourse) {
+            courseTags = indexCourse.getCourseTags();
+        }
+
+        List<IndexCourseTag> indexCourseTagList = Lists.newArrayList();
+        if (StringUtils.isNotBlank(courseTags)) {
+            String[] courseTagArray = courseTags.split(",");
+            for (String courseTag : courseTagArray) {
+                QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
+                indexCourseTagQueryWrapper.eq("courseTagNo", courseTag);
+                IndexCourseTag indexCourseTag = indexCourseTagService.getOne(indexCourseTagQueryWrapper);
+                indexCourseTagList.add(indexCourseTag);
+            }
+            model.addAttribute("indexCourseTagList", indexCourseTagList);
+        }
+
+        return "Admin/Course/config_tags";
     }
 }

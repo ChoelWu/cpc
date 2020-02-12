@@ -89,6 +89,7 @@
                             <th>章节课时</th>
                             <th>是否置顶</th>
                             <th>课程状态</th>
+                            <th>课程标签</th>
                             <th>学习人次</th>
                             <th>发布时间</th>
                             <th>操作</th>
@@ -114,8 +115,15 @@
                                            onclick="changeStatus('enable','${course.courseNo}')">待审核</a>
                                     </#if>
                                 </td>
+                                <td>
+                                    <a title="标签配置"
+                                       onclick="xadmin.open('标签配置','/admin/course/course_tags_page.do?courseNo=${course.courseNo}',600,500)"
+                                       href="javascript:;">
+                                        <i class="iconfont">&#xe6c5;</i>
+                                    </a>
+                                </td>
                                 <td>${course.courseLearnNum}</td>
-                                <td>${course.publishTime}</td>
+                                <td>${course.publishTime?string('y yyy-MM-dd HH:mm:ss')}</td>
                                 <td class="td-manage">
                                     <a title="编辑"
                                        onclick="xadmin.open('编辑课程','/admin/course/edit_page.do?courseNo=${course.courseNo}',600,500)"
