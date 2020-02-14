@@ -117,7 +117,7 @@
                                 </td>
                                 <td>
                                     <a title="标签配置"
-                                       onclick="xadmin.open('标签配置','/admin/course/course_tags_page.do?courseNo=${course.courseNo}',600,500)"
+                                       onclick="xadmin.open('标签配置','/admin/course/course_tags_page.do?courseNo=${course.courseNo}',550,500)"
                                        href="javascript:;">
                                         <i class="iconfont">&#xe6c5;</i>
                                     </a>

@@ -20,6 +20,7 @@ import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.*;
 import com.joe.pojo.Course;
 import com.joe.pojo.CourseCate;
+import com.joe.pojo.CourseTagsJson;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
 import com.joe.service.system.*;
@@ -471,27 +472,75 @@ public class IndexCourseController {
      */
     @RequestMapping("course_tags_page.do")
     public String course_tags_page(String courseNo, Model model) {
+        Gson gson = new Gson();
+
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         indexCourseQueryWrapper.eq("course_no", courseNo);
         IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
 
-        String courseTags = null;
+        String courseTags = "";
         if (null != indexCourse) {
             courseTags = indexCourse.getCourseTags();
-        }
-
-        List<IndexCourseTag> indexCourseTagList = Lists.newArrayList();
-        if (StringUtils.isNotBlank(courseTags)) {
-            String[] courseTagArray = courseTags.split(",");
-            for (String courseTag : courseTagArray) {
-                QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
-                indexCourseTagQueryWrapper.eq("courseTagNo", courseTag);
-                IndexCourseTag indexCourseTag = indexCourseTagService.getOne(indexCourseTagQueryWrapper);
-                indexCourseTagList.add(indexCourseTag);
+            if(StringUtils.isBlank(indexCourse.getCourseTags())) {
+                courseTags = "";
             }
-            model.addAttribute("indexCourseTagList", indexCourseTagList);
         }
 
+        // 课程已经选择的标签
+        List<CourseTagsJson> selectedCourseTagList = Lists.newArrayList();
+        String[] courseTagArray = courseTags.split(",");
+
+        // Json 化
+        model.addAttribute("selectedCourseTag", gson.toJson(courseTagArray));
+
+        // 所有的标签
+        List<CourseTagsJson> indexCourseTagJsonList = Lists.newArrayList();
+        List<IndexCourseTag> indexCourseTagList = indexCourseTagService.list();
+        if(!indexCourseTagList.isEmpty()) {
+            for(IndexCourseTag indexCourseTag : indexCourseTagList) {
+                // 组织Json
+                CourseTagsJson courseTagsJson = new CourseTagsJson();
+                courseTagsJson.setValue(indexCourseTag.getCourseTagNo());
+                courseTagsJson.setTitle(indexCourseTag.getCourseTagName());
+                indexCourseTagJsonList.add(courseTagsJson);
+            }
+        } else {
+            CourseTagsJson courseTagsJson = new CourseTagsJson();
+            courseTagsJson.setValue("");
+            courseTagsJson.setTitle("空");
+            courseTagsJson.setDisabled(true);
+            indexCourseTagJsonList.add(courseTagsJson);
+        }
+
+        String indexCourseTag = gson.toJson(indexCourseTagJsonList);
+        model.addAttribute("indexCourseTag", indexCourseTag);
+
+        // 返回视图页面
         return "Admin/Course/config_tags";
+    }
+
+    /**
+     * 为课程添加标签
+     *
+     * @param courseTagNos 课程标签编号字符串
+     * @param courseNo     课程编号
+     * @return 返回操作结果
+     */
+    @RequestMapping("add_course_tags")
+    @ResponseBody
+    public AppResponse<IndexCourse> addCourseTags(String courseTagNos, String courseNo) {
+        if (StringUtils.isNotBlank(courseTagNos) && StringUtils.isNotBlank(courseNo)) {
+            QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+            indexCourseQueryWrapper.eq("course_no", courseNo);
+            IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
+
+            if (null != indexCourse) {
+                indexCourse.setCourseTags(courseTagNos);
+
+                return AppResponse.success("标签添加成功！");
+            }
+        }
+
+        return AppResponse.fail("标签添加失败！");
     }
 }
