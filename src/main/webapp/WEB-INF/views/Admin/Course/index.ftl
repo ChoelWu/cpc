@@ -117,7 +117,7 @@
                                 </td>
                                 <td>
                                     <a title="标签配置"
-                                       onclick="xadmin.open('标签配置','/admin/course/course_tags_page.do?courseNo=${course.courseNo}',550,500)"
+                                       onclick="xadmin.open('标签配置','/admin/course/course_tags_page.do?courseNo=${course.courseNo}',530,500)"
                                        href="javascript:;">
                                         <i class="iconfont">&#xe6c5;</i>
                                     </a>
@@ -126,7 +126,7 @@
                                 <td>${course.publishTime?string('y yyy-MM-dd HH:mm:ss')}</td>
                                 <td class="td-manage">
                                     <a title="编辑"
-                                       onclick="xadmin.open('编辑课程','/admin/course/edit_page.do?courseNo=${course.courseNo}',600,500)"
+                                       onclick="xadmin.open('编辑课程','/admin/course/edit_page.do?courseNo=${course.courseNo}',600,450)"
                                        href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>

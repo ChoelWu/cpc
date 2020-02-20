@@ -20,6 +20,11 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    #test1 .layui-transfer .layui-transfer-box {
+        overflow: auto;
+    }
+</style>
 <body>
 <div class="layui-fluid">
     <div class="layui-row">
@@ -27,9 +32,9 @@
             <div class="layui-form-item">
                 <div id="test1" class="demo-transfer"></div>
             </div>
-            <div class="layui-form-item">
+            <div class="layui-form-item" style="padding-top: 20px;">
                 <label for="L_repass" class="layui-form-label"></label>
-                <button id="sb-button" class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+                <a id="config-button" class="layui-btn">完成</a>
             </div>
         </form>
     </div>
@@ -47,11 +52,50 @@
         //定义标题及数据源
         transfer.render({
             elem: '#test1'
-            ,title: ['候选文人', '获奖文人']  //自定义标题
+            ,title: ['未选标签', '已选标签']  //自定义标题
             ,data: data1,
             value: ${selectedCourseTag!''},
             // width: 150,
             height: 300 //定义高度
+            ,id: 'demo1' //定义索引
+        });
+
+        $("#config-button").click(function() {
+            // 获得右侧数据
+            var courseTagNos = transfer.getData('demo1');
+            var courseNo = "${courseNo}";
+            $.ajax({
+                url: "/admin/course/add_course_tags.do",
+                type: 'post',
+                data: {courseTagNos: JSON.stringify(courseTagNos), courseNo: courseNo},
+                success: function (res) {
+                    var icon = 5;
+                    if (1 === res.status || "1" === res.status) {
+                        icon = 6;
+                    }
+
+                    layer.alert(res.message, {
+                            icon: icon
+                        },
+                        function (index) {
+                            // 关闭当前frame
+                            layer.close(index);
+                            parent.location.reload();
+                        }
+                    );
+                },
+                error: function(res) {
+                    layer.alert("操作失败，请刷新页面后重新操作！", {
+                            icon: 5
+                        },
+                        function (index) {
+                            // 关闭当前frame
+                            layer.close(index);
+                            parent.location.reload();
+                        }
+                    );
+                }
+            });
         });
     });
 </script>

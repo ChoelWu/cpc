@@ -471,7 +471,7 @@ public class IndexCourseController {
      * @return 返回视图文件
      */
     @RequestMapping("course_tags_page.do")
-    public String course_tags_page(String courseNo, Model model) {
+    public String courseTagsPage(String courseNo, Model model) {
         Gson gson = new Gson();
 
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
@@ -481,13 +481,12 @@ public class IndexCourseController {
         String courseTags = "";
         if (null != indexCourse) {
             courseTags = indexCourse.getCourseTags();
-            if(StringUtils.isBlank(indexCourse.getCourseTags())) {
+            if (StringUtils.isBlank(indexCourse.getCourseTags())) {
                 courseTags = "";
             }
         }
 
         // 课程已经选择的标签
-        List<CourseTagsJson> selectedCourseTagList = Lists.newArrayList();
         String[] courseTagArray = courseTags.split(",");
 
         // Json 化
@@ -496,8 +495,8 @@ public class IndexCourseController {
         // 所有的标签
         List<CourseTagsJson> indexCourseTagJsonList = Lists.newArrayList();
         List<IndexCourseTag> indexCourseTagList = indexCourseTagService.list();
-        if(!indexCourseTagList.isEmpty()) {
-            for(IndexCourseTag indexCourseTag : indexCourseTagList) {
+        if (!indexCourseTagList.isEmpty()) {
+            for (IndexCourseTag indexCourseTag : indexCourseTagList) {
                 // 组织Json
                 CourseTagsJson courseTagsJson = new CourseTagsJson();
                 courseTagsJson.setValue(indexCourseTag.getCourseTagNo());
@@ -514,6 +513,7 @@ public class IndexCourseController {
 
         String indexCourseTag = gson.toJson(indexCourseTagJsonList);
         model.addAttribute("indexCourseTag", indexCourseTag);
+        model.addAttribute("courseNo", courseNo);
 
         // 返回视图页面
         return "Admin/Course/config_tags";
@@ -526,16 +526,35 @@ public class IndexCourseController {
      * @param courseNo     课程编号
      * @return 返回操作结果
      */
-    @RequestMapping("add_course_tags")
+    @RequestMapping("add_course_tags.do")
     @ResponseBody
     public AppResponse<IndexCourse> addCourseTags(String courseTagNos, String courseNo) {
         if (StringUtils.isNotBlank(courseTagNos) && StringUtils.isNotBlank(courseNo)) {
+            Gson gson = new Gson();
+            List<CourseTagsJson> courseTagsJsonList = gson.fromJson(courseTagNos, new TypeToken<List<CourseTagsJson>>() {
+            }.getType());
+
+            if(3 < courseTagsJsonList.size()) {
+                return AppResponse.fail("标签添加失败，至多选择三个标签！");
+            }
+
+            StringBuilder courseTagsNoString = new StringBuilder();
+            for (CourseTagsJson courseTagsJson : courseTagsJsonList) {
+                int index = courseTagsJsonList.indexOf(courseTagsJson);
+                if (0 == index) {
+                    courseTagsNoString.append(courseTagsJson.getValue());
+                } else {
+                    courseTagsNoString.append(",").append(courseTagsJson.getValue());
+                }
+            }
+
             QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
             indexCourseQueryWrapper.eq("course_no", courseNo);
             IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
 
             if (null != indexCourse) {
-                indexCourse.setCourseTags(courseTagNos);
+                indexCourse.setCourseTags(courseTagsNoString.toString());
+                indexCourseService.updateById(indexCourse);
 
                 return AppResponse.success("标签添加成功！");
             }
