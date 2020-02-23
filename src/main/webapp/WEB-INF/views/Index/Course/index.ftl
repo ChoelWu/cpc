@@ -991,21 +991,22 @@
     <div class="bg000">
         <div class="container-types clearfix"><h3 class="types-title clearfix"><span>新上好课</span></h3>
             <div class="clearfix types-content">
-                <#list newCourseList as newCourse>
+                <#list newIndexCourseList as newIndexCourse>
                 <div class="index-card-container course-card-container container">
-                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newCourse.courseNo}" data-track="sztj-1-1">
+                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newIndexCourse.course.courseNo}" data-track="sztj-1-1">
                         <div class="course-stat new">
                             在学
                         </div>
                         <div class="course-card-top hashadow">
-                            <img class="course-banner" src="${newCourse.courseCover}">
+                            <img class="course-banner" src="${newIndexCourse.course.courseCover}">
                             <div class="course-label">
-                                <label>大学化学</label>
-                                <label>无机化学</label>
+                                <#list newIndexCourse.courseTagList as courseTag>
+                                    <label>${courseTag.courseTagName}</label>
+                                </#list>
                             </div>
                         </div>
                         <div class="course-card-content">
-                            <h3 class="course-card-name">${newCourse.courseName}</h3>
+                            <h3 class="course-card-name">${newIndexCourse.course.courseName}</h3>
                             <div class="clearfix course-card-bottom">
                                 <div class="course-card-info">
                                     <span>普通</span><span><i class="imv2-set-sns"></i>248</span>
@@ -1039,13 +1040,15 @@
                 <a href="#"
                    class="banner_wk r hide" target="_blank"></a></h3>
             <div class="clearfix types-content js-rank-content">
-                <#list newCourseList as newCourse>
+                <#list newIndexCourseList as newIndexCourse>
                 <div class="index-card-container course-card-container container">
-                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newCourse.courseNo}" data-track="xshk-1-1">
+                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newIndexCourse.course.courseNo}" data-track="xshk-1-1">
                         <div class="course-card-top hashadow">
                             <img class="course-banner" src="/static/index/course/images/course04.jpg">
                             <div class="course-label">
-                                <label>分析化学</label>
+                                <#list newIndexCourse.courseTagList as courseTag>
+                                    <label>${courseTag.courseTagName}</label>
+                                </#list>
                             </div>
                         </div>
                         <div class="course-card-content">
