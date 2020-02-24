@@ -93,89 +93,24 @@
                         </div>
                     </div>
                     <div class="recomment-box">
-                        <div class="l banner-course-card">
-                            <a href="#/217.html?mc_marking=26dd86266f55cfc7a3b8b624af302664&amp;mc_channel=qianduankaifa1"
-                               target="_blank" title="大学化学实验" class="clearfix">
-                                <img src="/static/index/course/images/course06.png" class="l">
-                                <div class="l course-card">
-                                    <h3 class="course-card-name">大学化学实验</h3>
-                                    <div class="course-card-price l">大三（下）</div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                    <div class="course-card-info l">
-                                        普通
-                                    </div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                    <div class="course-card-info l">
-                                        <i class="icon-set_sns"></i>1708
-                                    </div>
+                        <#if courseCate.presentCourseList??>
+                            <#list courseCate.presentCourseList as presentCourse>
+                                <div class="l banner-course-card">
+                                    <a href="#/217.html?mc_marking=26dd86266f55cfc7a3b8b624af302664&amp;mc_channel=qianduankaifa1"
+                                       target="_blank" title="大学化学实验" class="clearfix">
+                                        <img src="${presentCourse.courseCover}" class="l">
+                                        <div class="l course-card">
+                                            <h3 class="course-card-name">${presentCourse.courseName}</h3>
+                                            <div class="course-card-price l">大三（下）</div>
+                                            <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
+                                            <div class="course-card-info l">普通</div>
+                                            <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
+                                            <div class="course-card-info l"><i class="icon-set_sns"></i>1708</div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="l banner-course-card">
-                            <a href="#/336.html?mc_marking=dce36388dbfc942a1d01880e63a59e4c&amp;mc_channel=qianduankaifa2"
-                               target="_blank" title="有机化学精讲" class="clearfix">
-                                <img src="/static/index/course/images/course04.jpg" class="l">
-                                <div class="l course-card">
-                                    <h3 class="course-card-name">有机化学精讲</h3>
-
-                                    <div class="course-card-price l">大三（下）</div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-
-                                    <div class="course-card-info l">
-                                        普通
-                                    </div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                    <div class="course-card-info l">
-                                        <i class="icon-set_sns"></i>466
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="l banner-course-card">
-                            <a href="#/373.html?mc_marking=989e3412c6cb7f02a3a0959e9c06d840&amp;mc_channel=qianduankaifa3"
-                               target="_blank" title="中学化学教学设计" class="clearfix">
-                                <img src="/static/index/course/images/course03.jpg" class="l">
-                                <div class="l course-card">
-                                    <h3 class="course-card-name">中学化学教学设计</h3>
-
-                                    <div class="course-card-price l">大三（下）</div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-
-                                    <div class="course-card-info l">
-
-                                        普通
-
-                                    </div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                    <div class="course-card-info l">
-                                        <i class="icon-set_sns"></i>434
-                                    </div>
-
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="l banner-course-card">
-                            <a href="#/learn/1157?mc_marking=1c676ba0e3770b8ce7fa73c472e906b0&amp;mc_channel=qianduankaifa4"
-                               target="_blank" title="化学实验安全知识" class="clearfix">
-                                <img src="/static/index/course/images/course08.jpg" class="l">
-                                <div class="l course-card">
-                                    <h3 class="course-card-name">化学实验安全知识</h3>
-
-                                    <div class="course-card-info l">
-
-                                        普通
-
-                                    </div>
-                                    <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                    <div class="course-card-info l">
-                                        <i class="icon-set_sns"></i>14238
-                                    </div>
-
-
-                                </div>
-                            </a>
-                        </div>
+                            </#list>
+                        </#if>
                     </div>
                 </div>
             </#list>

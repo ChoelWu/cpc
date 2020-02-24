@@ -68,17 +68,31 @@ public class CourseController {
                 // 子课程分类列表
                 List<IndexCourseCate> adminChildCourseCateList = Lists.newArrayList();
 
+                List<String> childCateNoList = Lists.newArrayList();
+
                 // 循环组织子课程分类
                 for (IndexCourseCate adminChildCourseCate : indexCourseCateList) {
                     if (StringUtils.equals(indexCourseCate.getCourseCateNo(), adminChildCourseCate.getParentCourseCateNo())) {
                         adminChildCourseCateList.add(adminChildCourseCate);
+                        childCateNoList.add(indexCourseCate.getCourseCateNo());
                     }
                 }
+
 
                 // 存储父课程分类
                 indexCourseCatePOJO.setIndexCourseCate(indexCourseCate);
                 // 存储子课程分类
                 indexCourseCatePOJO.setChildCourseCateList(adminChildCourseCateList);
+
+                // 存储推荐课程
+                if (!childCateNoList.isEmpty()) {
+                    // 查询父分类的推荐课程
+                    QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+                    indexCourseQueryWrapper.in("course_cate_no", childCateNoList).orderByDesc("visit_times").last("limit 0, 4");
+                    List<IndexCourse> indexCourseList = indexCourseService.list(indexCourseQueryWrapper);
+
+                    indexCourseCatePOJO.setPresentCourseList(indexCourseList);
+                }
 
                 // 存储课程分类
                 indexCourseCatePOJOList.add(indexCourseCatePOJO);
@@ -86,7 +100,7 @@ public class CourseController {
         }
 
         model.addAttribute("newIndexCourseList", newIndexCourseList);
-        model.addAttribute("indexCourseCatePOJOList", indexCourseCatePOJOList);
+        model.addAttribute("courseCateList", indexCourseCatePOJOList);
 
         return "/Index/Course/index";
     }
