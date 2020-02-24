@@ -11,7 +11,6 @@ CREATE TABLE `cpc_index_course`
     `course_difficult_level` char(1) COMMENT '课程困难程度 1-简单 2-普通 3-困难',
     `course_fit_people`      varchar(10) COMMENT '课程适合人群',
     `visit_times`            int(11) COMMENT '课程访问次数',
-    `learning_people_num`    int(11) COMMENT '课程学习人数',
     `course_cover`           varchar(100) COMMENT '课程封面',
     `is_top`                 char(1)     NOT NULL COMMENT '是否置顶 0-不置顶 1-置顶',
     `publish_time`           datetime COMMENT '发布时间',

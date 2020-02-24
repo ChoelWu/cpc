@@ -50,6 +50,7 @@
                             <th>分类名称</th>
                             <th>分类级别</th>
                             <th>排序</th>
+                            <th>推荐课程</th>
                             <th>操作</th>
                         </thead>
                         <tbody class="x-cate">
@@ -73,6 +74,7 @@
                                            value="${courseCate.indexCourseCate.courseCateIndex}"
                                            onchange="updateIndex('${courseCate.indexCourseCate.courseCateNo}', this.value)">
                                 </td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td class="td-manage">
                                     <a title="编辑"
                                        onclick="xadmin.open('编辑课程分类','/admin/course_cate/edit_page.do?courseCateNo=${courseCate.indexCourseCate.courseCateNo}',500,400)"
@@ -105,6 +107,7 @@
                                                value="${childCourseCate.courseCateIndex}"
                                                onchange="updateIndex('${childCourseCate.courseCateNo}', this.value)">
                                     </td>
+                                    <td></td>
                                     <td class="td-manage">
                                         <a title="编辑"
                                            onclick="xadmin.open('编辑','/admin/course_cate/edit_page.do?courseCateNo=${childCourseCate.courseCateNo}',500,400)"

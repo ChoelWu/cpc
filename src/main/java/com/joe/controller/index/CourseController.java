@@ -12,8 +12,12 @@ package com.joe.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
+import com.joe.commons.app.AppResponse;
 import com.joe.entity.IndexCourse;
+import com.joe.entity.IndexCourseCate;
 import com.joe.entity.IndexCourseTag;
+import com.joe.pojo.CourseCate;
+import com.joe.pojo.IndexCourseCatePOJO;
 import com.joe.pojo.IndexCoursePOJO;
 import com.joe.service.system.IndexCourseCateService;
 import com.joe.service.system.IndexCourseService;
@@ -44,11 +48,45 @@ public class CourseController {
 
     @RequestMapping("/index.do")
     public String index(Model model) {
+        // 获取课程
         List<IndexCourse> newCourseList = getNewCourse(null, 8);
-
         List<IndexCoursePOJO> newIndexCourseList = indexCourseToIndexCoursePOJO(newCourseList);
 
+        // 查询出所有的课程分类
+        QueryWrapper<IndexCourseCate> indexCourseCateQueryWrapper = new QueryWrapper<>();
+        indexCourseCateQueryWrapper.orderByAsc("course_cate_level", "course_cate_index");
+        List<IndexCourseCate> indexCourseCateList = indexCourseCateService.list(indexCourseCateQueryWrapper);
+
+        // 获取课程分类
+        List<IndexCourseCatePOJO> indexCourseCatePOJOList = Lists.newArrayList();
+
+        // 循环遍历课程分类，生成前台需要的格式
+        for (IndexCourseCate indexCourseCate : indexCourseCateList) {
+            if (StringUtils.equals("1", indexCourseCate.getCourseCateLevel())) {
+                // 创建课程分类对象
+                IndexCourseCatePOJO indexCourseCatePOJO = new IndexCourseCatePOJO();
+                // 子课程分类列表
+                List<IndexCourseCate> adminChildCourseCateList = Lists.newArrayList();
+
+                // 循环组织子课程分类
+                for (IndexCourseCate adminChildCourseCate : indexCourseCateList) {
+                    if (StringUtils.equals(indexCourseCate.getCourseCateNo(), adminChildCourseCate.getParentCourseCateNo())) {
+                        adminChildCourseCateList.add(adminChildCourseCate);
+                    }
+                }
+
+                // 存储父课程分类
+                indexCourseCatePOJO.setIndexCourseCate(indexCourseCate);
+                // 存储子课程分类
+                indexCourseCatePOJO.setChildCourseCateList(adminChildCourseCateList);
+
+                // 存储课程分类
+                indexCourseCatePOJOList.add(indexCourseCatePOJO);
+            }
+        }
+
         model.addAttribute("newIndexCourseList", newIndexCourseList);
+        model.addAttribute("indexCourseCatePOJOList", indexCourseCatePOJOList);
 
         return "/Index/Course/index";
     }
@@ -122,4 +160,5 @@ public class CourseController {
 
         return indexCoursePOJOList;
     }
+
 }

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -51,6 +50,26 @@ public class IndexCourse implements Serializable {
      * 课程简介
      */
     private String courseIntro;
+
+    /**
+     * 课程作者
+     */
+    private String courseAuthor;
+
+    /**
+     * 课程难度
+     */
+    private String courseDifficultLevel;
+
+    /**
+     * 课程适合人群
+     */
+    private String courseFitPeople;
+
+    /**
+     * 课程访问次数
+     */
+    private Integer visitTimes;
 
     /**
      * 课程封面
@@ -159,6 +178,38 @@ public class IndexCourse implements Serializable {
         this.courseIntro = courseIntro;
     }
 
+    public String getCourseAuthor() {
+        return courseAuthor;
+    }
+
+    public void setCourseAuthor(String courseAuthor) {
+        this.courseAuthor = courseAuthor;
+    }
+
+    public String getCourseDifficultLevel() {
+        return courseDifficultLevel;
+    }
+
+    public void setCourseDifficultLevel(String courseDifficultLevel) {
+        this.courseDifficultLevel = courseDifficultLevel;
+    }
+
+    public String getCourseFitPeople() {
+        return courseFitPeople;
+    }
+
+    public void setCourseFitPeople(String courseFitPeople) {
+        this.courseFitPeople = courseFitPeople;
+    }
+
+    public Integer getVisitTimes() {
+        return visitTimes;
+    }
+
+    public void setVisitTimes(Integer visitTimes) {
+        this.visitTimes = visitTimes;
+    }
+
     public String getCourseCover() {
         return courseCover;
     }
@@ -256,6 +307,10 @@ public class IndexCourse implements Serializable {
                 ", courseTags='" + courseTags + '\'' +
                 ", courseCateNo='" + courseCateNo + '\'' +
                 ", courseIntro='" + courseIntro + '\'' +
+                ", courseAuthor='" + courseAuthor + '\'' +
+                ", courseDifficultLevel='" + courseDifficultLevel + '\'' +
+                ", courseFitPeople='" + courseFitPeople + '\'' +
+                ", visitTimes=" + visitTimes +
                 ", courseCover='" + courseCover + '\'' +
                 ", isTop='" + isTop + '\'' +
                 ", publishTime=" + publishTime +
