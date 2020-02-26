@@ -534,7 +534,7 @@ public class IndexCourseController {
             List<CourseTagsJson> courseTagsJsonList = gson.fromJson(courseTagNos, new TypeToken<List<CourseTagsJson>>() {
             }.getType());
 
-            if(3 < courseTagsJsonList.size()) {
+            if (3 < courseTagsJsonList.size()) {
                 return AppResponse.fail("标签添加失败，至多选择三个标签！");
             }
 
