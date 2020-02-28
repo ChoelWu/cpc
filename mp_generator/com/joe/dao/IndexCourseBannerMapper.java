@@ -2,10 +2,6 @@ package com.joe.dao;
 
 import com.joe.entity.IndexCourseBanner;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.joe.pojo.Course;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -13,10 +9,8 @@ import java.util.Map;
  * </p>
  *
  * @author joe
- * @since 2020-02-24
+ * @since 2020-02-26
  */
 public interface IndexCourseBannerMapper extends BaseMapper<IndexCourseBanner> {
-    List<IndexCourseBanner> listCourseBanner(Map<String, Object> conditions);
 
-    Integer countCourseBanner(Map<String, Object> conditions);
 }
