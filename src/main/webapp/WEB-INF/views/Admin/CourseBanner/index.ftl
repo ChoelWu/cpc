@@ -80,7 +80,7 @@
                                 <td>${courseBanner.courseBannerStatus}</td>
                                 <td class="td-manage">
                                     <a title="编辑"
-                                       onclick="xadmin.open('编辑课程','/admin/course_banner/edit_page.do?courseNo=${courseBanner.courseBannerNo}',600,450)"
+                                       onclick="xadmin.open('编辑课程','/admin/course_banner/edit_page.do?courseBannerNo=${courseBanner.courseBannerNo}',600,450)"
                                        href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>

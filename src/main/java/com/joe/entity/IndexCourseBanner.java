@@ -3,8 +3,8 @@ package com.joe.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -68,7 +68,7 @@ public class IndexCourseBanner implements Serializable {
     /**
      * 添加时间
      */
-    private LocalDateTime addTime;
+    private Date addTime;
 
     /**
      * 添加人
@@ -78,7 +78,7 @@ public class IndexCourseBanner implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**
      * 更新人
@@ -158,11 +158,11 @@ public class IndexCourseBanner implements Serializable {
         this.bak = bak;
     }
 
-    public LocalDateTime getAddTime() {
+    public Date getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(LocalDateTime addTime) {
+    public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
 
@@ -174,11 +174,11 @@ public class IndexCourseBanner implements Serializable {
         this.addUserNo = addUserNo;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
