@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.joe.dao.IndexCourseBannerMapper">
-    <resultMap id="BaseResultMap" type="com.joe.pojo.Course">
+    <resultMap id="BaseResultMap" type="com.joe.entity.IndexCourseBanner">
         <id column="course_banner_id" property="courseBannerId"/>
         <result column="course_banner_no" property="courseBannerNo"/>
         <result column="course_banner_name" property="courseBannerName"/>
         <result column="course_banner_status" property="courseBannerStatus"/>
         <result column="course_banner_url" property="courseBannerUrl"/>
         <result column="course_banner_index" property="courseBannerIndex"/>
+        <result column="course_banner_pic" property="courseBannerPic"/>
         <result column="bak" property="bak"/>
         <result column="add_time" property="addTime"/>
         <result column="add_user_no" property="addUserNo"/>
@@ -17,65 +18,43 @@
 
     <select id="countCourseBanner" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT COUNT(*)
-        FROM cpc_index_course cico LEFT JOIN cpc_index_course_banner_cate cich ON cico.course_banner_cate_no = cich.course_banner_cate_no
+        FROM cpc_index_course
         <where>
             1=1
-            <if test="courseName != null and courseName != ''">
-                AND cico.course_banner_name like concat("%", #{courseName}, "%")
+            <if test="courseBannerName != null and courseBannerName != ''">
+                AND course_banner_name like concat("%", #{courseBannerName}, "%")
             </if>
-            <if test="courseCateNo != null and courseCateNo != ''">
-                AND cico.course_banner_cate_no = #{courseCateNo}
-            </if>
-            <if test="isTop != null and isTop != ''">
-                AND cico.is_top = #{isTop}
-            </if>
-            <if test="courseStatus != null and courseStatus != ''">
-                AND cico.course_banner_status = #{courseStatus}
+            <if test="courseBannerStatus != null and courseBannerStatus != ''">
+                AND course_banner_status = #{courseBannerStatus}
             </if>
         </where>
     </select>
 
     <select id="listCourseBanner" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT
-        cico.course_banner_id,
-        cico.course_banner_no,
-        cico.course_banner_name,
-        cico.course_banner_tags,
-        cico.course_banner_cate_no,
-        cico.course_banner_intro,
-        cico.course_banner_author,
-        cico.course_banner_difficult_level,
-        cico.course_banner_fit_people,
-        cico.visit_times,
-        cico.course_banner_cover,
-        cico.is_top,
-        cico.publish_time,
-        cico.role,
-        cico.course_banner_status,
-        cico.course_banner_learn_num,
-        cico.bak,
-        cico.add_time,
-        cico.add_user_no,
-        cico.update_time,
-        cico.update_user_no,
-        cich.course_banner_cate_name
-        FROM cpc_index_course cico LEFT JOIN cpc_index_course_banner_cate cich ON cico.course_banner_cate_no = cich.course_banner_cate_no
+        course_banner_id,
+        course_banner_no,
+        course_banner_name,
+        course_banner_status,
+        course_banner_url,
+        course_banner_index,
+        course_banner_pic,
+        bak,
+        add_time,
+        add_user_no,
+        update_time,
+        update_user_no
+        FROM cpc_index_course_banner
         <where>
             1=1
-            <if test="courseName != null and courseName != ''">
-                AND cico.course_banner_name like concat("%", #{courseName}, "%")
+            <if test="courseBannerName != null and courseBannerName != ''">
+                AND course_banner_name like concat("%", #{courseBannerName}, "%")
             </if>
-            <if test="courseCateNo != null and courseCateNo != ''">
-                AND cico.course_banner_cate_no = #{courseCateNo}
-            </if>
-            <if test="isTop != null and isTop != ''">
-                AND cico.is_top = #{isTop}
-            </if>
-            <if test="courseStatus != null and courseStatus != ''">
-                AND cico.course_banner_status = #{courseStatus}
+            <if test="courseBannerStatus != null and courseBannerStatus != ''">
+                AND course_banner_status = #{courseBannerStatus}
             </if>
         </where>
-        ORDER BY cico.course_banner_id DESC
+        ORDER BY course_banner_index DESC, course_banner_id DESC
         LIMIT #{startRow}, #{rowNum}
     </select>
 </mapper>

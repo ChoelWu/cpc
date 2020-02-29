@@ -7,13 +7,14 @@ package com.joe.controller.admin;
 // +----------------------------------------------------------------------
 // | Author: Joe
 // +----------------------------------------------------------------------
-// | Description: 
+// | Description: 课程推荐位
 // +----------------------------------------------------------------------
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.entity.AdminDict;
+import com.joe.entity.IndexCourseBanner;
 import com.joe.pojo.Course;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
@@ -57,7 +58,7 @@ public class IndexCourseBannerController {
         Map<String, Integer> pageInfoMap = Maps.newHashMap();
         pageInfoMap.put("startRow", start);
         pageInfoMap.put("rowNum", page.getRecordNum());
-        List<Course> courseList = indexCourseBannerService.listCourseBanner(conditionMap, pageInfoMap);
+        List<IndexCourseBanner> courseList = indexCourseBannerService.listCourseBanner(conditionMap, pageInfoMap);
 
         // 查询课程推荐位状态列表
         List<AdminDict> courseBannerStatusAdminDictList = adminDictService.getDictListByDictName("courseBannerStatus");

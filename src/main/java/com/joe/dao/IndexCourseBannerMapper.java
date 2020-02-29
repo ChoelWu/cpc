@@ -2,7 +2,6 @@ package com.joe.dao;
 
 import com.joe.entity.IndexCourseBanner;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.joe.pojo.Course;
 
 import java.util.List;
 import java.util.Map;
