@@ -129,18 +129,16 @@
                 <div class="g-banner-box">
                     <div class="focusBox" style="margin:0 auto">
                         <ul class="pic">
-                            <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/course/images/1.jpg"/></a></li>
-                            <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/course/images/2.jpg"/></a></li>
-                            <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/course/images/3.jpg"/></a></li>
-                            <li><a href="http://www.SuperSlide2.com" target="_blank"><img src="/static/index/course/images/4.jpg"/></a></li>
+                            <#list indexCourseBannerList as indexCourseBanner>
+                                <li><a href="${indexCourseBanner.courseBannerUrl}" target="_blank" title="${indexCourseBanner.courseBannerName}"><img src="${indexCourseBanner.courseBannerPic}"/></a></li>
+                            </#list>
                         </ul>
                         <a class="prev" href="javascript:void(0)"></a>
                         <a class="next" href="javascript:void(0)"></a>
                         <ul class="hd">
+                            <#list indexCourseBannerList as indexCourseBanner>
                             <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            </#list>
                         </ul>
                     </div>
 

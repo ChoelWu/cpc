@@ -7,22 +7,18 @@ package com.joe.controller.index;
 // +----------------------------------------------------------------------
 // | Author: Joe
 // +----------------------------------------------------------------------
-// | Description: 
+// | Description: 课程平台
 // +----------------------------------------------------------------------
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.joe.commons.app.AppResponse;
 import com.joe.entity.IndexCourse;
+import com.joe.entity.IndexCourseBanner;
 import com.joe.entity.IndexCourseCate;
 import com.joe.entity.IndexCourseTag;
-import com.joe.pojo.CourseCate;
 import com.joe.pojo.IndexCourseCatePOJO;
 import com.joe.pojo.IndexCoursePOJO;
-import com.joe.service.system.IndexCourseCateService;
-import com.joe.service.system.IndexCourseService;
-import com.joe.service.system.IndexCourseTagService;
-import com.joe.service.system.IndexLessonService;
+import com.joe.service.system.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +41,9 @@ public class CourseController {
 
     @Resource
     private IndexCourseTagService indexCourseTagService;
+
+    @Resource
+    private IndexCourseBannerService indexCourseBannerService;
 
     @RequestMapping("/index.do")
     public String index(Model model) {
@@ -99,8 +98,13 @@ public class CourseController {
             }
         }
 
+        // 获取推荐位
+        List<IndexCourseBanner> indexCourseBannerList = getCourseBannerList(5);
+
+        // 绑定数据
         model.addAttribute("newIndexCourseList", newIndexCourseList);
         model.addAttribute("courseCateList", indexCourseCatePOJOList);
+        model.addAttribute("indexCourseBannerList", indexCourseBannerList);
 
         return "/Index/Course/index";
     }
@@ -175,4 +179,16 @@ public class CourseController {
         return indexCoursePOJOList;
     }
 
+    /**
+     * 获取推荐位
+     *
+     * @param num 需要的条数
+     * @return 返回结果
+     */
+    private List<IndexCourseBanner> getCourseBannerList(int num) {
+        QueryWrapper<IndexCourseBanner> indexCourseBannerQueryWrapper = new QueryWrapper<>();
+        indexCourseBannerQueryWrapper.orderByDesc("course_banner_index").last("limit 0, " + num);
+
+        return indexCourseBannerService.list(indexCourseBannerQueryWrapper);
+    }
 }
