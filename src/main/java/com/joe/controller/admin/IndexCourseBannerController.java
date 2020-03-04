@@ -98,7 +98,7 @@ public class IndexCourseBannerController {
         // 数据绑定
         model.addAttribute("courseBannerStatusAdminDictList", courseBannerStatusAdminDictList);
 
-        return "Admin/Course/add";
+        return "Admin/CourseBanner/add";
     }
 
     /**
@@ -158,7 +158,7 @@ public class IndexCourseBannerController {
         model.addAttribute("indexCourseBanner", indexCourseBanner);
         model.addAttribute("courseBannerStatusAdminDictList", courseBannerStatusAdminDictList);
 
-        return "Admin/Course/edit";
+        return "Admin/CourseBanner/edit";
     }
 
     /**

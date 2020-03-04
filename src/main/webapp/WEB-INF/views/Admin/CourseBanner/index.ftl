@@ -41,7 +41,7 @@
                                    autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <select name="courseStatus" lay-filter="status-select" id="courseStatus">
+                            <select name="courseBannerStatus" lay-filter="status-select" id="courseBannerStatus">
                                 <option value="">推荐位状态</option>
                                 <#list courseBannerStatusAdminDictList as courseBannerStatusAdminDict>
                                     <option value="${courseBannerStatusAdminDict.dictKey}">${courseBannerStatusAdminDict.dictValue}</option>
@@ -55,7 +55,7 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加课程','/admin/course/add_page.do',600,500)"><i
+                    <button class="layui-btn" onclick="xadmin.open('添加课程推荐位','/admin/course_banner/add_page.do',600,500)"><i
                                 class="layui-icon"></i>添加
                     </button>
                 </div>
@@ -142,10 +142,8 @@
 
         <#if conditions??>
         form.val("search-box", {
-            "courseName": "${conditions.courseName}",
-            "courseStatus": "${conditions.courseStatus}",
-            "isTop": "${conditions.isTop}",
-            "courseCateNo": "${conditions.courseCateNo}"
+            "courseBannerName": "${conditions.courseBannerName}",
+            "courseBannerStatus": "${conditions.courseBannerStatus}"
         });
         </#if>
 
@@ -194,13 +192,13 @@
     }
 
     // 删除用户
-    function deleteCourse(courseNo) {
-        layer.confirm('将同时删除该课程下的所有章节和课时，确认要删除吗？', function (index) {
+    function deleteCourse(courseBannerNo) {
+        layer.confirm('将删除该课程推荐位，确认要删除吗？', function (index) {
             //发异步删除数据
             $.ajax({
-                url: "/admin/course/delete.do",
+                url: "/admin/course_banner/delete.do",
                 type: 'post',
-                data: {courseNo: courseNo},
+                data: {courseBannerNo: courseBannerNo},
                 success: function (res) {
                     var icon = 5;
                     if (1 === res.status || "1" === res.status) {
@@ -213,7 +211,7 @@
                         function (index) {
                             // 关闭当前frame
                             layer.close(index);
-                            window.location.href = "/admin/course/view.do";
+                            window.location.href = "/admin/course_banner/view.do";
                         }
                     );
                 }
@@ -224,13 +222,11 @@
     // 请求页面
     function queryPage(currentPage) {
         var data = {
-            courseName: $("#courseName").val(),
-            courseStatus: $("#courseStatus").val(),
-            courseCateNo: $("#courseCateNo").val(),
-            isTop: $("#isTop").val()
+            courseBannerName: $("#courseBannerName").val(),
+            courseBannerStatus: $("#courseBannerStatus").val()
         };
 
-        window.location.href = "/admin/course/view.do" + "?conditions=" + encodeURI(JSON.stringify(data)) + "&currentPage=" + currentPage;
+        window.location.href = "/admin/course_banner/view.do" + "?conditions=" + encodeURI(JSON.stringify(data)) + "&currentPage=" + currentPage;
     }
 
     // 页面跳转
