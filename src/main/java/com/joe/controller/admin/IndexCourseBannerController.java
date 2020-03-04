@@ -247,4 +247,27 @@ public class IndexCourseBannerController {
         logger.error("文件不存在！");
         return AppResponse.fail("文件上传失败！");
     }
+
+    /**
+     * 检查课程推荐位标题名称是否合法
+     *
+     * @param courseBannerNo   课程推荐位编号
+     * @param courseBannerName 课程推荐位名称
+     * @return 返回检查结果
+     */
+    @RequestMapping("check_course_banner_name.do")
+    @ResponseBody
+    public AppResponse<String> checkCourseName(String courseBannerNo, String courseBannerName) {
+        // 查询出courseNo不是当前记录的但是课程名称相同的所有的记录
+        QueryWrapper<IndexCourseBanner> indexCourseBannerQueryWrapper = new QueryWrapper<>();
+        indexCourseBannerQueryWrapper.ne("course_banner_no", courseBannerNo).eq("course_banner_name", courseBannerName);
+        List<IndexCourseBanner> indexCourseBannerList = indexCourseBannerService.list(indexCourseBannerQueryWrapper);
+
+        // 名称可用
+        if (indexCourseBannerList.isEmpty()) {
+            return AppResponse.success("课程推荐位名称可用！", "true");
+        }
+
+        return AppResponse.success("课程名称不可用！", "false");
+    }
 }

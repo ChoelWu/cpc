@@ -41,7 +41,7 @@
                     <span class="x-red">*</span>推荐位名称</label>
                 <div class="layui-input-inline">
                     <input type="text" id="courseBannerName" name="courseBannerName" required="" lay-verify="required|courseBannerName"
-                           autocomplete="off" class="layui-input" placeholder="请输入课程推荐位名称">
+                           autocomplete="off" class="layui-input" placeholder="请输入课程推荐位名称" value="${indexCourseBanner.courseBannerName}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     不超过16字符，不能使用特殊字符
@@ -52,7 +52,7 @@
                     <span class="x-red">*</span>推荐位地址</label>
                 <div class="layui-input-inline">
                     <input type="text" id="courseBannerUrl" name="courseBannerUrl" required="" lay-verify="required|url"
-                           autocomplete="off" class="layui-input" placeholder="请输入课程推荐位名称">
+                           autocomplete="off" class="layui-input" placeholder="请输入课程推荐位名称" value="${indexCourseBanner.courseBannerUrl}">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -60,7 +60,7 @@
                     <span class="x-red">*</span>推荐位编号</label>
                 <div class="layui-input-inline">
                     <input type="text" id="courseBannerIndex" name="courseBannerIndex" required="" lay-verify="required|courseBannerIndex"
-                           autocomplete="off" class="layui-input" placeholder="请填写 4 位数字">
+                           autocomplete="off" class="layui-input" placeholder="请填写 4 位数字" value="${indexCourseBanner.courseBannerIndex}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     例: 1234
@@ -79,17 +79,19 @@
                 <div class="layui-upload">
                     <button type="button" class="layui-btn" id="multipartFile">上传图片</button>
                     <div class="layui-upload-list" style="padding-left: 110px;">
+                        <img class="layui-upload-img" id="coverPic" <#if indexCourseBanner.courseBannerPic?? || "" = indexCourseBanner.courseBannerPic>src="${indexCourseBanner.courseBannerPic}" style="height: 100px;"</#if>>
                         <img class="layui-upload-img" id="coverPic">
                         <p id="demoText"></p>
                     </div>
                 </div>
-                <input type="hidden" name="courseBannerPic" id="courseBannerPic" value="">
+                <input type="hidden" name="courseBannerPic" id="courseBannerPic" value="${indexCourseBanner.courseBannerPic}">
             </div>
+
             <div class="layui-form-item layui-form-text">
                 <label for="courseIntro" class="layui-form-label">推荐位简介</label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入内容" id="courseBannerIntro" name="courseBannerIntro"
-                              class="layui-textarea"></textarea>
+                              class="layui-textarea">${indexCourseBanner.courseBannerIntro}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -120,7 +122,7 @@
                 if (value.length > 16) {
                     return '用户名长度在 16 字符之内';
                 }
-                var checkRel = checkcourseBannerName("", value);
+                var checkRel = checkcourseBannerName("${indexCourseBanner.courseBannerNo}", value);
                 if ("false" === checkRel || !checkRel) {
                     return '课程名称不能重复！';
                 }

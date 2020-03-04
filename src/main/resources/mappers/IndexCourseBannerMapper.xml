@@ -18,7 +18,7 @@
 
     <select id="countCourseBanner" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT COUNT(*)
-        FROM cpc_index_course
+        FROM cpc_index_course_banner
         <where>
             1=1
             <if test="courseBannerName != null and courseBannerName != ''">

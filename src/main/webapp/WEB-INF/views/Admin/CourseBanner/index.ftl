@@ -27,7 +27,7 @@
               <cite>导航元素</cite></a>
           </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-       onclick="window.location.href='/admin/course/view.do'" title="刷新">
+       onclick="window.location.href='/admin/course_banner/view.do'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
 </div>
 <div class="layui-fluid">
@@ -55,7 +55,7 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加课程推荐位','/admin/course_banner/add_page.do',600,500)"><i
+                    <button class="layui-btn" onclick="xadmin.open('添加课程推荐位','/admin/course_banner/add_page.do',600,550)"><i
                                 class="layui-icon"></i>添加
                     </button>
                 </div>
@@ -77,10 +77,16 @@
                                 <td>${courseBanner.courseBannerName}</td>
                                 <td>${courseBanner.courseBannerUrl}</td>
                                 <td>${courseBanner.courseBannerIndex}</td>
-                                <td>${courseBanner.courseBannerStatus}</td>
+                                <td>
+                                    <#list courseBannerStatusAdminDictList as courseBannerStatusAdminDict>
+                                        <#if courseBannerStatusAdminDict.dictKey = courseBanner.courseBannerStatus>
+                                            ${courseBannerStatusAdminDict.dictValue}
+                                        </#if>
+                                    </#list>
+                                </td>
                                 <td class="td-manage">
                                     <a title="编辑"
-                                       onclick="xadmin.open('编辑课程','/admin/course_banner/edit_page.do?courseBannerNo=${courseBanner.courseBannerNo}',600,450)"
+                                       onclick="xadmin.open('编辑课程推荐位','/admin/course_banner/edit_page.do?courseBannerNo=${courseBanner.courseBannerNo}',600,600)"
                                        href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
