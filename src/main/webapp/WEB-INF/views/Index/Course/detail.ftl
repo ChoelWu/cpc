@@ -121,7 +121,7 @@
                             <#if chapter.lessonList??>
                             <#list chapter.lessonList as lesson>
                             <li data-media-id="20083">
-                                <a href="lessonVideoAndSwf.html" class="J-media-item">
+                                <a href="/index/course/video.do?lessonNo=${lesson.lessonNo}" class="J-media-item">
                                     <i class="imv2-play_circle type"></i>${chapter_index + 1}-${lesson_index + 1} ${lesson.lessonName} (02:13)
                                     <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
                                 </a>

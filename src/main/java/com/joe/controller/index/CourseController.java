@@ -47,6 +47,12 @@ public class CourseController {
     @Resource
     private IndexChapterService indexChapterService;
 
+    /**
+     * 课程首页
+     *
+     * @param model model
+     * @return 返回页面视图
+     */
     @RequestMapping("/index.do")
     public String index(Model model) {
         // 获取课程
@@ -78,7 +84,6 @@ public class CourseController {
                         childCateNoList.add(indexCourseCate.getCourseCateNo());
                     }
                 }
-
 
                 // 存储父课程分类
                 indexCourseCatePOJO.setIndexCourseCate(indexCourseCate);
@@ -112,13 +117,62 @@ public class CourseController {
     }
 
     /**
+     * 课程详情
+     *
+     * @param courseNo 课程编号
+     * @param model    model
+     * @return 返回视图
+     */
+    @RequestMapping("/detail.do")
+    public String courseDetail(String courseNo, Model model) {
+        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(courseNo);
+
+        // 数据绑定
+        model.addAttribute("course", courseChapterLessonPOJO);
+
+        // 返回页面视图
+        return "Index/Course/detail";
+    }
+
+    /**
+     * 课程播放页面
+     *
+     * @param lessonNo 课程编号
+     * @param model    model
+     * @return 返回页面视图
+     */
+    @RequestMapping("video.do")
+    public String video(String lessonNo, Model model) {
+        // 查询课程信息
+        QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
+        indexLessonQueryWrapper.eq("lesson_no", lessonNo);
+        IndexLesson indexLesson = indexLessonService.getOne(indexLessonQueryWrapper);
+
+        // 查询课程章节和课时信息
+        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(indexLesson.getCourseNo());
+
+        // 绑定数据
+        model.addAttribute("courseChapterLesson", courseChapterLessonPOJO);
+        model.addAttribute("indexLesson", indexLesson);
+
+        // 返回对应的页面视图
+        if (StringUtils.equals(indexLesson.getLessonType(), "")) {
+            return "Index/Course/videoPlayer";
+        } else if (StringUtils.equals(indexLesson.getLessonType(), "")) {
+            return "Index/Course/swfPlayer";
+        } else {
+            return "Index/Course/swfVideoPlayer";
+        }
+    }
+
+    /**
      * 获取新课
      *
      * @param cateNo    所属栏目
      * @param courseNum 获取条数
      * @return 返回list
      */
-    public List<IndexCourse> getNewCourse(String cateNo, int courseNum) {
+    private List<IndexCourse> getNewCourse(String cateNo, int courseNum) {
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNoneBlank(cateNo)) {
             indexCourseQueryWrapper.eq("course_cate_no", cateNo);
@@ -135,7 +189,7 @@ public class CourseController {
      * @param courseNum 获取条数
      * @return 返回list
      */
-    public List<IndexCourse> getHotCourse(String cateNo, int courseNum) {
+    private List<IndexCourse> getHotCourse(String cateNo, int courseNum) {
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNoneBlank(cateNo)) {
             indexCourseQueryWrapper.eq("course_cate_no", cateNo);
@@ -143,53 +197,6 @@ public class CourseController {
         indexCourseQueryWrapper.orderByDesc("publish_time").last("limit " + courseNum);
 
         return indexCourseService.list(indexCourseQueryWrapper);
-    }
-
-    /**
-     * 课程详情
-     *
-     * @param courseNo 课程编号
-     * @param model    model
-     * @return 返回视图
-     */
-    @RequestMapping("/detail.do")
-    public String courseDetail(String courseNo, Model model) {
-        // 查询课程
-        QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
-        indexCourseQueryWrapper.eq("course_no", courseNo);
-        IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
-
-        // 查询课程章节
-        QueryWrapper<IndexChapter> indexChapterQueryWrapper = new QueryWrapper<>();
-        indexChapterQueryWrapper.eq("course_no", indexCourse.getCourseNo()).orderByAsc("chapter_index");
-        List<IndexChapter> indexChapterList = indexChapterService.list(indexChapterQueryWrapper);
-
-        List<ChapterLessonPOJO> chapterLessonPOJOList = Lists.newArrayList();
-        // 查询课时
-        for (IndexChapter indexChapter : indexChapterList) {
-            ChapterLessonPOJO chapterLessonPOJO = new ChapterLessonPOJO();
-
-            QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
-            indexLessonQueryWrapper.eq("chapter_no", indexChapter.getChapterNo()).orderByAsc("lesson_index");
-            List<IndexLesson> indexLessonList = indexLessonService.list(indexLessonQueryWrapper);
-
-            // 组装章节课时
-            chapterLessonPOJO.setChapter(indexChapter);
-            chapterLessonPOJO.setLessonList(indexLessonList);
-
-            chapterLessonPOJOList.add(chapterLessonPOJO);
-        }
-
-        // 组装前台格式
-        CourseChapterLessonPOJO courseChapterLessonPOJO = new CourseChapterLessonPOJO();
-        courseChapterLessonPOJO.setCourse(indexCourse);
-        courseChapterLessonPOJO.setChapterList(chapterLessonPOJOList);
-
-        // 数据绑定
-        model.addAttribute("course", courseChapterLessonPOJO);
-
-        // 返回页面视图
-        return "Index/Course/detail";
     }
 
     /**
@@ -229,5 +236,47 @@ public class CourseController {
         indexCourseBannerQueryWrapper.orderByDesc("course_banner_index").last("limit 0, " + num);
 
         return indexCourseBannerService.list(indexCourseBannerQueryWrapper);
+    }
+
+    /**
+     * 获取课程章节课时信息
+     *
+     * @param courseNo 课程编号
+     * @return 返回组装好的数据
+     */
+    private CourseChapterLessonPOJO getCourseInfoList(String courseNo) {
+        // 查询课程
+        QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+        indexCourseQueryWrapper.eq("course_no", courseNo);
+        IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
+
+        // 查询课程章节
+        QueryWrapper<IndexChapter> indexChapterQueryWrapper = new QueryWrapper<>();
+        indexChapterQueryWrapper.eq("course_no", indexCourse.getCourseNo()).orderByAsc("chapter_index");
+        List<IndexChapter> indexChapterList = indexChapterService.list(indexChapterQueryWrapper);
+
+        List<ChapterLessonPOJO> chapterLessonPOJOList = Lists.newArrayList();
+        // 查询课时
+        for (IndexChapter indexChapter : indexChapterList) {
+            ChapterLessonPOJO chapterLessonPOJO = new ChapterLessonPOJO();
+
+            QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
+            indexLessonQueryWrapper.eq("chapter_no", indexChapter.getChapterNo()).orderByAsc("lesson_index");
+            List<IndexLesson> indexLessonList = indexLessonService.list(indexLessonQueryWrapper);
+
+            // 组装章节课时
+            chapterLessonPOJO.setChapter(indexChapter);
+            chapterLessonPOJO.setLessonList(indexLessonList);
+
+            chapterLessonPOJOList.add(chapterLessonPOJO);
+        }
+
+        // 组装前台格式
+        CourseChapterLessonPOJO courseChapterLessonPOJO = new CourseChapterLessonPOJO();
+        courseChapterLessonPOJO.setCourse(indexCourse);
+        courseChapterLessonPOJO.setChapterList(chapterLessonPOJOList);
+
+        // 返回数据
+        return courseChapterLessonPOJO;
     }
 }
