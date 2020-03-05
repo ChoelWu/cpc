@@ -12,10 +12,9 @@ package com.joe.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.joe.entity.IndexCourse;
-import com.joe.entity.IndexCourseBanner;
-import com.joe.entity.IndexCourseCate;
-import com.joe.entity.IndexCourseTag;
+import com.joe.entity.*;
+import com.joe.pojo.ChapterLessonPOJO;
+import com.joe.pojo.CourseChapterLessonPOJO;
 import com.joe.pojo.IndexCourseCatePOJO;
 import com.joe.pojo.IndexCoursePOJO;
 import com.joe.service.system.*;
@@ -44,6 +43,9 @@ public class CourseController {
 
     @Resource
     private IndexCourseBannerService indexCourseBannerService;
+
+    @Resource
+    private IndexChapterService indexChapterService;
 
     @RequestMapping("/index.do")
     public String index(Model model) {
@@ -143,13 +145,50 @@ public class CourseController {
         return indexCourseService.list(indexCourseQueryWrapper);
     }
 
+    /**
+     * 课程详情
+     *
+     * @param courseNo 课程编号
+     * @param model    model
+     * @return 返回视图
+     */
     @RequestMapping("/detail.do")
     public String courseDetail(String courseNo, Model model) {
+        // 查询课程
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         indexCourseQueryWrapper.eq("course_no", courseNo);
         IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
 
-        model.addAttribute("indexCourse", indexCourse);
+        // 查询课程章节
+        QueryWrapper<IndexChapter> indexChapterQueryWrapper = new QueryWrapper<>();
+        indexChapterQueryWrapper.eq("course_no", indexCourse.getCourseNo()).orderByAsc("chapter_index");
+        List<IndexChapter> indexChapterList = indexChapterService.list(indexChapterQueryWrapper);
+
+        List<ChapterLessonPOJO> chapterLessonPOJOList = Lists.newArrayList();
+        // 查询课时
+        for (IndexChapter indexChapter : indexChapterList) {
+            ChapterLessonPOJO chapterLessonPOJO = new ChapterLessonPOJO();
+
+            QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
+            indexLessonQueryWrapper.eq("chapter_no", indexChapter.getChapterNo()).orderByAsc("lesson_index");
+            List<IndexLesson> indexLessonList = indexLessonService.list(indexLessonQueryWrapper);
+
+            // 组装章节课时
+            chapterLessonPOJO.setChapter(indexChapter);
+            chapterLessonPOJO.setLessonList(indexLessonList);
+
+            chapterLessonPOJOList.add(chapterLessonPOJO);
+        }
+
+        // 组装前台格式
+        CourseChapterLessonPOJO courseChapterLessonPOJO = new CourseChapterLessonPOJO();
+        courseChapterLessonPOJO.setCourse(indexCourse);
+        courseChapterLessonPOJO.setChapterList(chapterLessonPOJOList);
+
+        // 数据绑定
+        model.addAttribute("course", courseChapterLessonPOJO);
+
+        // 返回页面视图
         return "Index/Course/detail";
     }
 

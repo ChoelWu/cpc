@@ -51,9 +51,7 @@
     </div>
 </div>
 
-
 <div id="main">
-
     <div class="course-infos">
         <div class="w pr">
             <div class="path">
@@ -62,7 +60,7 @@
                 <i class="path-split">\</i><a href="#//www.imooc.com/course/list?c=java">物理化学（上）</a>
             </div>
             <div class="hd clearfix">
-                <h2 class="l">${indexCourse.courseName}</h2>
+                <h2 class="l">${course.course.courseName}</h2>
             </div>
 
             <div class="statics clearfix">
@@ -87,7 +85,6 @@
                     <span class="meta">学习人数</span><span class="meta-value js-learn-num">248</span>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="course-info-menu ">
@@ -97,24 +94,23 @@
                 </li>
             </ul>
         </div>
+    </div>
 
-
-    </div><!-- 课程面板 -->
-
+    <!-- 课程面板 -->
     <div class="course-info-main clearfix w">
-
         <div class="content-wrap clearfix">
             <div class="content">
                 <!-- 课程简介 -->
-                <div class="course-description course-wrap">${indexCourse.courseIntro}</div>
+                <div class="course-description course-wrap">${course.course.courseIntro}</div>
                 <!-- 课程简介 end -->
 
                 <!-- 课程章节 -->
                 <div class="course-chapters">
+                    <#list course.chapterList as chapter>
                     <div class="chapter course-wrap ">
                         <!-- 章节标题 -->
                         <h3>
-                            第1章 绪论与气体
+                            第${chapter_index + 1}章 ${chapter.chapter.chapterName}
                         </h3>
                         <div class="chapter-description">
                             本章课程的主要内容说明。
@@ -122,258 +118,29 @@
                         <!-- 章节标题 end -->
                         <!-- 章节小节 -->
                         <ul class="video">
+                            <#if chapter.lessonList??>
+                            <#list chapter.lessonList as lesson>
                             <li data-media-id="20083">
-
                                 <a href="lessonVideoAndSwf.html" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    1-1 绪论
-                                    (02:13)
-
+                                    <i class="imv2-play_circle type"></i>${chapter_index + 1}-${lesson_index + 1} ${lesson.lessonName} (02:13)
                                     <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
                                 </a>
                             </li>
-                            <li data-media-id="20084">
-
-                                <a href="lessonVideo.html" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    1-2 理想气体状态方程与理想气体
-                                    (05:58)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
+                            </#list>
+                            </#if>
                         </ul>
                         <!-- 章节小节 end -->
                     </div>
-                    <div class="chapter course-wrap ">
-                        <!-- 章节标题 -->
-                        <h3>
-                            第2章 热力学第一定律
-                        </h3>
-                        <div class="chapter-description">
-                            本章课程的主要内容说明。
-                        </div>
-                        <!-- 章节标题 end -->
-                        <!-- 章节小节 -->
-                        <ul class="video">
-                            <li data-media-id="20085">
-
-                                <a href="lessonSwf.html" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    2-1 热力学基本概念及术语
-                                    (01:45)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20086">
-
-                                <a href="#//www.imooc.com/video/20086" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    2-2 热力学第一定律
-                                    (10:41)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20087">
-
-                                <a href="#//www.imooc.com/video/20087" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    2-3 恒容热、恒压热
-                                    (05:40)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- 章节小节 end -->
-                    </div>
-                    <div class="chapter course-wrap ">
-                        <!-- 章节标题 -->
-                        <h3>
-                            第3章 热力学第二定律
-                        </h3>
-                        <div class="chapter-description">
-                            本章课程的主要内容说明。
-                        </div>
-                        <!-- 章节标题 end -->
-                        <!-- 章节小节 -->
-                        <ul class="video">
-                            <li data-media-id="20088">
-
-                                <a href="#//www.imooc.com/video/20088" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    3-1 热机效率及卡诺热机效率
-                                    (01:31)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20089">
-
-                                <a href="#//www.imooc.com/video/20089" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    3-2 自发过程的共同特征与热力学第二定律
-                                    (08:08)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20090">
-
-                                <a href="#//www.imooc.com/video/20090" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    3-3 熵、亥姆霍兹函数、吉布斯函数及其判据
-                                    (06:22)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- 章节小节 end -->
-                    </div>
-                    <div class="chapter course-wrap ">
-                        <!-- 章节标题 -->
-                        <h3>
-                            第4章 多组分系统热力学
-                        </h3>
-                        <div class="chapter-description">
-                            本章介绍。
-                        </div>
-                        <!-- 章节标题 end -->
-                        <!-- 章节小节 -->
-                        <ul class="video">
-                            <li data-media-id="20091">
-
-                                <a href="#//www.imooc.com/video/20091" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    4-1 多组分系统热力学概念
-                                    (02:22)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20092">
-
-                                <a href="#//www.imooc.com/video/20092" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    4-2 拉乌尔定律与亨利定律
-                                    (09:08)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- 章节小节 end -->
-                    </div>
-                    <div class="chapter course-wrap ">
-                        <!-- 章节标题 -->
-                        <h3>
-                            第5章 化学平衡
-                        </h3>
-                        <div class="chapter-description">
-                            本章主要介绍。
-                        </div>
-                        <!-- 章节标题 end -->
-                        <!-- 章节小节 -->
-                        <ul class="video">
-                            <li data-media-id="20093">
-
-                                <a href="#//www.imooc.com/video/20093" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    5-1 热力学第三定律
-                                    (05:18)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20094">
-
-                                <a href="#//www.imooc.com/video/20094" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    5-2 化学反应的吉布斯函数变化
-                                    (06:44)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- 章节小节 end -->
-                    </div>
-                    <div class="chapter course-wrap ">
-                        <!-- 章节标题 -->
-                        <h3>
-                            第6章 相平衡
-                        </h3>
-                        <div class="chapter-description">
-                            本章介绍。
-                        </div>
-                        <!-- 章节标题 end -->
-                        <!-- 章节小节 -->
-                        <ul class="video">
-                            <li data-media-id="20095">
-
-                                <a href="#//www.imooc.com/video/20095" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    6-1 相平衡系统基本概念
-                                    (02:51)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20096">
-
-                                <a href="#//www.imooc.com/video/20096" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    6-2 单组分相平衡
-                                    (09:11)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                            <li data-media-id="20097">
-
-                                <a href="#//www.imooc.com/video/20097" class="J-media-item">
-                                    <i class="imv2-play_circle type"></i>
-                                    6-3 二组分理想液态混合物气液平衡相图
-                                    (08:00)
-
-                                    <button class="r moco-btn moco-btn-red preview-btn">开始学习</button>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- 章节小节 end -->
-                    </div>
+                    </#list>
                 </div>
                 <!-- 课程章节 end -->
             </div><!--content end-->
             <div class="aside r">
                 <div class="course-wrap course-aside-info js-usercard-box">
                     <div class="learn-btn">
-
-
                         <a href="#//www.imooc.com/video/20083"
                            class="moco-btn moco-btn-red moco-btn-lg J-learn-course">开始学习</a>
-
                     </div>
-
-
                     <div class="course-info-tip">
                         <dl class="first">
                             <dt>课程须知</dt>
@@ -389,19 +156,16 @@
                             </dd>
                         </dl>
                     </div>
-
-
                 </div>
-
                 <div class="js-commend-box">
                     <div class="mb40 recom-course-list-box"><h4>推荐课程</h4>
                         <ul class="js-recom-course moco-aside-course clearfix">
                             <li>
                                 <div class="aside-course-img"><img src="/static/index/course/images/course03.jpg">
-                                    <p class="aside-course-type">实战</p></div>
+                                    <p class="aside-course-type">实战</p>
+                                </div>
                                 <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/96.html"
-                                                                     class="aside-course-name" target="_blank">推荐课程（此处为推荐课程）</a>
+                                    <a href="#//coding.imooc.com/class/96.html" class="aside-course-name" target="_blank">推荐课程（此处为推荐课程）</a>
                                     <p class="aside-course-grade">普通</p>
                                     <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
                                     <p class="aside-course-people"><i class="imv2-set-sns"></i><span>8034</span></p>
@@ -409,39 +173,46 @@
                             </li>
                             <li>
                                 <div class="aside-course-img"><img src="/static/index/course/images/course05.jpg">
-                                    <p class="aside-course-type">实战</p></div>
-                                <div class="aside-course-content"><a href="#//coding.imooc.com/class/117.html"
-                                                                     class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
+                                    <p class="aside-course-type">实战</p>
+                                </div>
+                                <div class="aside-course-content">
+                                    <a href="#//coding.imooc.com/class/117.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
                                     <p class="aside-course-grade">普通</p>
                                     <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
                                     <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4822</span></p>
                                 </div>
                             </li>
                             <li>
-                                <div class="aside-course-img"><img src="/static/index/course/images/course06.png">
-                                    <p class="aside-course-type">实战</p></div>
-                                <div class="aside-course-content"><a href="#//coding.imooc.com/class/134.html"
-                                                                     class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
+                                <div class="aside-course-img">
+                                    <img src="/static/index/course/images/course06.png">
+                                    <p class="aside-course-type">实战</p>
+                                </div>
+                                <div class="aside-course-content">
+                                    <a href="#//coding.imooc.com/class/134.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
                                     <p class="aside-course-grade">困难</p>
                                     <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
                                     <p class="aside-course-people"><i class="imv2-set-sns"></i><span>2166</span></p>
                                 </div>
                             </li>
                             <li>
-                                <div class="aside-course-img"><img src="/static/index/course/images/course09.jpg">
-                                    <p class="aside-course-type">实战</p></div>
-                                <div class="aside-course-content"><a href="#//coding.imooc.com/class/187.html"
-                                                                     class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
+                                <div class="aside-course-img">
+                                    <img src="/static/index/course/images/course09.jpg">
+                                    <p class="aside-course-type">实战</p>
+                                </div>
+                                <div class="aside-course-content">
+                                    <a href="#//coding.imooc.com/class/187.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
                                     <p class="aside-course-grade">困难</p>
                                     <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
                                     <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4572</span></p>
                                 </div>
                             </li>
                             <li>
-                                <div class="aside-course-img"><img src="/static/index/course/images/course08.jpg">
-                                    <p class="aside-course-type">实战</p></div>
-                                <div class="aside-course-content"><a href="#//coding.imooc.com/class/303.html"
-                                                                     class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
+                                <div class="aside-course-img">
+                                    <img src="/static/index/course/images/course08.jpg">
+                                    <p class="aside-course-type">实战</p>
+                                </div>
+                                <div class="aside-course-content">
+                                    <a href="#//coding.imooc.com/class/303.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
                                     <p class="aside-course-grade">普通</p>
                                     <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
                                     <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4671</span></p>
@@ -451,35 +222,29 @@
                     </div>
                 </div>
                 <div class="js-tag-box">
-                    <div class="mb40 all-attention-box"><h4>热门专题标签</h4>
-                        <div class="js-all-attention all-attention"><a href="#//www.imooc.com/topic/ecom"
-                                                                       target="_blank" data-id="8"
-                                                                       class="style1">有机化学</a><a
-                                href="#//www.imooc.com/topic/javaecom" target="_blank" data-id="15" class="style2">无机化学</a><a
-                                href="#//www.imooc.com/topic/azmianshi" target="_blank" data-id="28"
-                                class="style5">大学化学</a><a href="#//www.imooc.com/topic/spring"
-                                                                   target="_blank" data-id="23" class="style4">spring
-                            实例教程</a><a href="#//www.imooc.com/topic/aztest" target="_blank" data-id="18"
-                                       class="style6">物理化学</a><a
-                                href="#//www.imooc.com/topic/fullstack" target="_blank" data-id="29"
-                                class="style1">实验</a><a href="#//www.imooc.com/topic/androidsdk"
-                                                            target="_blank" data-id="17"
-                                                            class="style2">高分子</a><a
-                                href="#//www.imooc.com/topic/suanfa" target="_blank" data-id="11" class="style3">分析化学</a>
+                    <div class="mb40 all-attention-box">
+                        <h4>热门专题标签</h4>
+                        <div class="js-all-attention all-attention">
+                            <a href="#//www.imooc.com/topic/ecom" target="_blank" data-id="8" class="style1">有机化学</a>
+                            <a href="#//www.imooc.com/topic/javaecom" target="_blank" data-id="15" class="style2">无机化学</a>
+                            <a href="#//www.imooc.com/topic/azmianshi" target="_blank" data-id="28" class="style5">大学化学</a>
+                            <a href="#//www.imooc.com/topic/spring" target="_blank" data-id="23" class="style4">spring 实例教程</a>
+                            <a href="#//www.imooc.com/topic/aztest" target="_blank" data-id="18" class="style6">物理化学</a>
+                            <a href="#//www.imooc.com/topic/fullstack" target="_blank" data-id="29" class="style1">实验</a>
+                            <a href="#//www.imooc.com/topic/androidsdk" target="_blank" data-id="17" class="style2">高分子</a>
+                            <a href="#//www.imooc.com/topic/suanfa" target="_blank" data-id="11" class="style3">分析化学</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="clear"></div>
-
     </div>
     <!-- 视频介绍 -->
     <div id="js-video-wrap" class="video pop-video" style="display:none">
         <div class="video_box" id="js-video"></div>
         <a href="javascript:;" class="pop-close icon-close"></a>
     </div>
-
 </div>
 
 <div id="footer" data="course,learn">
