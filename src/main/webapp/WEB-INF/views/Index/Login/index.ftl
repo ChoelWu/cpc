@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>紫色背景简洁登陆页面演示_dowebok</title>
+    <title>登录页面</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -64,8 +64,8 @@
 <script>
     $("#submit-btn").click(function () {
     	var data = {
-    		"account": $("#account").val(),
-			"password": $("#password").val()
+    		"userAccount": $("#account").val(),
+			"userPassword": $("#password").val()
 		};
 
         $.ajax({
@@ -75,7 +75,11 @@
             data: {data: JSON.stringify(data)},
             dataType: 'json',
             success: function (res) {
-                console.log(res);
+                if(1 === res.status || "1" === res.status) {
+                    window.location.href = "/index/course/index.do";
+                } else {
+                    console.log(res);
+                }
             }
         });
     });

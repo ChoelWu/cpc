@@ -6442,7 +6442,7 @@ body {
 
 @font-face {
     font-family: 'dincondm';
-    src: url('/static/fonts/DINCondm/DINCOND-MEDIUM.otf');
+    src: url(../fonts/DINCOND-MEDIUM.otf);
     font-style: normal;
 }
 

@@ -7,7 +7,7 @@ package com.joe.controller.index;
 // +----------------------------------------------------------------------
 // | Author: Joe
 // +----------------------------------------------------------------------
-// | Description: 
+// | Description: 登录
 // +----------------------------------------------------------------------
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -38,11 +38,23 @@ public class IndexLoginController {
     @Resource
     private IndexUserService indexUserService;
 
+    /**
+     * 登录页面
+     *
+     * @return 返回页面视图
+     */
     @RequestMapping("/login_page.do")
     public String loginPage() {
         return "Index/Login/index";
     }
 
+    /**
+     * 登录
+     *
+     * @param data    用户登录信息
+     * @param session session
+     * @return 返回登录结果
+     */
     @RequestMapping("/login.do")
     @ResponseBody
     public AppResponse<String> login(String data, HttpSession session) {
@@ -78,6 +90,12 @@ public class IndexLoginController {
         return AppResponse.success("登录成功！");
     }
 
+    /**
+     * 登出
+     *
+     * @param session session
+     * @return 返回操作结果
+     */
     @RequestMapping("/logout.do")
     @ResponseBody
     public AppResponse<String> logout(HttpSession session) {
@@ -89,6 +107,13 @@ public class IndexLoginController {
         return AppResponse.success("用户退出登录！");
     }
 
+    /**
+     * 完善用户信息页面
+     *
+     * @param session session
+     * @param model   model
+     * @return 返回页面信息
+     */
     @RequestMapping("/improve_info")
     public String improveInfo(HttpSession session, Model model) {
         // 获取用户session信息

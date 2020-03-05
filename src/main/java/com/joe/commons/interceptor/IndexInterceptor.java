@@ -1,5 +1,8 @@
 package com.joe.commons.interceptor;
 
+import com.joe.entity.AdminUser;
+import com.joe.entity.IndexUser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,16 +15,18 @@ public class IndexInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-//        SessionContainer sc = (SessionContainer) request.getSession().getAttribute("sc");
-//        if (sc == null) {
-//            // 跳转登录请求
-//            request.getRequestDispatcher("/admin/login/login_page.do").forward(request, response);
-//            return false;
-//        }
-//        Validate valid = Validate.getInstance();
-//        if (!valid.validPassword(sc.getSourcePassword())) {
-//            // 跳转至修改密码请求
-//            request.getRequestDispatcher("/system/sysUser/goModifyInfoPage?userId=" + sc.getUserId() + "&flag=password&tipFlag=true").forward(request, response);
+        IndexUser indexUser = (IndexUser) request.getSession().getAttribute("indexUser");
+        // 检查登录
+        if (null == indexUser) {
+            // 跳转登录请求
+            request.getRequestDispatcher("/index/login/login_page.do").forward(request, response);
+            return false;
+        }
+
+        // 检查信息是否完善
+//        if (StringUtils.equals("1", indexUser.getUserStatus())) {
+//            // 跳转至完善信息页面
+//            request.getRequestDispatcher("/index/user/improve_info.do").forward(request, response);
 //            return false;
 //        }
 
