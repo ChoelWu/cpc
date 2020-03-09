@@ -12,16 +12,22 @@ package com.joe.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.joe.entity.AdminMenu;
+import com.joe.entity.AdminUser;
+import com.joe.entity.IndexArticle;
 import com.joe.pojo.Menu;
 import com.joe.service.system.AdminMenuService;
+import com.joe.service.system.IndexArticleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/index")
@@ -29,8 +35,18 @@ public class AdminIndexController {
     @Resource
     private AdminMenuService adminMenuService;
 
+    @Resource
+    private IndexArticleService indexArticleService;
+
+    /**
+     * 父框架视图
+     *
+     * @param model   model
+     * @param session session
+     * @return 返回页面视图
+     */
     @RequestMapping("index.do")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
         // 查询出所有的菜单
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.orderByAsc("menu_level", "menu_index");
@@ -64,13 +80,34 @@ public class AdminIndexController {
             }
         }
 
+        // 查询用户信息
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 绑定菜单数据到前台
         model.addAttribute("menuList", menuList);
+        model.addAttribute("adminUser", adminUser);
+
+        // 返回页面视图
         return "Admin/Index/index";
     }
 
     @RequestMapping("home.do")
-    public String Home() {
+    public String Home(Model model) {
+        // 查询文章总数
+        Map<String, Object> conditions = Maps.newHashMap();
+        conditions.put("1", "1");
+        int articleNum = indexArticleService.countArticle(conditions);
+        // 查询待审核文章数目
+        conditions.put("articleStatus", "0");
+        int auditNum = indexArticleService.countArticle(conditions);
+
+        //
+        Map<String, Object> broadList = Maps.newHashMap();
+        broadList.put("articleNum", articleNum);
+        broadList.put("auditNum", auditNum);
+
+        model.addAttribute("broadList", broadList);
+
         return "Admin/Index/home";
     }
 }
