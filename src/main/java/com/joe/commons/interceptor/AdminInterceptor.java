@@ -22,12 +22,6 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
 
-        // 检查信息是否完善
-        if (StringUtils.equals("1", adminUser.getUserStatus())) {
-            // 跳转至完善信息页面
-            request.getRequestDispatcher("/admin/user/improve_info.do").forward(request, response);
-            return false;
-        }
         return true;
     }
 }

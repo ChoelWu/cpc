@@ -71,7 +71,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>用户角色</label>
                             <div class="layui-input-inline">
-                                <input type="text" value="${adminUser.roleName}" readonly=""
+                                <input type="text" value="${adminUser.roleName!''}" readonly=""
                                        class="layui-input">
                             </div>
                             <div class="layui-form-mid layui-word-aux">不可修改</div>
@@ -110,7 +110,7 @@
                             <label class="layui-form-label">备注</label>
                             <div class="layui-input-block">
                                             <textarea name="bak" placeholder="请输入内容"
-                                                      class="layui-textarea">${adminUser.bak}</textarea>
+                                                      class="layui-textarea">${adminUser.bak!''}</textarea>
                             </div>
                         </div>
                         <input type="hidden" name="userStatus" value="${adminUser.userStatus}">
@@ -147,7 +147,7 @@
                     return '用户名长度在 16 字符之内';
                 }
 
-                var checkRel = checkUser("", "user_name", value);
+                var checkRel = checkUser("${adminUser.userNo}", "user_name", value);
                 if ("false" === checkRel || !checkRel) {
                     return '用户名不能重复！';
                 }
@@ -192,7 +192,6 @@
                     if (1 === res.status || "1" === res.status) {
                         icon = 6;
                     }
-
 
                     layer.alert(res.message, {
                             icon: icon

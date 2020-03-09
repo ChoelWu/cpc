@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,6 +84,7 @@ public class LoginController {
 
         // 登陆成功
         logger.info("用户名为 " + adminUser.getUserName() + " 的后端用户登陆成功");
+
         return AppResponse.success("登录成功！");
     }
 
@@ -103,23 +103,5 @@ public class LoginController {
         // 返回操作结果
         logger.info("用户名为 " + adminUser.getUserName() + " 的后端用户退出登录！");
         return AppResponse.success("用户退出登录！");
-    }
-
-    /**
-     * 完善用户信息
-     *
-     * @param session session
-     * @param model   model
-     * @return 返回页面视图
-     */
-    @RequestMapping("/improve_info")
-    public String improveInfo(HttpSession session, Model model) {
-        // 获取用户session信息
-        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
-
-        // 绑定用户信息到前台
-        model.addAttribute("adminUser", adminUser);
-
-        return "/Admin/Login/improveInfo";
     }
 }

@@ -336,9 +336,12 @@ public class AdminUserController {
      */
     @RequestMapping("/personal_page.do")
     public String personalPage(Model model, HttpSession session) {
+        // 获取用户session信息
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 查询出用户信息
         Map<String, Object> condition = Maps.newHashMap();
-        condition.put("userNo", "AUNO20191125122211P11301");
+        condition.put("userNo", adminUser.getUserNo());
         AdminUserPOJO adminUserPOJO = adminUserService.getAdminUser(condition);
 
         // 数据绑定
