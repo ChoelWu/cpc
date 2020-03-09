@@ -14,20 +14,20 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-//        AdminUser adminUser = (AdminUser) request.getSession().getAttribute("adminUser");
-//        // 检查登录
-//        if (null == adminUser) {
-//            // 跳转登录请求
-//            request.getRequestDispatcher("/admin/login/login_page.do").forward(request, response);
-//            return false;
-//        }
+        AdminUser adminUser = (AdminUser) request.getSession().getAttribute("adminUser");
+        // 检查登录
+        if (null == adminUser) {
+            // 跳转登录请求
+            request.getRequestDispatcher("/admin/login/login_page.do").forward(request, response);
+            return false;
+        }
 
         // 检查信息是否完善
-//        if(StringUtils.equals("1", adminUser.getUserStatus())) {
-//            // 跳转至完善信息页面
-//            request.getRequestDispatcher("/admin/user/improve_info.do").forward(request, response);
-//            return false;
-//        }
+        if (StringUtils.equals("1", adminUser.getUserStatus())) {
+            // 跳转至完善信息页面
+            request.getRequestDispatcher("/admin/user/improve_info.do").forward(request, response);
+            return false;
+        }
         return true;
     }
 }
