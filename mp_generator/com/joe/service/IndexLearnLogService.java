@@ -1,6 +1,6 @@
 package com.joe.service;
 
-import com.joe.entity.IndexCourseBanner;
+import com.joe.entity.IndexLearnLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author joe
- * @since 2020-02-26
+ * @since 2020-03-09
  */
-public interface IndexCourseBannerService extends IService<IndexCourseBanner> {
+public interface IndexLearnLogService extends IService<IndexLearnLog> {
 
 }

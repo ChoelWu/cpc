@@ -12,6 +12,7 @@ package com.joe.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
+import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.*;
 import com.joe.pojo.ChapterLessonPOJO;
 import com.joe.pojo.CourseChapterLessonPOJO;
@@ -24,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -46,6 +49,9 @@ public class CourseController {
 
     @Resource
     private IndexChapterService indexChapterService;
+
+    @Resource
+    private IndexLearnLogService indexLearnLogService;
 
     /**
      * 课程首页
@@ -142,7 +148,7 @@ public class CourseController {
      * @return 返回页面视图
      */
     @RequestMapping("video.do")
-    public String video(String lessonNo, Model model) {
+    public String video(String lessonNo, Model model, HttpSession session) {
         // 查询课程信息
         QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
         indexLessonQueryWrapper.eq("lesson_no", lessonNo);
@@ -154,6 +160,12 @@ public class CourseController {
         // 绑定数据
         model.addAttribute("courseChapterLesson", courseChapterLessonPOJO);
         model.addAttribute("indexLesson", indexLesson);
+
+        // 记录Log
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+        IndexLearnLog indexLearnLog = setLog(indexLesson, indexUser.getUserNo());
+
+        indexLearnLogService.save(indexLearnLog);
 
         // 返回对应的页面视图
         if (StringUtils.equals(indexLesson.getLessonType(), "")) {
@@ -278,5 +290,27 @@ public class CourseController {
 
         // 返回数据
         return courseChapterLessonPOJO;
+    }
+
+    /**
+     * 生成学习日志
+     *
+     * @param indexLesson 课时
+     * @param userNo      用户编号
+     * @return 返回日志对象
+     */
+    private IndexLearnLog setLog(IndexLesson indexLesson, String userNo) {
+        IndexLearnLog indexLearnLog = new IndexLearnLog();
+        indexLearnLog.setLearnLogNo(CommonFunctions.generateNo("ILLNO"));
+        indexLearnLog.setCourseNo(indexLesson.getCourseNo());
+        indexLearnLog.setChapterNo(indexLesson.getChapterNo());
+        indexLearnLog.setLessonNo(indexLesson.getLessonNo());
+        indexLearnLog.setUserNo(userNo);
+        indexLearnLog.setAddTime(new Date());
+        indexLearnLog.setAddUserNo(userNo);
+        indexLearnLog.setUpdateTime(new Date());
+        indexLearnLog.setUpdateUserNo(userNo);
+
+        return indexLearnLog;
     }
 }

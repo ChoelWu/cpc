@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author joe
- * @since 2020-02-26
+ * @since 2020-03-09
  */
 @Controller
-@RequestMapping("/indexCourseBanner")
-public class IndexCourseBannerController {
+@RequestMapping("/indexLearnLog")
+public class IndexLearnLogController {
 
 }
 
