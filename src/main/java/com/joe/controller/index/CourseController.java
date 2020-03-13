@@ -53,6 +53,9 @@ public class CourseController {
     @Resource
     private IndexLearnLogService indexLearnLogService;
 
+    @Resource
+    private IndexUserCourseService indexUserCourseService;
+
     /**
      * 课程首页
      *
@@ -161,8 +164,11 @@ public class CourseController {
         model.addAttribute("courseChapterLesson", courseChapterLessonPOJO);
         model.addAttribute("indexLesson", indexLesson);
 
-        // 记录Log
+        // 添加课程学习记录
         IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+        setUserCourse(indexLesson, indexUser.getUserNo());
+
+        // 记录Log
         IndexLearnLog indexLearnLog = setLog(indexLesson, indexUser.getUserNo());
 
         indexLearnLogService.save(indexLearnLog);
@@ -313,4 +319,40 @@ public class CourseController {
 
         return indexLearnLog;
     }
+
+    /**
+     * 添加学习记录
+     *
+     * @param indexLesson 课时信息
+     * @param userNo      用户编号
+     */
+    private void setUserCourse(IndexLesson indexLesson, String userNo) {
+        // 查询该课程是否存在
+        QueryWrapper<IndexUserCourse> indexUserCourseQueryWrapper = new QueryWrapper<>();
+        indexUserCourseQueryWrapper.eq("user_no", userNo).eq("course_no", indexLesson.getCourseNo());
+        IndexUserCourse preIndexUserCourse = indexUserCourseService.getOne(indexUserCourseQueryWrapper);
+
+        // 已经存在记录，更新没记录，没有记录添加记录
+        if (null == preIndexUserCourse) {
+            IndexUserCourse indexUserCourse = new IndexUserCourse();
+            indexUserCourse.setUserCourseNo(CommonFunctions.generateNo("IUCNO"));
+            indexUserCourse.setUserNo(indexLesson.getCourseNo());
+            indexUserCourse.setCourseNo(indexLesson.getCourseNo());
+            indexUserCourse.setLastTime(new Date());
+            indexUserCourse.setAddTime(new Date());
+            indexUserCourse.setAddUserNo(userNo);
+            indexUserCourse.setUpdateTime(new Date());
+            indexUserCourse.setUpdateUserNo(userNo);
+
+            indexUserCourseService.save(indexUserCourse);
+        } else {
+            preIndexUserCourse.setLastTime(new Date());
+            preIndexUserCourse.setUpdateTime(new Date());
+            preIndexUserCourse.setUpdateUserNo(userNo);
+
+            indexUserCourseService.updateById(preIndexUserCourse);
+        }
+    }
+
+
 }

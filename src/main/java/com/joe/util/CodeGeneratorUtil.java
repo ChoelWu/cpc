@@ -67,7 +67,7 @@ public class CodeGeneratorUtil {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategyConfig.setInclude("cpc_index_learn_log");
+        strategyConfig.setInclude("cpc_index_user_course");
         strategyConfig.setTablePrefix("cpc_");
 
         autoGenerator.setStrategy(strategyConfig);
