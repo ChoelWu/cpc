@@ -223,7 +223,7 @@ public class CourseController {
             IndexCoursePOJO indexCoursePOJO = new IndexCoursePOJO();
 
             String courseTagNoString = indexCourse.getCourseTags();
-            String[] courseTagNoArray = courseTagNoString.split(",");
+            Object[] courseTagNoArray = courseTagNoString.split(",");
             QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
             indexCourseTagQueryWrapper.in("course_tag_no", courseTagNoArray);
             List<IndexCourseTag> indexCourseTagList = indexCourseTagService.list(indexCourseTagQueryWrapper);
