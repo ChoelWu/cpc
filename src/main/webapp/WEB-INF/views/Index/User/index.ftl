@@ -302,17 +302,18 @@
 
             <div class="all-course-main">
                 <div class="allcourse-content js-course-list ">
+                    <#list courseLogList as courseLog>
                     <div class="courseitem tl-item">
                         <div class="img-box">
-                            <a href="https://www.imooc.com/learn/988" target="_blank">
+                            <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" target="_blank">
                                 <img width="200" height="116" alt="区块链技术核心概念与原理讲解"
-                                     src="/static/index/user/image/5ae3e5b80001818c06000338-360-202.jpg">
+                                     src="${courseLog.course.courseCover}">
                             </a>
                         </div>
                         <div class="info-box course-list">
                             <div class="title">
                                 <span>免费课程</span>
-                                <a href="https://www.imooc.com/learn/988" class="hd" target="_blank">区块链技术核心概念与原理讲解</a>
+                                <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" class="hd" target="_blank">${courseLog.course.courseName}</a>
                             </div>
                             <div class="study-info">
                                 <span class="i-left span-common">已学100%</span>
@@ -346,6 +347,7 @@
                             </div>
                         </div>
                     </div>
+                    </#list>
                 </div>
                 <!-- 分页 -->
                 <div class="qa-comment-page">
