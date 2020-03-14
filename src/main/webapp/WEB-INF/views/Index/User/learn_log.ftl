@@ -8,18 +8,17 @@
     <meta name="renderer" content="webkit">
     <meta property="qc:admins" content="77103107776157736375">
     <meta property="wb:webmaster" content="c4f857219bfae3cb">
-    <link rel="dns-prefetch" href="https://www.imooc.com/">
-    <link rel="dns-prefetch" href="https://img.imooc.com/">
-    <link rel="dns-prefetch" href="https://img1.sycdn.imooc.com/">
     <link rel="stylesheet" href="/static/index/user/css/moco.min.css" type="text/css">
     <link rel="stylesheet" href="/static/index/user/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/static/index/user/css/layer.css">
+    <link rel="stylesheet" href="/static/index/user/saved_resource" type="text/css">
+    <link rel="stylesheet" href="/static/index/user/css/share_style0_16.css">
+    <link rel="stylesheet" href="/static/index/user/css/base.css">
     <script src="/static/index/user/js/push.js"></script>
     <script type="text/javascript" async="" src="/static/index/user/js/rt.js"></script>
     <script src="/static/index/user/js/hm.js"></script>
     <script async="" type="text/javascript" id="zhuge-js" src="/static/index/user/js/zhuge.min.js"></script>
-    <link rel="stylesheet" href="/static/index/user/css/layer.css">
     <script src="/static/index/user/js/init.js" async=""></script>
-    <link rel="stylesheet" href="/static/index/user/saved_resource" type="text/css">
     <script charset="utf-8" async="" src="/static/index/user/js/seajs-text.js"></script>
     <script charset="utf-8" async="" src="/static/index/user/js/common.js"></script>
     <script charset="utf-8" async="" src="/static/index/user/js/jquery.js"></script>
@@ -39,12 +38,9 @@
     <script charset="utf-8" async="" src="/static/index/user/js/modifystudyplan.js"></script>
     <script charset="utf-8" async="" src="/static/index/user/js/layer.min.js"></script>
     <script src="/static/index/user/js/share.js"></script>
-    <link rel="stylesheet" href="/static/index/user/css/share_style0_16.css">
 </head>
 
 <body>
-
-
 <!-- 窄条导航 -->
 <div id="globalTopBanner"></div>
 <div id="new_header">
@@ -94,13 +90,10 @@
                 </h3>
                 <!--25-->
                 <p class="about-info">
-<#--                    <span>男</span>-->
-<#--                    <span>甘肃</span>-->
-<#--                    <span>兰州市</span>-->
                     <span>
                         <#if indexUser.userType='1'>校内学生<#elseif indexUser.userType='2'>校外学生<#elseif indexUser.userType='3'>老师</#if>
                     </span>
-                    <a class="more-user-info" href=""><i class="imv2-edit"></i> 编辑信息</a>
+                    <a class="more-user-info" hrref=""><i class="imv2-edit"></i> 编辑信息</a>
                 </p>
             </div>
             <div class="user-sign hide">
@@ -129,9 +122,11 @@
                     <a href="https://www.imooc.com/u/index/fans"><em>0</em></a>
                     <span>粉丝</span>
                 </div>
-                <div class="item follows"><a href="https://www.imooc.com/user/setbindsns" class="set-btn"><i
-                                class="icon-set"></i>个人设置</a></div>
-
+                <div class="item follows">
+                    <a href="https://www.imooc.com/user/setbindsns" class="set-btn">
+                        <i class="icon-set"></i>个人设置
+                    </a>
+                </div>
             </div><!--.study-info end-->
         </div><!-- .user-info end -->
     </div><!-- .big-pic end -->
@@ -140,45 +135,45 @@
         <div class="slider">
             <ul>
                 <li>
-                    <a href="/index/user/index.do" class="active">
+                    <a href="/index/user/index.do">
                         <i class="imv2-war"></i><span>我的课程</span><b class="icon-drop_right"></b>
                     </a>
                 </li>
                 <li>
-                    <a href="/index/user/learn_log.do">
+                    <a href="/index/user/learn_log.do" class="active">
                         <i class="new-icn"></i> <i class="imv2-list_numbered"></i><span>历史记录</span><b
                                 class="icon-drop_right"></b>
                     </a>
                 </li>
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/allfollows">-->
-<#--                        <i class="imv2-tick"></i><span>收藏</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
+                <#--                <li>-->
+                <#--                    <a href="https://www.imooc.com/u/index/allfollows">-->
+                <#--                        <i class="imv2-tick"></i><span>收藏</span><b class="icon-drop_right"></b>-->
+                <#--                    </a>-->
+                <#--                </li>-->
                 <!-- 只能自己看的 -->
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/notebook">-->
-<#--                        <i class="imv2-nav_note"></i><span>笔记</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
+                <#--                <li>-->
+                <#--                    <a href="https://www.imooc.com/u/index/notebook">-->
+                <#--                        <i class="imv2-nav_note"></i><span>笔记</span><b class="icon-drop_right"></b>-->
+                <#--                    </a>-->
+                <#--                </li>-->
 
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/bbs">-->
-<#--                        <i class="icon-yuanwen"></i><span>猿问</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
+                <#--                <li>-->
+                <#--                    <a href="https://www.imooc.com/u/index/bbs">-->
+                <#--                        <i class="icon-yuanwen"></i><span>猿问</span><b class="icon-drop_right"></b>-->
+                <#--                    </a>-->
+                <#--                </li>-->
 
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/articles">-->
-<#--                        <i class="icon-blog"></i><span>手记</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
+                <#--                <li>-->
+                <#--                    <a href="https://www.imooc.com/u/index/articles">-->
+                <#--                        <i class="icon-blog"></i><span>手记</span><b class="icon-drop_right"></b>-->
+                <#--                    </a>-->
+                <#--                </li>-->
 
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/read">-->
-<#--                        <i class="imv2-feather-o"></i><span>专栏</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
+                <#--                <li>-->
+                <#--                    <a href="https://www.imooc.com/u/index/read">-->
+                <#--                        <i class="imv2-feather-o"></i><span>专栏</span><b class="icon-drop_right"></b>-->
+                <#--                    </a>-->
+                <#--                </li>-->
             </ul>
         </div>
         <div class="u-container">
@@ -190,52 +185,45 @@
 
             <div class="all-course-main">
                 <div class="allcourse-content js-course-list ">
-                    <#list courseLogList as courseLog>
-                    <div class="courseitem tl-item">
-                        <div class="img-box">
-                            <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" target="_blank">
-                                <img width="200" height="116" alt="区块链技术核心概念与原理讲解"
-                                     src="${courseLog.course.courseCover}">
-                            </a>
-                        </div>
-                        <div class="info-box course-list">
-                            <div class="title">
-                                <span>免费课程</span>
-                                <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" class="hd" target="_blank">${courseLog.course.courseName}</a>
-                            </div>
-                            <div class="study-info">
-                                <span class="i-left span-common">已学100%</span>
-                                <span class="i-mid span-common">用时43分</span>
-                                <span class="i-right span-common">学习至1.01 课程介绍</span>
-                            </div>
-                            <div class="catog-points">
-                                <span class="span-common">
-                                    <a href="https://www.imooc.com/u/2302092/notepad/988?frm=allcourses">笔记 <i>0</i></a>
-                                </span>
-                                <span class="i-mid span-common">
-                                    <a href="https://www.imooc.com/u/2302092/course/988/codes?frm=allcourses">代码 <i>0</i></a>
-                                </span>
-                                <span class="i-right span-common">
-                                    <a href="https://www.imooc.com/u/2302092/course/988/questions?frm=allcourses">问答 <i>0</i></a>
-                                </span>
-                                <div class="moco-ico-btn js-add-to-plan" style="position: absolute;right: 130px;"
-                                     data-type="1" data-tid="988">
-                                    加入课表
-                                </div>
-                                <a href="https://www.imooc.com/video/17139" target="_blank"
-                                   class="btn-red continute-btn">继续学习</a>
-                            </div>
-                            <div class="share-box clearfix course-one" data-courseid="988" data-uid="2302092">
-                                <div class="show-btn"><i class="icon-down2"></i></div>
-                                <div class="share-box-con">
-                                    <a href="javascript:;" title="删除" data-type="all" class="del">
-                                        <i class="icon icon-notdisplay"></i>
+                    <div id="qaContainer" class="answertabcon">
+                        <div class="course_quescon mod-post">
+                            <#list learnLogPOJOList as learnLogPOJO>
+                            <div class="wenda-listcon mod-qa-list clearfix">
+                                <div class="icon-wenda"></div>
+                                <div class="headslider qa-medias l">
+                                    <a href="/u/3374835/courses" class="media" target="_blank" title="小小单身">
+                                        <img src="//img4.mukewang.com/5b347b170001daa010021002-40-40.jpg" width="40"
+                                                height="40">
                                     </a>
                                 </div>
+                                <div class="wendaslider qa-content">
+                                    <h2 class="wendaquetitle qa-header">
+                                        <div class="wendatitlecon qa-header-cnt clearfix">
+                                            <a href="/qadetail/278493" target="_blank" class="qa-tit">${learnLogPOJO.indexLesson.lessonName}</a>
+                                        </div>
+                                    </h2>
+                                    <div class="replycont qa-body clearfix">
+                                        <div class="l replydes">
+                                            <span class="replysign">
+                                                <a href="/index/course/detail.do?courseNo=${learnLogPOJO.indexCourse.courseNo}" class="nickname">${learnLogPOJO.indexCourse.courseName}</a> /
+                                                ${learnLogPOJO.indexChapter.chapterName} /
+                                                <a href="/index/course/video.do?lessonNo=${learnLogPOJO.indexLesson.lessonNo}" target="_blank" title="GXHCT"
+                                                        class="nickname">第 ${learnLogPOJO.indexLesson.lessonIndex} 课时</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="replymegfooter qa-footer clearfix">
+                                        <div class="l-box l">
+                                            <a href="/qadetail/278493" target="_blank" class="replynumber static-count ">
+                                            </a>
+                                        </div>
+                                        <em class="r">${learnLogPOJO.indexLearnLog.addTime?string('yyyy-MM-dd HH:mm:ss')}</em>
+                                    </div>
+                                </div>
                             </div>
+                            </#list>
                         </div>
                     </div>
-                    </#list>
                 </div>
                 <!-- 分页 -->
                 <div class="qa-comment-page">
@@ -284,7 +272,8 @@
                          <li><a href="/about/us" target="_blank">关于我们</a></li> -->
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/user/image/a9.png"> 2020
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/user/image/a9.png">
+                    2020
                     imooc.com All Rights Reserved | 京ICP备 12003892号-11 <a
                             href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802030151"
                             style="color: #93999F;margin:0 5px;" target="_blank"><i class="beian"></i>京公网安备11010802030151号</a>

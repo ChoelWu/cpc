@@ -28,6 +28,7 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/index/course/**"/>
+            <mvc:mapping path="/index/user/**"/>
             <mvc:exclude-mapping path="/index/login/**"/>
             <bean class="com.joe.commons.interceptor.IndexInterceptor"/>
         </mvc:interceptor>

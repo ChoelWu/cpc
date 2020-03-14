@@ -100,10 +100,10 @@ public class IndexLoginController {
     @ResponseBody
     public AppResponse<String> logout(HttpSession session) {
         // 销毁 session 信息
-        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
-        session.removeAttribute("adminUser");
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+        session.removeAttribute("indexUser");
         // 返回操作结果
-        logger.info("用户名为 " + adminUser.getUserName() + " 的后端用户退出登录！");
+        logger.info("用户名为 " + indexUser.getUserName() + " 的后端用户退出登录！");
         return AppResponse.success("用户退出登录！");
     }
 

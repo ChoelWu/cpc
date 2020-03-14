@@ -40,7 +40,11 @@
         <div id="login-area">
             <ul class="header-unlogin clearfix">
                 <li class="header-signin">
-                    <a href="#/user/newlogin" id="js-signin-btn">登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <#if indexUser??>
+                        <a href="/index/user/index.do" id="js-signin-btn" title="个人中心"><img width="40" height="40" src="${indexUser.userHeadSculpture!''}"></a>
+                    <#else>
+                        <a href="/index/login/login_page.do" id="js-signin-btn">登录&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    </#if>
                 </li>
             </ul>
         </div>
@@ -57,15 +61,6 @@
             </div>
             <div class="showhide-search" data-show="no"><i class="icon-search"></i></div>
         </div>
-    </div>
-</div>
-<!-- 新人有礼入口 --> <a class="newcomer hide" href="#/act/newcomer" target="_blank"> <i
-        class="js-close-newcomer imv2-close"></i> </a>
-<div class="bindHintBox js-bindHintBox hide">
-    <div class="pr"> 为了账号安全，请及时绑定邮箱和手机<a href="#/user/setbindsns" class="ml20 color-red"
-                                         target="_blank">立即绑定</a>
-        <button class="closeBindHint js-closeBindHint" type="button"></button>
-        <div class="arrow"></div>
     </div>
 </div>
 
