@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>后台登录-X-admin2.2</title>
+    <title>课程内容管理平台</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -32,44 +32,41 @@
     <div class="left_open">
         <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
     </div>
-    <ul class="layui-nav left fast-add" lay-filter="">
-        <li class="layui-nav-item">
-            <a href="javascript:;">+新增</a>
-            <dl class="layui-nav-child">
-                <!-- 二级菜单 -->
-                <dd>
-                    <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">
-                        <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">
-                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">
-                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开','member-list.html')">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
-            </dl>
-        </li>
-    </ul>
+<#--    <ul class="layui-nav left fast-add" lay-filter="">-->
+<#--        <li class="layui-nav-item">-->
+<#--            <a href="javascript:;">+新增</a>-->
+<#--            <dl class="layui-nav-child">-->
+<#--                <!-- 二级菜单 &ndash;&gt;-->
+<#--                <dd>-->
+<#--                    <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">-->
+<#--                        <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>-->
+<#--                <dd>-->
+<#--                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">-->
+<#--                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>-->
+<#--                <dd>-->
+<#--                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">-->
+<#--                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>-->
+<#--                <dd>-->
+<#--                    <a onclick="xadmin.add_tab('在tab打开','member-list.html')">-->
+<#--                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>-->
+<#--                <dd>-->
+<#--                    <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">-->
+<#--                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>-->
+<#--            </dl>-->
+<#--        </li>-->
+<#--    </ul>-->
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
             <a href="javascript:;">${adminUser.userName}</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
-                <dd>
-                    <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-                <dd>
-                    <a href="login.html">退出</a></dd>
+                <dd><a onclick="xadmin.add_tab('个人信息','/admin/user/personal_page.do')">个人信息</a></dd>
+                <dd><a onclick="logout();">退出登录</a></dd>
             </dl>
         </li>
-        <li class="layui-nav-item to-index">
-            <a href="/">前台首页</a></li>
+<#--        <li class="layui-nav-item to-index">-->
+<#--            <a href="/">前台首页</a>-->
+<#--        </li>-->
     </ul>
 </div>
 <!-- 顶部结束 -->
@@ -127,6 +124,26 @@
 <div class="page-content-bg"></div>
 <style id="theme_style"></style>
 <!-- 右侧主体结束 -->
+<script>
+    function logout() {
+        $.ajax({
+            url: '/admin/login/logout.do',
+            success: function (res) {
+                if (1 === res.status || "1" === res.status) {
+                    parent.window.location.href = "/admin/index/index.do";
+                } else {
+                    layer.alert(res.message, {
+                            icon: 5
+                        }, function () {
+                            //关闭当前frame
+                            parent.location.reload();
+                        }
+                    );
+                }
+            }
+        });
+    }
+</script>
 <!-- 中部结束 -->
 <script>//百度统计可去掉
     var _hmt = _hmt || [];

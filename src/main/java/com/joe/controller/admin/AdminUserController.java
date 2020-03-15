@@ -350,7 +350,7 @@ public class AdminUserController {
         AdminUserPOJO adminUserPOJO = adminUserService.getAdminUser(condition);
 
         // 数据绑定
-        model.addAttribute("adminUser", adminUserPOJO);
+        model.addAttribute("adminUserPOJO", adminUserPOJO);
 
         return "Admin/User/personal";
     }

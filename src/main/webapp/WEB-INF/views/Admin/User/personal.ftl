@@ -19,24 +19,24 @@
 </head>
 <body>
 <div class="x-nav">
-    <#if '1' = adminUser.userStatus>
+    <#if '1' = adminUserPOJO.userStatus>
         账户激活
     <#else>
         <span class="layui-breadcrumb">
             <a href="/admin/index/home.do">首页</a>
-            <a href="">演示</a>
+            <a>个人中心</a>
             <a>
-                <cite>导航元素</cite>
+                <cite>个人信息</cite>
             </a>
         </span>
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-           href="/admin/user/page_info.do" title="刷新">
+           href="/admin/user/personal_page.do" title="刷新">
             <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
     </#if>
 </div>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
-        <#if '1' = adminUser.userStatus>
+        <#if '1' = adminUserPOJO.userStatus>
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body ">
@@ -51,11 +51,11 @@
             <div class="layui-card">
                 <div class="layui-card-body ">
                     <form class="layui-form">
-                        <input type="hidden" name="userId" value="${adminUser.userId}">
+                        <input type="hidden" name="userId" value="${adminUserPOJO.userId}">
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>用户名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userName" value="${adminUser.userName}"
+                                <input type="text" name="userName" value="${adminUserPOJO.userName}"
                                        lay-verify="userName|required" autocomplete="off" placeholder="请输入昵称"
                                        class="layui-input">
                             </div>
@@ -63,7 +63,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>登录账号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userAccount" value="${adminUser.userAccount}"
+                                <input type="text" name="userAccount" value="${adminUserPOJO.userAccount}"
                                        readonly="" class="layui-input">
                             </div>
                             <div class="layui-form-mid layui-word-aux">不可修改，一般用于后台登入名</div>
@@ -71,7 +71,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>用户角色</label>
                             <div class="layui-input-inline">
-                                <input type="text" value="${adminUser.roleName!''}" readonly=""
+                                <input type="text" value="${adminUserPOJO.roleName!''}" readonly=""
                                        class="layui-input">
                             </div>
                             <div class="layui-form-mid layui-word-aux">不可修改</div>
@@ -79,7 +79,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>联系电话</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userMobile" value="${adminUser.userMobile}"
+                                <input type="text" name="userMobile" value="${adminUserPOJO.userMobile}"
                                        lay-verify="phone|required" autocomplete="off" placeholder="请输入昵称"
                                        class="layui-input">
                             </div>
@@ -87,7 +87,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><span class="x-red">*</span>电子邮箱</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userEmail" value="${adminUser.userEmail}"
+                                <input type="text" name="userEmail" value="${adminUserPOJO.userEmail}"
                                        lay-verify="email|required" autocomplete="off" placeholder="请输入昵称"
                                        class="layui-input">
                             </div>
@@ -98,25 +98,25 @@
                                 <button type="button" class="layui-btn" id="userHeadSculpture">上传图片</button>
                                 <div class="layui-upload-list" style="padding-left: 110px;">
                                     <img class="layui-upload-img" id="userHeadSculpturePic"
-                                         <#if adminUser.userHeadSculpture??>src="${adminUser.userHeadSculpture}"
+                                         <#if adminUserPOJO.userHeadSculpture?? && adminUserPOJO.userHeadSculpture != "">src="${adminUserPOJO.userHeadSculpture!''}"
                                          <#else>src="/static/admin/images/unknow.jpg"</#if> height="100">
                                     <p id="userHeadSculptureText"></p>
                                 </div>
                             </div>
                             <input type="hidden" name="userHeadSculpture" lay-verify="userHeadSculpture"
-                                   id="userHeadSculptureInput" value="${adminUser.userHeadSculpture!''}">
+                                   id="userHeadSculptureInput" value="${adminUserPOJO.userHeadSculpture!''}">
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">备注</label>
                             <div class="layui-input-block">
                                             <textarea name="bak" placeholder="请输入内容"
-                                                      class="layui-textarea">${adminUser.bak!''}</textarea>
+                                                      class="layui-textarea">${adminUserPOJO.bak!''}</textarea>
                             </div>
                         </div>
-                        <input type="hidden" name="userStatus" value="${adminUser.userStatus}">
+                        <input type="hidden" name="userStatus" value="${adminUserPOJO.userStatus}">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <#if '1' = adminUser.userStatus>
+                                <#if '1' = adminUserPOJO.userStatus>
                                     <button class="layui-btn" lay-submit="" lay-filter="edit" id="sb-button">激活账户
                                     </button>
                                 <#else>
@@ -147,7 +147,7 @@
                     return '用户名长度在 16 字符之内';
                 }
 
-                var checkRel = checkUser("${adminUser.userNo}", "user_name", value);
+                var checkRel = checkUser("${adminUserPOJO.userNo}", "user_name", value);
                 if ("false" === checkRel || !checkRel) {
                     return '用户名不能重复！';
                 }
@@ -196,7 +196,7 @@
                     layer.alert(res.message, {
                             icon: icon
                         }, function () {
-                            <#if '1' = adminUser.userStatus>
+                            <#if '1' = adminUserPOJO.userStatus>
                             window.location.href = "/admin/index/index.do";
                             <#else>
                             // 获得frame索引
@@ -207,8 +207,6 @@
                             </#if>
                         }
                     );
-
-
                 }
             });
         });

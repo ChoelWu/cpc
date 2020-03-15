@@ -2,7 +2,7 @@
 <html  class="x-admin-sm">
 <head>
 	<meta charset="UTF-8">
-	<title>后台登录-cpc</title>
+	<title>管理端登录</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -20,7 +20,7 @@
 <body class="login-bg">
     
     <div class="login layui-anim layui-anim-up">
-        <div class="message">cpc-管理登录</div>
+        <div class="message">管理登录</div>
         <div id="darkbannerwrap"></div>
         
         <form method="post" class="layui-form" >
@@ -44,6 +44,7 @@
               var form = layui.form;
               //监听提交
               form.on('submit(login)', function(data){
+                  $("#login-button").attr("disabled", "disabled");
                   $.ajax({
                       url: '/admin/login/login.do',
                       type: 'post',
@@ -51,9 +52,16 @@
                       data: {data: JSON.stringify(data.field)},
                       dataType: 'json',
                       success: function (res) {
-                          layer.msg(res.message,function(){
-                              location.href='http://localhost:8080/admin/index/index.do'
-                          });
+                          if("1" === res.status || 1 === res.status) {
+                              layer.msg(res.message,function(){
+                                  location.href='http://localhost:8080/admin/index/index.do'
+                              });
+                          } else {
+                              layer.msg(res.message);
+                              setTimeout(function() {
+                                  $("#login-button").removeAttr("disabled");
+                              }, 1000);
+                          }
                       }
                   });
               });
