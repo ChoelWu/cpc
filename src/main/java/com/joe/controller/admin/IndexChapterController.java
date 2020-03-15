@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexChapter;
 import com.joe.entity.IndexLesson;
 import com.joe.pojo.Chapter;
@@ -122,6 +123,9 @@ public class IndexChapterController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexChapter> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexChapter indexChapter = gson.fromJson(data, new TypeToken<IndexChapter>() {
@@ -131,9 +135,9 @@ public class IndexChapterController {
         indexChapter.setChapterNo(CommonFunctions.generateNo("ICHANO"));
 
         // 操作信息
-        indexChapter.setAddUserNo("1");
+        indexChapter.setAddUserNo(adminUser.getUserNo());
         indexChapter.setAddTime(new Date());
-        indexChapter.setUpdateUserNo("1");
+        indexChapter.setUpdateUserNo(adminUser.getUserNo());
         indexChapter.setUpdateTime(new Date());
 
         // 新增数据
@@ -174,13 +178,16 @@ public class IndexChapterController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexChapter> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexChapter indexChapter = gson.fromJson(data, new TypeToken<IndexChapter>() {
         }.getType());
 
         // 更新操作信息
-        indexChapter.setUpdateUserNo("1l");
+        indexChapter.setUpdateUserNo(adminUser.getUserNo());
         indexChapter.setUpdateTime(new Date());
 
         // 更新数据

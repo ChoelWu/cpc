@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexChapter;
 import com.joe.entity.IndexLesson;
 import com.joe.service.system.AdminDictService;
@@ -85,6 +86,9 @@ public class IndexLessonController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexLesson> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexLesson indexLesson = gson.fromJson(data, new TypeToken<IndexLesson>() {
@@ -94,9 +98,9 @@ public class IndexLessonController {
         indexLesson.setLessonNo(CommonFunctions.generateNo("ILNO"));
 
         // 操作信息
-        indexLesson.setAddUserNo("1");
+        indexLesson.setAddUserNo(adminUser.getUserNo());
         indexLesson.setAddTime(new Date());
-        indexLesson.setUpdateUserNo("1");
+        indexLesson.setUpdateUserNo(adminUser.getUserNo());
         indexLesson.setUpdateTime(new Date());
 
         // 新增数据
@@ -143,13 +147,16 @@ public class IndexLessonController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexLesson> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexLesson indexLesson = gson.fromJson(data, new TypeToken<IndexLesson>() {
         }.getType());
 
         // 更新操作信息
-        indexLesson.setUpdateUserNo("1l");
+        indexLesson.setUpdateUserNo(adminUser.getUserNo());
         indexLesson.setUpdateTime(new Date());
 
         // 更新数据
@@ -255,7 +262,7 @@ public class IndexLessonController {
      * 动画上传
      *
      * @param multipartSwf 动画文件
-     * @param request        request
+     * @param request      request
      * @return 返回上传结果
      */
     @RequestMapping("/upload_swf.do")

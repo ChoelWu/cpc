@@ -17,10 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
-import com.joe.entity.AdminDict;
-import com.joe.entity.IndexArticle;
-import com.joe.entity.IndexChannel;
-import com.joe.entity.IndexUser;
+import com.joe.entity.*;
 import com.joe.pojo.Channel;
 import com.joe.pojo.Article;
 import com.joe.pojo.Page;
@@ -210,6 +207,9 @@ public class IndexArticleController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexArticle> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexArticle indexArticle = gson.fromJson(data, new TypeToken<IndexArticle>() {
@@ -221,9 +221,9 @@ public class IndexArticleController {
         indexArticle.setArticleStatus("0");
 
         // 操作信息
-        indexArticle.setAddUserNo("1");
+        indexArticle.setAddUserNo(adminUser.getUserNo());
         indexArticle.setAddTime(new Date());
-        indexArticle.setUpdateUserNo("1");
+        indexArticle.setUpdateUserNo(adminUser.getUserNo());
         indexArticle.setUpdateTime(new Date());
 
         // 新增数据
@@ -308,13 +308,16 @@ public class IndexArticleController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexArticle> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexArticle indexArticle = gson.fromJson(data, new TypeToken<IndexArticle>() {
         }.getType());
 
         // 更新操作信息
-        indexArticle.setUpdateUserNo("1l");
+        indexArticle.setUpdateUserNo(adminUser.getUserNo());
         indexArticle.setUpdateTime(new Date());
 
         // 更新数据
@@ -337,6 +340,9 @@ public class IndexArticleController {
     @RequestMapping("/audit.do")
     @ResponseBody
     public AppResponse<IndexArticle> audit(String articleNo, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         QueryWrapper<IndexArticle> indexArticleQueryWrapper = new QueryWrapper<>();
         indexArticleQueryWrapper.eq("article_no", articleNo).eq("article_status", "0");
         IndexArticle indexArticle = indexArticleService.getOne(indexArticleQueryWrapper);
@@ -351,7 +357,7 @@ public class IndexArticleController {
 
         // 添加修改信息
         indexArticle.setUpdateTime(new Date());
-        indexArticle.setUpdateUserNo("");
+        indexArticle.setUpdateUserNo(adminUser.getUserNo());
 
         // 更新信息
         indexArticleService.updateById(indexArticle);
@@ -369,6 +375,9 @@ public class IndexArticleController {
     @RequestMapping("/dis_audit.do")
     @ResponseBody
     public AppResponse<IndexArticle> disAudit(String articleNo, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         QueryWrapper<IndexArticle> indexArticleQueryWrapper = new QueryWrapper<>();
         indexArticleQueryWrapper.eq("article_no", articleNo).eq("article_status", "1");
         IndexArticle indexArticle = indexArticleService.getOne(indexArticleQueryWrapper);
@@ -383,7 +392,7 @@ public class IndexArticleController {
 
         // 添加修改信息
         indexArticle.setUpdateTime(new Date());
-        indexArticle.setUpdateUserNo("");
+        indexArticle.setUpdateUserNo(adminUser.getUserNo());
 
         // 更新信息
         indexArticleService.updateById(indexArticle);

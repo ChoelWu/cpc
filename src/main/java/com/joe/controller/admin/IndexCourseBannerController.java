@@ -111,6 +111,9 @@ public class IndexCourseBannerController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexCourseBanner> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourseBanner indexCourseBanner = gson.fromJson(data, new TypeToken<IndexCourseBanner>() {
@@ -122,9 +125,9 @@ public class IndexCourseBannerController {
         indexCourseBanner.setCourseBannerStatus("0");
 
         // 操作信息
-        indexCourseBanner.setAddUserNo("1");
+        indexCourseBanner.setAddUserNo(adminUser.getUserNo());
         indexCourseBanner.setAddTime(new Date());
-        indexCourseBanner.setUpdateUserNo("1");
+        indexCourseBanner.setUpdateUserNo(adminUser.getUserNo());
         indexCourseBanner.setUpdateTime(new Date());
 
         // 新增数据
@@ -171,6 +174,9 @@ public class IndexCourseBannerController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexCourse> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourseBanner indexCourseBanner = gson.fromJson(data, new TypeToken<IndexCourseBanner>() {
@@ -179,7 +185,7 @@ public class IndexCourseBannerController {
         indexCourseBanner.setCourseBannerStatus("0");
 
         // 更新操作信息
-        indexCourseBanner.setUpdateUserNo("1l");
+        indexCourseBanner.setUpdateUserNo(adminUser.getUserNo());
         indexCourseBanner.setUpdateTime(new Date());
 
         // 更新数据

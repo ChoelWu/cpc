@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexChannel;
 import com.joe.pojo.Channel;
 import com.joe.service.system.AdminDictService;
@@ -137,12 +138,16 @@ public class IndexChannelController {
     /**
      * 新增栏目
      *
-     * @param data 前端表单数据
+     * @param data    前端表单数据
+     * @param session session
      * @return 返回新增结果
      */
     @RequestMapping("add.do")
     @ResponseBody
-    public AppResponse add(@RequestParam String data) {
+    public AppResponse<IndexChannel> add(@RequestParam String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为对象
         Gson gson = new Gson();
         IndexChannel indexChannel = gson.fromJson(data, new TypeToken<IndexChannel>() {
@@ -151,9 +156,9 @@ public class IndexChannelController {
         // 栏目编号
         indexChannel.setChannelNo(CommonFunctions.generateNo("ICNO"));
         // 操作信息
-        indexChannel.setAddUserNo("1");
+        indexChannel.setAddUserNo(adminUser.getUserNo());
         indexChannel.setAddTime(new Date());
-        indexChannel.setUpdateUserNo("1");
+        indexChannel.setUpdateUserNo(adminUser.getUserNo());
         indexChannel.setUpdateTime(new Date());
 
         // 新增数据
@@ -218,7 +223,7 @@ public class IndexChannelController {
      */
     @RequestMapping("edit.do")
     @ResponseBody
-    public AppResponse edit(String data, HttpSession session) {
+    public AppResponse<IndexChannel> edit(String data, HttpSession session) {
         // 前台字符串数据转化为对象
         Gson gson = new Gson();
         IndexChannel indexChannel = gson.fromJson(data, new TypeToken<IndexChannel>() {
@@ -242,7 +247,7 @@ public class IndexChannelController {
      */
     @RequestMapping("enable_channel.do")
     @ResponseBody
-    public AppResponse enableChannel(String channelNo) {
+    public AppResponse<IndexChannel> enableChannel(String channelNo) {
         // 根据栏目编号查询
         QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
         indexChannelQueryWrapper.eq("channel_no", channelNo).eq("channel_status", "0");
@@ -266,7 +271,7 @@ public class IndexChannelController {
      */
     @RequestMapping("disable_channel.do")
     @ResponseBody
-    public AppResponse disableChannel(String channelNo) {
+    public AppResponse<IndexChannel> disableChannel(String channelNo) {
         // 根据栏目编号查询
         QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
         indexChannelQueryWrapper.eq("channel_no", channelNo).eq("channel_status", "1");
@@ -300,7 +305,7 @@ public class IndexChannelController {
      */
     @RequestMapping("delete.do")
     @ResponseBody
-    public AppResponse deleteChannel(String channelNo) {
+    public AppResponse<IndexChannel> deleteChannel(String channelNo) {
         // 根据栏目编号查询
         QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
         indexChannelQueryWrapper.eq("channel_no", channelNo);
@@ -325,9 +330,20 @@ public class IndexChannelController {
         }
     }
 
+    /**
+     * 更新栏目索引
+     *
+     * @param channelNo    栏目编号
+     * @param channelIndex 栏目序号
+     * @param session      session
+     * @return 返回操作结果
+     */
     @RequestMapping("update_index.do")
     @ResponseBody
-    public AppResponse updateIndex(String channelNo, String channelIndex) {
+    public AppResponse<IndexChannel> updateIndex(String channelNo, String channelIndex, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 根据栏目编号查询
         QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
         indexChannelQueryWrapper.eq("channel_no", channelNo);
@@ -338,7 +354,7 @@ public class IndexChannelController {
         // 判断是不是数字
         if (StringUtils.isNumeric(channelIndex) && 4 == channelIndex.length()) {
             indexChannel.setChannelIndex(channelIndex);
-            indexChannel.setUpdateUserNo("1");
+            indexChannel.setUpdateUserNo(adminUser.getUserNo());
             indexChannel.setUpdateTime(new Date());
             // 更新
             indexChannelService.updateById(indexChannel);

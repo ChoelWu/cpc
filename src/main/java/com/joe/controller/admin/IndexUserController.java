@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexUser;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
@@ -132,6 +133,9 @@ public class IndexUserController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexUser> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexUser indexUser = gson.fromJson(data, new TypeToken<IndexUser>() {
@@ -147,9 +151,9 @@ public class IndexUserController {
         indexUser.setUserStatus("1");
 
         // 操作信息
-        indexUser.setAddUserNo("1");
+        indexUser.setAddUserNo(adminUser.getUserNo());
         indexUser.setAddTime(new Date());
-        indexUser.setUpdateUserNo("1");
+        indexUser.setUpdateUserNo(adminUser.getUserNo());
         indexUser.setUpdateTime(new Date());
 
         // 新增数据
@@ -196,13 +200,16 @@ public class IndexUserController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexUser> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexUser indexUser = gson.fromJson(data, new TypeToken<IndexUser>() {
         }.getType());
 
         // 更新操作信息
-        indexUser.setUpdateUserNo("1l");
+        indexUser.setUpdateUserNo(adminUser.getUserNo());
         indexUser.setUpdateTime(new Date());
 
         // 更新数据
@@ -395,6 +402,9 @@ public class IndexUserController {
     @RequestMapping("/import_user.do")
     @ResponseBody
     public AppResponse<IndexUser> importUser(HttpServletRequest request, HttpSession session) throws Exception {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
         // 获取上传到的文件
@@ -542,9 +552,9 @@ public class IndexUserController {
                 indexUser.setUserType(userType);
                 indexUser.setUserStatus(userStatus);
                 indexUser.setAddTime(new Date());
-                indexUser.setAddUserNo("");
+                indexUser.setAddUserNo(adminUser.getUserNo());
                 indexUser.setUpdateTime(new Date());
-                indexUser.setUpdateUserNo("");
+                indexUser.setUpdateUserNo(adminUser.getUserNo());
 
                 indexUserService.save(indexUser);
             } else {

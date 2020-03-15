@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexCourseTag;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
@@ -107,6 +108,9 @@ public class IndexCourseTagController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexCourseTag> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourseTag indexCourseTag = gson.fromJson(data, new TypeToken<IndexCourseTag>() {
@@ -116,9 +120,9 @@ public class IndexCourseTagController {
         indexCourseTag.setCourseTagNo(CommonFunctions.generateNo("ICTNO"));
 
         // 操作信息
-        indexCourseTag.setAddUserNo("1");
+        indexCourseTag.setAddUserNo(adminUser.getUserNo());
         indexCourseTag.setAddTime(new Date());
-        indexCourseTag.setUpdateUserNo("1");
+        indexCourseTag.setUpdateUserNo(adminUser.getUserNo());
         indexCourseTag.setUpdateTime(new Date());
 
         // 新增数据
@@ -134,7 +138,7 @@ public class IndexCourseTagController {
     /**
      * 课程标签编辑页面
      *
-     * @param model  model
+     * @param model       model
      * @param courseTagNo 课程标签编号
      * @return 返回页面视图
      */
@@ -161,13 +165,16 @@ public class IndexCourseTagController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexCourseTag> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourseTag indexCourseTag = gson.fromJson(data, new TypeToken<IndexCourseTag>() {
         }.getType());
 
         // 更新操作信息
-        indexCourseTag.setUpdateUserNo("1l");
+        indexCourseTag.setUpdateUserNo(adminUser.getUserNo());
         indexCourseTag.setUpdateTime(new Date());
 
         // 更新数据

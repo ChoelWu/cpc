@@ -15,7 +15,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.joe.entity.AdminMenu;
 import com.joe.entity.AdminUser;
-import com.joe.entity.IndexArticle;
 import com.joe.pojo.Menu;
 import com.joe.service.system.AdminMenuService;
 import com.joe.service.system.IndexArticleService;

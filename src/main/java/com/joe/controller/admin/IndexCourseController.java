@@ -27,7 +27,6 @@ import com.joe.service.system.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -207,6 +206,9 @@ public class IndexCourseController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<IndexCourse> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourse indexCourse = gson.fromJson(data, new TypeToken<IndexCourse>() {
@@ -220,9 +222,9 @@ public class IndexCourseController {
         indexCourse.setCourseLearnNum(0);
 
         // 操作信息
-        indexCourse.setAddUserNo("1");
+        indexCourse.setAddUserNo(adminUser.getUserNo());
         indexCourse.setAddTime(new Date());
-        indexCourse.setUpdateUserNo("1");
+        indexCourse.setUpdateUserNo(adminUser.getUserNo());
         indexCourse.setUpdateTime(new Date());
 
         // 新增数据
@@ -242,7 +244,6 @@ public class IndexCourseController {
      */
     @RequestMapping("edit_page.do")
     public String editPage(Model model, String courseNo) {
-
         // 根据字典编号查询
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         indexCourseQueryWrapper.eq("course_no", courseNo);
@@ -309,6 +310,9 @@ public class IndexCourseController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<IndexCourse> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         IndexCourse indexCourse = gson.fromJson(data, new TypeToken<IndexCourse>() {
@@ -317,7 +321,7 @@ public class IndexCourseController {
         indexCourse.setCourseStatus("0");
 
         // 更新操作信息
-        indexCourse.setUpdateUserNo("1l");
+        indexCourse.setUpdateUserNo(adminUser.getUserNo());
         indexCourse.setUpdateTime(new Date());
 
         // 更新数据

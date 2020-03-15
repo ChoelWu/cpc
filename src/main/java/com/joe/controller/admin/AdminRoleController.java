@@ -16,12 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
-import com.joe.entity.AdminAuth;
-import com.joe.entity.AdminMenu;
-import com.joe.entity.AdminRole;
-import com.joe.entity.IndexUser;
-import com.joe.pojo.AdminMenuPOJO;
-import com.joe.pojo.AuthPOJO;
+import com.joe.entity.*;
 import com.joe.pojo.Page;
 import com.joe.pojo.Tree;
 import com.joe.service.common.PageService;
@@ -29,7 +24,6 @@ import com.joe.service.system.AdminAuthService;
 import com.joe.service.system.AdminMenuService;
 import com.joe.service.system.AdminRoleService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -125,6 +119,9 @@ public class AdminRoleController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<AdminRole> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminRole adminRole = gson.fromJson(data, new TypeToken<AdminRole>() {
@@ -137,9 +134,9 @@ public class AdminRoleController {
         adminRole.setRoleStatus("1");
 
         // 操作信息
-        adminRole.setAddUserNo("1");
+        adminRole.setAddUserNo(adminUser.getUserNo());
         adminRole.setAddTime(new Date());
-        adminRole.setUpdateUserNo("1");
+        adminRole.setUpdateUserNo(adminUser.getUserNo());
         adminRole.setUpdateTime(new Date());
 
         // 新增数据
@@ -182,13 +179,16 @@ public class AdminRoleController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<AdminRole> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminRole adminRole = gson.fromJson(data, new TypeToken<AdminRole>() {
         }.getType());
 
         // 更新操作信息
-        adminRole.setUpdateUserNo("1l");
+        adminRole.setUpdateUserNo(adminUser.getUserNo());
         adminRole.setUpdateTime(new Date());
 
         // 更新数据
@@ -344,14 +344,14 @@ public class AdminRoleController {
                         List<AdminAuth> adminAuthList = adminAuthService.list(adminAuthQueryWrapper);
 
                         List<Tree> level3TreeList = Lists.newArrayList();
-                        for(AdminAuth adminAuth : adminAuthList) {
+                        for (AdminAuth adminAuth : adminAuthList) {
                             Tree level3Tree = new Tree();
 
                             level3Tree.setTitle(adminAuth.getAuthName());
                             level3Tree.setId(adminAuth.getAuthNo());
                             level3Tree.setField(adminAuth.getAuthNo());
 
-                            if(StringUtils.contains("," + authString + ",", "," + adminAuth.getAuthNo() + ",")) {
+                            if (StringUtils.contains("," + authString + ",", "," + adminAuth.getAuthNo() + ",")) {
                                 level3Tree.setChecked(true);
                             }
                             level3TreeList.add(level3Tree);

@@ -19,6 +19,7 @@ import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
 import com.joe.entity.AdminMenu;
+import com.joe.entity.AdminUser;
 import com.joe.pojo.Dict;
 import com.joe.pojo.Menu;
 import com.joe.pojo.Page;
@@ -174,7 +175,10 @@ public class AdminDictController {
      */
     @RequestMapping("add.do")
     @ResponseBody
-    public AppResponse add(String data, HttpSession session) {
+    public AppResponse<AdminDict> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminDict adminDict = gson.fromJson(data, new TypeToken<AdminDict>() {
@@ -184,9 +188,9 @@ public class AdminDictController {
         adminDict.setDictNo(CommonFunctions.generateNo("ADNO"));
 
         // 操作信息
-        adminDict.setAddUserNo("1");
+        adminDict.setAddUserNo(adminUser.getUserNo());
         adminDict.setAddTime(new Date());
-        adminDict.setUpdateUserNo("1");
+        adminDict.setUpdateUserNo(adminUser.getUserNo());
         adminDict.setUpdateTime(new Date());
 
         // 新增数据
@@ -260,14 +264,17 @@ public class AdminDictController {
      */
     @RequestMapping("edit.do")
     @ResponseBody
-    public AppResponse edit(String data, HttpSession session) {
+    public AppResponse<AdminDict> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminDict adminDict = gson.fromJson(data, new TypeToken<AdminDict>() {
         }.getType());
 
         // 更新操作信息
-        adminDict.setUpdateUserNo("1l");
+        adminDict.setUpdateUserNo(adminUser.getUserNo());
         adminDict.setUpdateTime(new Date());
 
         // 更新数据
@@ -288,7 +295,7 @@ public class AdminDictController {
      */
     @RequestMapping("delete.do")
     @ResponseBody
-    public AppResponse deleteDict(String dictNo) {
+    public AppResponse<AdminDict> deleteDict(String dictNo) {
         // 根据用户编号查询
         QueryWrapper<AdminDict> adminDictQueryWrapper = new QueryWrapper<>();
         adminDictQueryWrapper.eq("dict_no", dictNo);
@@ -311,7 +318,7 @@ public class AdminDictController {
      */
     @RequestMapping("/delete_batch.do")
     @ResponseBody
-    public AppResponse deleteBatch(String dictNos) {
+    public AppResponse<AdminDict> deleteBatch(String dictNos) {
         String[] dictNoArr = dictNos.split(",");
 
         List<Long> dictIdList = Lists.newArrayList();

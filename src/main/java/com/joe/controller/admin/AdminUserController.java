@@ -19,7 +19,6 @@ import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminRole;
 import com.joe.entity.AdminUser;
-import com.joe.entity.IndexUser;
 import com.joe.pojo.AdminUserPOJO;
 import com.joe.pojo.Page;
 import com.joe.service.common.PageService;
@@ -119,6 +118,9 @@ public class AdminUserController {
     @RequestMapping("add.do")
     @ResponseBody
     public AppResponse<AdminUser> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser sessionAdminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminUser adminUser = gson.fromJson(data, new TypeToken<AdminUser>() {
@@ -134,9 +136,9 @@ public class AdminUserController {
         adminUser.setUserStatus("1");
 
         // 操作信息
-        adminUser.setAddUserNo("1");
+        adminUser.setAddUserNo(sessionAdminUser.getUserNo());
         adminUser.setAddTime(new Date());
-        adminUser.setUpdateUserNo("1");
+        adminUser.setUpdateUserNo(sessionAdminUser.getUserNo());
         adminUser.setUpdateTime(new Date());
 
         // 新增数据
@@ -185,13 +187,16 @@ public class AdminUserController {
     @RequestMapping("edit.do")
     @ResponseBody
     public AppResponse<AdminUser> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser sessionAdminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminUser adminUser = gson.fromJson(data, new TypeToken<AdminUser>() {
         }.getType());
 
         // 更新操作信息
-        adminUser.setUpdateUserNo("1l");
+        adminUser.setUpdateUserNo(sessionAdminUser.getUserNo());
         adminUser.setUpdateTime(new Date());
 
         // 更新数据
@@ -392,6 +397,9 @@ public class AdminUserController {
     @RequestMapping("personal.do")
     @ResponseBody
     public AppResponse<AdminUser> personal(String data, HttpSession session) {
+        // 获取 session
+        AdminUser sessionAdminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminUser adminUser = gson.fromJson(data, new TypeToken<AdminUser>() {
@@ -403,7 +411,7 @@ public class AdminUserController {
         }
 
         // 更新操作信息
-        adminUser.setUpdateUserNo("1l");
+        adminUser.setUpdateUserNo(sessionAdminUser.getUserNo());
         adminUser.setUpdateTime(new Date());
 
         // 更新数据

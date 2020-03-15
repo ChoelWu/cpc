@@ -20,7 +20,7 @@
 
             <form class="login100-form validate-form">
 				<span class="login100-form-title">
-					会员登陆
+					用户登陆
 				</span>
 
                 <div class="wrap-input100 validate-input">
@@ -37,6 +37,10 @@
                     <span class="symbol-input100">
 						<i class="fa fa-lock" aria-hidden="true"></i>
 					</span>
+                </div>
+
+                <div class="text-center p-t-10" style="min-height: 40px;">
+                    <span style="display: none; color: red;" id="login-text"></span>
                 </div>
 
                 <div class="container-login100-form-btn">
@@ -78,7 +82,10 @@
                 if(1 === res.status || "1" === res.status) {
                     window.location.href = "/index/course/index.do";
                 } else {
-                    console.log(res);
+                    $("#login-text").html(res.message).fadeIn();
+                    setTimeout(function() {
+                        $("#login-text").fadeOut();
+                    }, 2000);
                 }
             }
         });

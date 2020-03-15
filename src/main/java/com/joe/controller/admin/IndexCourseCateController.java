@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.entity.IndexCourseCate;
 import com.joe.pojo.CourseCate;
 import com.joe.service.system.AdminDictService;
@@ -124,12 +125,16 @@ public class IndexCourseCateController {
     /**
      * 新增课程分类
      *
-     * @param data 前端表单数据
+     * @param data    前端表单数据
+     * @param session session
      * @return 返回新增结果
      */
     @RequestMapping("add.do")
     @ResponseBody
-    public AppResponse<IndexCourseCate> add(@RequestParam String data) {
+    public AppResponse<IndexCourseCate> add(@RequestParam String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为对象
         Gson gson = new Gson();
         IndexCourseCate indexCourseCate = gson.fromJson(data, new TypeToken<IndexCourseCate>() {
@@ -138,9 +143,9 @@ public class IndexCourseCateController {
         // 课程分类编号
         indexCourseCate.setCourseCateNo(CommonFunctions.generateNo("ICCNO"));
         // 操作信息
-        indexCourseCate.setAddUserNo("1");
+        indexCourseCate.setAddUserNo(adminUser.getUserNo());
         indexCourseCate.setAddTime(new Date());
-        indexCourseCate.setUpdateUserNo("1");
+        indexCourseCate.setUpdateUserNo(adminUser.getUserNo());
         indexCourseCate.setUpdateTime(new Date());
 
         // 新增数据
@@ -252,11 +257,15 @@ public class IndexCourseCateController {
      *
      * @param courseCateNo    课程分类编号
      * @param courseCateIndex 课程分类序号
+     * @param session         session
      * @return 返回操作结果
      */
     @RequestMapping("update_index.do")
     @ResponseBody
-    public AppResponse<IndexCourseCate> updateIndex(String courseCateNo, String courseCateIndex) {
+    public AppResponse<IndexCourseCate> updateIndex(String courseCateNo, String courseCateIndex, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 根据课程分类编号查询
         QueryWrapper<IndexCourseCate> indexCourseCateQueryWrapper = new QueryWrapper<>();
         indexCourseCateQueryWrapper.eq("course_cate_no", courseCateNo);
@@ -265,7 +274,7 @@ public class IndexCourseCateController {
         // 判断是不是数字
         if (StringUtils.isNumeric(courseCateIndex) && 4 == courseCateIndex.length()) {
             indexCourseCate.setCourseCateIndex(courseCateIndex);
-            indexCourseCate.setUpdateUserNo("1");
+            indexCourseCate.setUpdateUserNo(adminUser.getUserNo());
             indexCourseCate.setUpdateTime(new Date());
             // 更新
             indexCourseCateService.updateById(indexCourseCate);

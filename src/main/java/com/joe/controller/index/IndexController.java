@@ -218,7 +218,7 @@ public class IndexController {
      * @return 返回文章列表数据与视图
      */
     @RequestMapping("cate.do")
-    public String cate(Model model, String no, @RequestParam(value="currentPage", defaultValue="1")int currentPage) {
+    public String cate(Model model, String no, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
         // 获取列表
         List<Channel> navList = getNav();
 

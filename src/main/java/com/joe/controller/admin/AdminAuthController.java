@@ -19,6 +19,7 @@ import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminAuth;
 import com.joe.entity.AdminMenu;
+import com.joe.entity.AdminUser;
 import com.joe.pojo.Auth;
 import com.joe.pojo.Menu;
 import com.joe.pojo.Page;
@@ -174,7 +175,10 @@ public class AdminAuthController {
      */
     @RequestMapping("add.do")
     @ResponseBody
-    public AppResponse add(String data, HttpSession session) {
+    public AppResponse<AdminAuth> add(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminAuth adminAuth = gson.fromJson(data, new TypeToken<AdminAuth>() {
@@ -184,9 +188,9 @@ public class AdminAuthController {
         adminAuth.setAuthNo(CommonFunctions.generateNo("AUNO"));
 
         // 操作信息
-        adminAuth.setAddUserNo("1");
+        adminAuth.setAddUserNo(adminUser.getUserNo());
         adminAuth.setAddTime(new Date());
-        adminAuth.setUpdateUserNo("1");
+        adminAuth.setUpdateUserNo(adminUser.getUserNo());
         adminAuth.setUpdateTime(new Date());
 
         // 新增数据
@@ -262,14 +266,17 @@ public class AdminAuthController {
      */
     @RequestMapping("edit.do")
     @ResponseBody
-    public AppResponse edit(String data, HttpSession session) {
+    public AppResponse<AdminAuth> edit(String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为Map
         Gson gson = new Gson();
         AdminAuth adminAuth = gson.fromJson(data, new TypeToken<AdminAuth>() {
         }.getType());
 
         // 更新操作信息
-        adminAuth.setUpdateUserNo("1l");
+        adminAuth.setUpdateUserNo(adminUser.getUserNo());
         adminAuth.setUpdateTime(new Date());
 
         // 更新数据
@@ -290,7 +297,7 @@ public class AdminAuthController {
      */
     @RequestMapping("delete.do")
     @ResponseBody
-    public AppResponse deleteAuth(String authNo) {
+    public AppResponse<AdminAuth> deleteAuth(String authNo) {
         // 根据权限编号查询
         QueryWrapper<AdminAuth> adminAuthQueryWrapper = new QueryWrapper<>();
         adminAuthQueryWrapper.eq("auth_no", authNo);
@@ -313,7 +320,7 @@ public class AdminAuthController {
      */
     @RequestMapping("/delete_batch.do")
     @ResponseBody
-    public AppResponse deleteBatch(String authNos) {
+    public AppResponse<AdminAuth> deleteBatch(String authNos) {
         String[] authNoArr = authNos.split(",");
 
         List<Long> authIdList = Lists.newArrayList();

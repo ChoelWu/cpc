@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminDict;
+import com.joe.entity.AdminUser;
 import com.joe.pojo.Menu;
 import com.joe.service.system.AdminDictService;
 import com.joe.service.system.AdminMenuService;
@@ -123,12 +124,16 @@ public class AdminMenuController {
     /**
      * 新增菜单
      *
-     * @param data 前端表单数据
+     * @param data    前端表单数据
+     * @param session session
      * @return 返回新增结果
      */
     @RequestMapping("add.do")
     @ResponseBody
-    public AppResponse add(@RequestParam String data) {
+    public AppResponse<AdminMenu> add(@RequestParam String data, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 前台字符串数据转化为对象
         Gson gson = new Gson();
         AdminMenu adminMenu = gson.fromJson(data, new TypeToken<AdminMenu>() {
@@ -137,9 +142,9 @@ public class AdminMenuController {
         // 菜单编号
         adminMenu.setMenuNo(CommonFunctions.generateNo("AMNO"));
         // 操作信息
-        adminMenu.setAddUserNo("1");
+        adminMenu.setAddUserNo(adminUser.getUserNo());
         adminMenu.setAddTime(new Date());
-        adminMenu.setUpdateUserNo("1");
+        adminMenu.setUpdateUserNo(adminUser.getUserNo());
         adminMenu.setUpdateTime(new Date());
 
         // 新增数据
@@ -200,7 +205,7 @@ public class AdminMenuController {
      */
     @RequestMapping("edit.do")
     @ResponseBody
-    public AppResponse edit(String data, HttpSession session) {
+    public AppResponse<AdminMenu> edit(String data, HttpSession session) {
         // 前台字符串数据转化为对象
         Gson gson = new Gson();
         AdminMenu adminMenu = gson.fromJson(data, new TypeToken<AdminMenu>() {
@@ -224,7 +229,7 @@ public class AdminMenuController {
      */
     @RequestMapping("enable_menu.do")
     @ResponseBody
-    public AppResponse enableMenu(String menuNo) {
+    public AppResponse<AdminMenu> enableMenu(String menuNo) {
         // 根据菜单编号查询
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.eq("menu_no", menuNo).eq("menu_status", "0");
@@ -248,7 +253,7 @@ public class AdminMenuController {
      */
     @RequestMapping("disable_menu.do")
     @ResponseBody
-    public AppResponse disableMenu(String menuNo) {
+    public AppResponse<AdminMenu> disableMenu(String menuNo) {
         // 根据菜单编号查询
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.eq("menu_no", menuNo).eq("menu_status", "1");
@@ -282,7 +287,7 @@ public class AdminMenuController {
      */
     @RequestMapping("delete.do")
     @ResponseBody
-    public AppResponse deleteMenu(String menuNo) {
+    public AppResponse<AdminMenu> deleteMenu(String menuNo) {
         // 根据菜单编号查询
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.eq("menu_no", menuNo);
@@ -307,9 +312,20 @@ public class AdminMenuController {
         }
     }
 
+    /**
+     * 更新菜单排序
+     *
+     * @param menuNo    菜单编号
+     * @param menuIndex 菜单排序
+     * @param session   session
+     * @return 返回操作结果
+     */
     @RequestMapping("update_index.do")
     @ResponseBody
-    public AppResponse updateIndex(String menuNo, String menuIndex) {
+    public AppResponse<AdminMenu> updateIndex(String menuNo, String menuIndex, HttpSession session) {
+        // 获取 session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 根据菜单编号查询
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.eq("menu_no", menuNo);
@@ -320,7 +336,7 @@ public class AdminMenuController {
         // 判断是不是数字
         if (StringUtils.isNumeric(menuIndex) && 4 == menuIndex.length()) {
             adminMenu.setMenuIndex(menuIndex);
-            adminMenu.setUpdateUserNo("1");
+            adminMenu.setUpdateUserNo(adminUser.getUserNo());
             adminMenu.setUpdateTime(new Date());
             // 更新
             adminMenuService.updateById(adminMenu);
