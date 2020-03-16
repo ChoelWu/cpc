@@ -167,9 +167,13 @@
                 <#list newIndexCourseList as newIndexCourse>
                 <div class="index-card-container course-card-container container">
                     <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newIndexCourse.course.courseNo}" data-track="sztj-1-1">
-                        <div class="course-stat new">
-                            在学
-                        </div>
+                        <#if newIndexCourse.indexUserCourse??>
+                            <#if newIndexCourse.indexUserCourse.status = "1">
+                                <div class="course-stat new">在学</div>
+                            <#elseif newIndexCourse.indexUserCourse.status = "2">
+                                <div class="course-stat new">学完</div>
+                            </#if>
+                        </#if>
                         <div class="course-card-top hashadow">
                             <img class="course-banner" src="${newIndexCourse.course.courseCover}">
                             <div class="course-label">
@@ -182,23 +186,17 @@
                             <h3 class="course-card-name">${newIndexCourse.course.courseName}</h3>
                             <div class="clearfix course-card-bottom">
                                 <div class="course-card-info">
-                                    <span>普通</span><span><i class="imv2-set-sns"></i>248</span>
-                                    <span class="r js-hover-evaluation">7人学完</span>
+                                    <#if newIndexCourse.course.courseDifficultLevel = "1">
+                                        <span>简单</span>
+                                    <#elseif newIndexCourse.course.courseDifficultLevel = "2">
+                                        <span>普通</span>
+                                    <#elseif newIndexCourse.course.courseDifficultLevel = "3">
+                                        <span>困难</span>
+                                    </#if>
+                                    <span><i class="imv2-set-sns"></i>${newIndexCourse.course.courseLearnNum!'0'}</span>
+                                    <span class="r js-hover-evaluation">${newIndexCourse.course.visitTimes!'0'}人次</span>
                                 </div>
-                                <div class="evaluation-desc-box clearfix">
-                                    <i class="trangle"></i>
-                                    <div class="left-box l">
-                                        <p>综合评分</p>
-                                        <p class="big-text">10.00</p>
-                                        <p>7人学完</p>
-                                    </div>
-                                    <div class="rightcourse-card-container-box right-box l">
-                                        <p>内容实用<span>10.00</span></p>
-                                        <p>通俗易懂<span>10.00</span></p>
-                                        <p>逻辑清晰<span>10.00</span></p>
-                                    </div>
-                                </div>
-                                <div class="course-card-price">大三（下）</div>
+                                <div class="course-card-price">${newIndexCourse.course.courseFitPeople!''}</div>
                             </div>
                         </div>
                     </a>
@@ -213,40 +211,39 @@
                 <a href="#"
                    class="banner_wk r hide" target="_blank"></a></h3>
             <div class="clearfix types-content js-rank-content">
-                <#list newIndexCourseList as newIndexCourse>
+                <#list hotIndexCourseList as hotIndexCourse>
                 <div class="index-card-container course-card-container container">
-                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${newIndexCourse.course.courseNo}" data-track="xshk-1-1">
+                    <a target="_blank" class="course-card" href="/index/course/detail.do?courseNo=${hotIndexCourse.course.courseNo}" data-track="xshk-1-1">
+                        <#if hotIndexCourse.indexUserCourse??>
+                            <#if hotIndexCourse.indexUserCourse.status = "1">
+                                <div class="course-stat new">在学</div>
+                            <#elseif hotIndexCourse.indexUserCourse.status = "2">
+                                <div class="course-stat new">学完</div>
+                            </#if>
+                        </#if>
                         <div class="course-card-top hashadow">
-                            <img class="course-banner" src="/static/index/course/images/course04.jpg">
+                            <img class="course-banner" src="${hotIndexCourse.course.courseCover}">
                             <div class="course-label">
-                                <#list newIndexCourse.courseTagList as courseTag>
+                                <#list hotIndexCourse.courseTagList as courseTag>
                                     <label>${courseTag.courseTagName}</label>
                                 </#list>
                             </div>
                         </div>
                         <div class="course-card-content">
-                            <h3 class="course-card-name">分析化学是科学技术和工农业生产的眼睛</h3>
+                            <h3 class="course-card-name">${hotIndexCourse.course.courseName}</h3>
                             <div class="clearfix course-card-bottom">
                                 <div class="course-card-info">
-                                    <span>普通</span><span><i class="imv2-set-sns"></i>2282</span>
-                                    <span class="r js-hover-evaluation">612人学完</span>
+                                    <#if hotIndexCourse.course.courseDifficultLevel = "1">
+                                        <span>简单</span>
+                                    <#elseif hotIndexCourse.course.courseDifficultLevel = "2">
+                                        <span>普通</span>
+                                    <#elseif hotIndexCourse.course.courseDifficultLevel = "3">
+                                        <span>困难</span>
+                                    </#if>
+                                    <span><i class="imv2-set-sns"></i>${hotIndexCourse.course.courseLearnNum!'0'}</span>
+                                    <span class="r js-hover-evaluation">${hotIndexCourse.course.visitTimes!'0'}人次</span>
                                 </div>
-                                <div class="evaluation-desc-box clearfix">
-                                    <i class="trangle"></i>
-                                    <div class="left-box l">
-                                        <p>综合评分</p>
-                                        <p class="big-text">10.00</p>
-                                        <p>612人学完</p>
-                                    </div>
-                                    <div class="rightcourse-card-container-box right-box l">
-                                        <p>内容实用<span>10.00</span></p>
-                                        <p>通俗易懂<span>10.00</span></p>
-                                        <p>逻辑清晰<span>10.00</span></p>
-                                    </div>
-                                </div>
-
-
-                                <div class="course-card-price">大三（下）</div>
+                                <div class="course-card-price">${hotIndexCourse.course.courseFitPeople!''}</div>
                             </div>
                         </div>
                     </a>

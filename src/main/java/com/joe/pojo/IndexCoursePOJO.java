@@ -12,6 +12,7 @@ package com.joe.pojo;
 
 import com.joe.entity.IndexCourse;
 import com.joe.entity.IndexCourseTag;
+import com.joe.entity.IndexUserCourse;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class IndexCoursePOJO {
 
     // 课程所对应的标签
     private List<IndexCourseTag> courseTagList;
+
+    private IndexUserCourse indexUserCourse;
 
     public IndexCourse getCourse() {
         return course;
@@ -38,11 +41,20 @@ public class IndexCoursePOJO {
         this.courseTagList = courseTagList;
     }
 
+    public IndexUserCourse getIndexUserCourse() {
+        return indexUserCourse;
+    }
+
+    public void setIndexUserCourse(IndexUserCourse indexUserCourse) {
+        this.indexUserCourse = indexUserCourse;
+    }
+
     @Override
     public String toString() {
         return "IndexCoursePOJO{" +
                 "course=" + course +
                 ", courseTagList=" + courseTagList +
+                ", indexUserCourse=" + indexUserCourse +
                 '}';
     }
 }

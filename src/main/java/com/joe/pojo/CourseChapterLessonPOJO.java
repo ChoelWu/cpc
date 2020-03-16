@@ -20,8 +20,6 @@ public class CourseChapterLessonPOJO {
 
     private List<ChapterLessonPOJO> chapterList;
 
-    private IndexUserCourse indexUserCourse;
-
     public IndexCourse getCourse() {
         return course;
     }
@@ -38,20 +36,11 @@ public class CourseChapterLessonPOJO {
         this.chapterList = chapterList;
     }
 
-    public IndexUserCourse getIndexUserCourse() {
-        return indexUserCourse;
-    }
-
-    public void setIndexUserCourse(IndexUserCourse indexUserCourse) {
-        this.indexUserCourse = indexUserCourse;
-    }
-
     @Override
     public String toString() {
         return "CourseChapterLessonPOJO{" +
                 "course=" + course +
                 ", chapterList=" + chapterList +
-                ", indexUserCourse=" + indexUserCourse +
                 '}';
     }
 }
