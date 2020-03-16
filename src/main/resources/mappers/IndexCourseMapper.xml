@@ -15,6 +15,8 @@
         <result column="visit_times" property="visitTimes"/>
         <result column="course_cover" property="courseCover"/>
         <result column="is_top" property="isTop"/>
+        <result column="course_duration_hour" property="courseDurationHour"/>
+        <result column="course_duration_minute" property="courseDurationMinute"/>
         <result column="publish_time" property="publishTime"/>
         <result column="role" property="role"/>
         <result column="course_status" property="courseStatus"/>
@@ -60,6 +62,8 @@
         cico.visit_times,
         cico.course_cover,
         cico.is_top,
+        cico.course_duration_hour,
+        cico.course_duration_minute,
         cico.publish_time,
         cico.role,
         cico.course_status,

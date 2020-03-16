@@ -78,6 +78,16 @@ public class Course implements Serializable {
     private String isTop;
 
     /**
+     * 课程时长-小时
+     */
+    private Integer courseDurationHour;
+
+    /**
+     * 课程时长-分钟
+     */
+    private Integer courseDurationMinute;
+
+    /**
      * 发布时间
      */
     private Date publishTime;
@@ -226,6 +236,22 @@ public class Course implements Serializable {
         this.isTop = isTop;
     }
 
+    public Integer getCourseDurationHour() {
+        return courseDurationHour;
+    }
+
+    public void setCourseDurationHour(Integer courseDurationHour) {
+        this.courseDurationHour = courseDurationHour;
+    }
+
+    public Integer getCourseDurationMinute() {
+        return courseDurationMinute;
+    }
+
+    public void setCourseDurationMinute(Integer courseDurationMinute) {
+        this.courseDurationMinute = courseDurationMinute;
+    }
+
     public Date getPublishTime() {
         return publishTime;
     }
@@ -314,6 +340,8 @@ public class Course implements Serializable {
                 ", visitTimes=" + visitTimes +
                 ", courseCover='" + courseCover + '\'' +
                 ", isTop='" + isTop + '\'' +
+                ", courseDurationHour=" + courseDurationHour +
+                ", courseDurationMinute=" + courseDurationMinute +
                 ", publishTime=" + publishTime +
                 ", role='" + role + '\'' +
                 ", courseStatus='" + courseStatus + '\'' +

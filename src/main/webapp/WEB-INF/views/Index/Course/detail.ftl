@@ -78,19 +78,27 @@
                              src="/static/index/course/images/course07.jpg" width="80" height="80">
                     </a>
                     <span class="tit">
-                <a href="#//www.imooc.com/u/7459484/courses?sort=publish" target="_blank">白守理</a>
-            </span>
-                    <span class="job">教授</span>
+                        <a>${course.course.courseAuthor!''}</a>
+                    </span>
+                    <span class="job">老师</span>
                 </div>
 
                 <div class="static-item l">
-                    <span class="meta">难度</span><span class="meta-value">困难</span>
+                    <span class="meta">难度</span><span class="meta-value">
+                         <#if course.course.courseDifficultLevel = "1">
+                             <span>简单</span>
+                         <#elseif course.course.courseDifficultLevel = "2">
+                             <span>普通</span>
+                         <#elseif course.course.courseDifficultLevel = "3">
+                             <span>困难</span>
+                         </#if>
+                    </span>
                 </div>
                 <div class="static-item l">
-                    <span class="meta">时长</span><span class="meta-value"> 2小时10分</span>
+                    <span class="meta">时长</span><span class="meta-value"> ${course.course.courseDurationHour!'0'}小时${course.course.courseDurationMinute!'0'}分</span>
                 </div>
                 <div class="static-item l">
-                    <span class="meta">学习人数</span><span class="meta-value js-learn-num">248</span>
+                    <span class="meta">学习人数</span><span class="meta-value js-learn-num">${course.course.courseLearnNum}</span>
                 </div>
             </div>
         </div>
@@ -120,9 +128,6 @@
                         <h3>
                             第${chapter_index + 1}章 ${chapter.chapter.chapterName}
                         </h3>
-                        <div class="chapter-description">
-                            本章课程的主要内容说明。
-                        </div>
                         <!-- 章节标题 end -->
                         <!-- 章节小节 -->
                         <ul class="video">
@@ -145,10 +150,6 @@
             </div><!--content end-->
             <div class="aside r">
                 <div class="course-wrap course-aside-info js-usercard-box">
-                    <div class="learn-btn">
-                        <a href="#//www.imooc.com/video/20083"
-                           class="moco-btn moco-btn-red moco-btn-lg J-learn-course">开始学习</a>
-                    </div>
                     <div class="course-info-tip">
                         <dl class="first">
                             <dt>课程须知</dt>

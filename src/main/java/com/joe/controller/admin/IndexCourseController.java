@@ -215,7 +215,7 @@ public class IndexCourseController {
         }.getType());
 
         // 课程编号
-        indexCourse.setCourseNo(CommonFunctions.generateNo("IANO"));
+        indexCourse.setCourseNo(CommonFunctions.generateNo("ICONO"));
         // 课程状态-未审核
         indexCourse.setCourseStatus("0");
         // 课程学习次数设置为 0

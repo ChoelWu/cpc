@@ -343,11 +343,16 @@ public class CourseController {
         indexUserCourseQueryWrapper.eq("user_no", userNo).eq("course_no", indexLesson.getCourseNo());
         IndexUserCourse preIndexUserCourse = indexUserCourseService.getOne(indexUserCourseQueryWrapper);
 
+        // 修改访问次数和学习人数
+        QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+        indexCourseQueryWrapper.eq("course_no", indexLesson.getCourseNo());
+        IndexCourse indexCourse = indexCourseService.getOne(indexCourseQueryWrapper);
+
         // 已经存在记录，更新没记录，没有记录添加记录
         if (null == preIndexUserCourse) {
             IndexUserCourse indexUserCourse = new IndexUserCourse();
             indexUserCourse.setUserCourseNo(CommonFunctions.generateNo("IUCNO"));
-            indexUserCourse.setUserNo(indexLesson.getCourseNo());
+            indexUserCourse.setUserNo(userNo);
             indexUserCourse.setCourseNo(indexLesson.getCourseNo());
             indexUserCourse.setLastTime(new Date());
             indexUserCourse.setAddTime(new Date());
@@ -356,6 +361,9 @@ public class CourseController {
             indexUserCourse.setUpdateUserNo(userNo);
 
             indexUserCourseService.save(indexUserCourse);
+
+            // 学习人数加一
+            indexCourse.setCourseLearnNum(indexCourse.getCourseLearnNum() + 1);
         } else {
             preIndexUserCourse.setLastTime(new Date());
             preIndexUserCourse.setUpdateTime(new Date());
@@ -363,7 +371,12 @@ public class CourseController {
 
             indexUserCourseService.updateById(preIndexUserCourse);
         }
+
+        // 访问次数加一
+        indexCourse.setVisitTimes(indexCourse.getVisitTimes() + 1);
+        indexCourse.setUpdateTime(new Date());
+        indexCourse.setUpdateUserNo(userNo);
+
+        indexCourseService.updateById(indexCourse);
     }
-
-
 }
