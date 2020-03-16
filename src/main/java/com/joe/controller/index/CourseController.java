@@ -141,8 +141,30 @@ public class CourseController {
     public String courseDetail(String courseNo, Model model) {
         CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(courseNo);
 
+        // 获取热门课程
+        List<IndexCourse> hotCourseList = getHotCourse(null, 8);
+        List<IndexCoursePOJO> hotIndexCourseList = indexCourseToIndexCoursePOJO(hotCourseList);
+
+        // 查询课程栏目
+        QueryWrapper<IndexCourseCate> indexCourseCateQueryWrapper = new QueryWrapper<>();
+        indexCourseCateQueryWrapper.eq("course_cate_no", courseChapterLessonPOJO.getCourse().getCourseCateNo());
+        IndexCourseCate indexCourseCate = indexCourseCateService.getOne(indexCourseCateQueryWrapper);
+        // 查询课程父栏目
+        QueryWrapper<IndexCourseCate> parentIndexCourseCateQueryWrapper = new QueryWrapper<>();
+        parentIndexCourseCateQueryWrapper.eq("course_cate_no", indexCourseCate.getParentCourseCateNo());
+        IndexCourseCate parentIndexCourseCate = indexCourseCateService.getOne(parentIndexCourseCateQueryWrapper);
+
+        // 课程标签列表
+        QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
+        indexCourseTagQueryWrapper.orderByDesc("course_tag_use_num").last("limit 0, 8");
+        List<IndexCourseTag> indexCourseTagList = indexCourseTagService.list(indexCourseTagQueryWrapper);
+
         // 数据绑定
         model.addAttribute("course", courseChapterLessonPOJO);
+        model.addAttribute("hotIndexCourseList", hotIndexCourseList);
+        model.addAttribute("indexCourseCate", indexCourseCate);
+        model.addAttribute("parentIndexCourseCate", parentIndexCourseCate);
+        model.addAttribute("indexCourseTagList", indexCourseTagList);
 
         // 返回页面视图
         return "Index/Course/detail";

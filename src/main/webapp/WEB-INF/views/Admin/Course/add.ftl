@@ -63,6 +63,39 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label for="courseAuthor" class="layui-form-label">
+                    <span class="x-red">*</span>课程讲师</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="courseAuthor" name="courseAuthor" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input" placeholder="请输入课程讲师">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    不超过16字符，不能使用特殊字符
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="courseDifficultLevel" class="layui-form-label">
+                    <span class="x-red">*</span>课程难度</label>
+                <div class="layui-input-inline">
+                    <select id="courseDifficultLevel" name="courseDifficultLevel" class="valid" lay-verify="required">
+                        <#list courseDifficultLevelAdminDictList as courseDifficultLevelAdminDict>
+                            <option value="${courseDifficultLevelAdminDict.dictKey}">${courseDifficultLevelAdminDict.dictValue}</option>
+                        </#list>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="courseFitPeople" class="layui-form-label">
+                    <span class="x-red">*</span>课程适宜人群</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="courseFitPeople" name="courseFitPeople" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input" placeholder="请输入课程适宜人群">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    不超过16字符，不能使用特殊字符
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">可观看角色</label>
                 <div class="layui-input-block">
                     <#list courseRoleAdminDictList as courseRoleAdminDict>
@@ -70,6 +103,17 @@
                     </#list>
                 </div>
                 <input type="hidden" id="roleHidden" name="role" value="">
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">课程时长</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="courseDurationHour" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">小时 </div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="courseDurationMinute" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">分钟</div>
             </div>
             <div class="layui-form-item">
                 <label for="publishTime" class="layui-form-label">
@@ -106,6 +150,20 @@
                 <label for="courseIntro" class="layui-form-label">课程简介</label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入内容" id="courseIntro" name="courseIntro"
+                              class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label for="courseCaution" class="layui-form-label">课程须知</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" id="courseCaution" name="courseCaution"
+                              class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label for="courseGoal" class="layui-form-label">课程目标</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" id="courseGoal" name="courseGoal"
                               class="layui-textarea"></textarea>
                 </div>
             </div>

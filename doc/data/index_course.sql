@@ -7,6 +7,8 @@ CREATE TABLE `cpc_index_course`
     `course_tags`            varchar(100) COMMENT '课程标签',
     `course_cate_no`         varchar(25) COMMENT '课程分类',
     `course_intro`           varchar(512) COMMENT '课程简介',
+    `course_caution`         varchar(512) COMMENT '课程注意事项',
+    `course_Instruction`     varchar(512) COMMENT '课程须知',
     `course_author`          varchar(50) COMMENT '课程作者',
     `course_difficult_level` char(1) COMMENT '课程困难程度 1-简单 2-普通 3-困难',
     `course_fit_people`      varchar(10) COMMENT '课程适合人群',

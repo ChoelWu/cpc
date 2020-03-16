@@ -187,11 +187,14 @@ public class IndexCourseController {
         List<AdminDict> courseIsTopAdminDictList = adminDictService.getDictListByDictName("courseIsTop");
         // 课程是否置顶字典查询
         List<AdminDict> courseRoleAdminDictList = adminDictService.getDictListByDictName("courseRole");
+        // 课程难度字典查询
+        List<AdminDict> courseDifficultLevelAdminDictList = adminDictService.getDictListByDictName("courseDifficultLevel");
 
         // 数据绑定
         model.addAttribute("courseCateList", courseCateList);
         model.addAttribute("courseIsTopAdminDictList", courseIsTopAdminDictList);
         model.addAttribute("courseRoleAdminDictList", courseRoleAdminDictList);
+        model.addAttribute("courseDifficultLevelAdminDictList", courseDifficultLevelAdminDictList);
 
         return "Admin/Course/add";
     }
@@ -289,6 +292,8 @@ public class IndexCourseController {
         List<AdminDict> courseIsTopAdminDictList = adminDictService.getDictListByDictName("courseIsTop");
         // 课程是否置顶字典查询
         List<AdminDict> courseRoleAdminDictList = adminDictService.getDictListByDictName("courseRole");
+        // 课程难度字典查询
+        List<AdminDict> courseDifficultLevelAdminDictList = adminDictService.getDictListByDictName("courseDifficultLevel");
 
         // 绑定数据
         model.addAttribute("courseCateList", courseCateList);
@@ -296,6 +301,7 @@ public class IndexCourseController {
         model.addAttribute("roleList", roleList);
         model.addAttribute("courseIsTopAdminDictList", courseIsTopAdminDictList);
         model.addAttribute("courseRoleAdminDictList", courseRoleAdminDictList);
+        model.addAttribute("courseDifficultLevelAdminDictList", courseDifficultLevelAdminDictList);
 
         return "Admin/Course/edit";
     }
@@ -544,6 +550,15 @@ public class IndexCourseController {
 
             StringBuilder courseTagsNoString = new StringBuilder();
             for (CourseTagsJson courseTagsJson : courseTagsJsonList) {
+                // 标签更新使用次数
+                String courseTagNo = courseTagsJson.getValue();
+                QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
+                indexCourseTagQueryWrapper.eq("course_tag_no", courseTagNo);
+                IndexCourseTag indexCourseTag = indexCourseTagService.getOne(indexCourseTagQueryWrapper);
+                int courseTagUseNum = null == indexCourseTag.getCourseTagUseNum() ? 0 : indexCourseTag.getCourseTagUseNum();
+                indexCourseTag.setCourseTagUseNum(courseTagUseNum + 1);
+                indexCourseTagService.updateById(indexCourseTag);
+
                 int index = courseTagsJsonList.indexOf(courseTagsJson);
                 if (0 == index) {
                     courseTagsNoString.append(courseTagsJson.getValue());

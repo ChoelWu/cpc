@@ -75,7 +75,7 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加课程','/admin/course/add_page.do',600,500)"><i
+                    <button class="layui-btn" onclick="xadmin.open('添加课程','/admin/course/add_page.do',600,600)"><i
                                 class="layui-icon"></i>添加
                     </button>
                 </div>
@@ -126,7 +126,7 @@
                                 <td>${course.publishTime?string('y yyy-MM-dd HH:mm:ss')}</td>
                                 <td class="td-manage">
                                     <a title="编辑"
-                                       onclick="xadmin.open('编辑课程','/admin/course/edit_page.do?courseNo=${course.courseNo}',600,450)"
+                                       onclick="xadmin.open('编辑课程','/admin/course/edit_page.do?courseNo=${course.courseNo}',600,600)"
                                        href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>

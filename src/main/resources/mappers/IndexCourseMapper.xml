@@ -9,6 +9,8 @@
         <result column="course_cate_no" property="courseCateNo"/>
         <result column="course_cate_name" property="courseCateName"/>
         <result column="course_intro" property="courseIntro"/>
+        <result column="course_caution" property="courseCaution"/>
+        <result column="course_goal" property="courseGoal"/>
         <result column="course_author" property="courseAuthor"/>
         <result column="course_difficult_level" property="courseDifficultLevel"/>
         <result column="course_fit_people" property="courseFitPeople"/>
@@ -56,6 +58,8 @@
         cico.course_tags,
         cico.course_cate_no,
         cico.course_intro,
+        cico.course_caution,
+        cico.course_goal,
         cico.course_author,
         cico.course_difficult_level,
         cico.course_fit_people,

@@ -3,13 +3,14 @@ package com.joe.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author joe
@@ -18,7 +19,7 @@ import java.util.Date;
 @TableName("cpc_index_course_tag")
 public class IndexCourseTag implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 课程标签ID
@@ -35,6 +36,11 @@ public class IndexCourseTag implements Serializable {
      * 课程标签名称
      */
     private String courseTagName;
+
+    /**
+     * 课程标签使用次数
+     */
+    private Integer courseTagUseNum;
 
     /**
      * 备用字段
@@ -86,6 +92,14 @@ public class IndexCourseTag implements Serializable {
         this.courseTagName = courseTagName;
     }
 
+    public Integer getCourseTagUseNum() {
+        return courseTagUseNum;
+    }
+
+    public void setCourseTagUseNum(Integer courseTagUseNum) {
+        this.courseTagUseNum = courseTagUseNum;
+    }
+
     public String getBak() {
         return bak;
     }
@@ -129,14 +143,15 @@ public class IndexCourseTag implements Serializable {
     @Override
     public String toString() {
         return "IndexCourseTag{" +
-        "courseTagId=" + courseTagId +
-        ", courseTagNo=" + courseTagNo +
-        ", courseTagName=" + courseTagName +
-        ", bak=" + bak +
-        ", addTime=" + addTime +
-        ", addUserNo=" + addUserNo +
-        ", updateTime=" + updateTime +
-        ", updateUserNo=" + updateUserNo +
-        "}";
+                "courseTagId=" + courseTagId +
+                ", courseTagNo='" + courseTagNo + '\'' +
+                ", courseTagName='" + courseTagName + '\'' +
+                ", courseTagUseNum=" + courseTagUseNum +
+                ", bak='" + bak + '\'' +
+                ", addTime=" + addTime +
+                ", addUserNo='" + addUserNo + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUserNo='" + updateUserNo + '\'' +
+                '}';
     }
 }

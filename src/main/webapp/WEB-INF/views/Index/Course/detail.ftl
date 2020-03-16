@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-        物理化学（上）
+        课程平台-${course.course.courseName}
     </title>
     <link rel="stylesheet" href="/static/index/course/css/moco.css" type="text/css">
     <link rel="stylesheet" href="/static/index/course/css/swiper-3.css">
@@ -63,9 +63,9 @@
     <div class="course-infos">
         <div class="w pr">
             <div class="path">
-                <a href="#//www.imooc.com/course/list">课程</a>
-                <i class="path-split">\</i><a href="#//www.imooc.com/course/list?c=be">无机化学</a>
-                <i class="path-split">\</i><a href="#//www.imooc.com/course/list?c=java">物理化学（上）</a>
+                <a href="#">课程平台首页</a>
+                <i class="path-split">\</i><a href="#">${parentIndexCourseCate.courseCateName!''}</a>
+                <i class="path-split">\</i><a href="#">${indexCourseCate.courseCateName!''}</a>
             </div>
             <div class="hd clearfix">
                 <h2 class="l">${course.course.courseName}</h2>
@@ -154,14 +154,13 @@
                         <dl class="first">
                             <dt>课程须知</dt>
                             <dd class="autowrap">
-                                物理化学又称理论化学，是化学类的基础和门边缘学科，它是应用物理学原理和方法研究有关化学现象和化学过程的一门科学。
+                                ${course.course.courseCaution!''}
                             </dd>
                         </dl>
                         <dl>
                             <dt>老师告诉你能学到什么？</dt>
-                            <dd class="autowrap">（１）物理化学的理论研究方法分为热力学方法、统计力学方法和量子力学方法。本课程要求较好地掌握应用经典热力学方法。
-                                （２）通过本门课学习使学生比较牢固地掌握物理化学基础理论知识和计算方法，增长提出问题，分析问题和解决问题的能力。
-                                （３）通过抽象思维建立起来的概念、模型的讲述，训练学生的科学抽象、逻辑推理能力。
+                            <dd class="autowrap">
+                                ${course.course.courseGoal!''}
                             </dd>
                         </dl>
                     </div>
@@ -169,64 +168,24 @@
                 <div class="js-commend-box">
                     <div class="mb40 recom-course-list-box"><h4>推荐课程</h4>
                         <ul class="js-recom-course moco-aside-course clearfix">
-                            <li>
-                                <div class="aside-course-img"><img src="/static/index/course/images/course03.jpg">
-                                    <p class="aside-course-type">实战</p>
-                                </div>
-                                <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/96.html" class="aside-course-name" target="_blank">推荐课程（此处为推荐课程）</a>
-                                    <p class="aside-course-grade">普通</p>
-                                    <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
-                                    <p class="aside-course-people"><i class="imv2-set-sns"></i><span>8034</span></p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="aside-course-img"><img src="/static/index/course/images/course05.jpg">
-                                    <p class="aside-course-type">实战</p>
-                                </div>
-                                <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/117.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
-                                    <p class="aside-course-grade">普通</p>
-                                    <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
-                                    <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4822</span></p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="aside-course-img">
-                                    <img src="/static/index/course/images/course06.png">
-                                    <p class="aside-course-type">实战</p>
-                                </div>
-                                <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/134.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
-                                    <p class="aside-course-grade">困难</p>
-                                    <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
-                                    <p class="aside-course-people"><i class="imv2-set-sns"></i><span>2166</span></p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="aside-course-img">
-                                    <img src="/static/index/course/images/course09.jpg">
-                                    <p class="aside-course-type">实战</p>
-                                </div>
-                                <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/187.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
-                                    <p class="aside-course-grade">困难</p>
-                                    <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
-                                    <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4572</span></p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="aside-course-img">
-                                    <img src="/static/index/course/images/course08.jpg">
-                                    <p class="aside-course-type">实战</p>
-                                </div>
-                                <div class="aside-course-content">
-                                    <a href="#//coding.imooc.com/class/303.html" class="aside-course-name" target="_blank">24小时备考大学化学/普通化学/无机化学原理/竞赛入门</a>
-                                    <p class="aside-course-grade">普通</p>
-                                    <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
-                                    <p class="aside-course-people"><i class="imv2-set-sns"></i><span>4671</span></p>
-                                </div>
-                            </li>
+                            <#list hotIndexCourseList as hotIndexCourse>
+                                <li>
+                                    <div class="aside-course-img"><img src="${hotIndexCourse.course.courseCover}">
+                                    </div>
+                                    <div class="aside-course-content">
+                                        <a href="#//coding.imooc.com/class/96.html" class="aside-course-name" target="_blank">${hotIndexCourse.course.courseName}</a>
+                                        <#if hotIndexCourse.course.courseDifficultLevel = "1">
+                                            <p class="aside-course-grade">简单</p>
+                                        <#elseif hotIndexCourse.course.courseDifficultLevel = "2">
+                                            <p class="aside-course-grade">普通</p>
+                                        <#elseif hotIndexCourse.course.courseDifficultLevel = "3">
+                                            <p class="aside-course-grade">困难</p>
+                                        </#if>
+                                        <div class="aside-course-dot"><i class="imv2-dot_samll"></i></div>
+                                        <p class="aside-course-people"><i class="imv2-set-sns"></i><span>${hotIndexCourse.course.courseLearnNum!'0'}</span></p>
+                                    </div>
+                                </li>
+                            </#list>
                         </ul>
                     </div>
                 </div>
@@ -234,14 +193,9 @@
                     <div class="mb40 all-attention-box">
                         <h4>热门专题标签</h4>
                         <div class="js-all-attention all-attention">
-                            <a href="#//www.imooc.com/topic/ecom" target="_blank" data-id="8" class="style1">有机化学</a>
-                            <a href="#//www.imooc.com/topic/javaecom" target="_blank" data-id="15" class="style2">无机化学</a>
-                            <a href="#//www.imooc.com/topic/azmianshi" target="_blank" data-id="28" class="style5">大学化学</a>
-                            <a href="#//www.imooc.com/topic/spring" target="_blank" data-id="23" class="style4">spring 实例教程</a>
-                            <a href="#//www.imooc.com/topic/aztest" target="_blank" data-id="18" class="style6">物理化学</a>
-                            <a href="#//www.imooc.com/topic/fullstack" target="_blank" data-id="29" class="style1">实验</a>
-                            <a href="#//www.imooc.com/topic/androidsdk" target="_blank" data-id="17" class="style2">高分子</a>
-                            <a href="#//www.imooc.com/topic/suanfa" target="_blank" data-id="11" class="style3">分析化学</a>
+                            <#list indexCourseTagList as indexCourseTag>
+                                <a href="" target="_blank" class="style${indexCourseTag_index + 1}">${indexCourseTag.courseTagName}</a>
+                            </#list>
                         </div>
                     </div>
                 </div>

@@ -48,6 +48,16 @@ public class Course implements Serializable {
     private String courseIntro;
 
     /**
+     * 课程简介
+     */
+    private String courseCaution;
+
+    /**
+     * 课程简介
+     */
+    private String courseGoal;
+
+    /**
      * 课程作者
      */
     private String courseAuthor;
@@ -186,6 +196,22 @@ public class Course implements Serializable {
 
     public void setCourseIntro(String courseIntro) {
         this.courseIntro = courseIntro;
+    }
+
+    public String getCourseCaution() {
+        return courseCaution;
+    }
+
+    public void setCourseCaution(String courseCaution) {
+        this.courseCaution = courseCaution;
+    }
+
+    public String getCourseGoal() {
+        return courseGoal;
+    }
+
+    public void setCourseGoal(String courseGoal) {
+        this.courseGoal = courseGoal;
     }
 
     public String getCourseAuthor() {
@@ -334,6 +360,8 @@ public class Course implements Serializable {
                 ", courseCateNo='" + courseCateNo + '\'' +
                 ", courseCateName='" + courseCateName + '\'' +
                 ", courseIntro='" + courseIntro + '\'' +
+                ", courseCaution='" + courseCaution + '\'' +
+                ", courseGoal='" + courseGoal + '\'' +
                 ", courseAuthor='" + courseAuthor + '\'' +
                 ", courseDifficultLevel='" + courseDifficultLevel + '\'' +
                 ", courseFitPeople='" + courseFitPeople + '\'' +
