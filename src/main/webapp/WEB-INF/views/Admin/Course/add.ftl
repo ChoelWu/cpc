@@ -125,7 +125,8 @@
             upload = layui.upload;
 
         laydate.render({
-            elem: '#publishTime'
+            elem: '#publishTime',
+            trigger:'click'
         });
 
         //自定义验证规则

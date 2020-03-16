@@ -10,8 +10,8 @@ package com.joe.pojo;
 // | Description: 课程章节课时POJO
 // +----------------------------------------------------------------------
 
-import com.joe.entity.IndexChapter;
 import com.joe.entity.IndexCourse;
+import com.joe.entity.IndexUserCourse;
 
 import java.util.List;
 
@@ -19,6 +19,8 @@ public class CourseChapterLessonPOJO {
     private IndexCourse course;
 
     private List<ChapterLessonPOJO> chapterList;
+
+    private IndexUserCourse indexUserCourse;
 
     public IndexCourse getCourse() {
         return course;
@@ -36,11 +38,20 @@ public class CourseChapterLessonPOJO {
         this.chapterList = chapterList;
     }
 
+    public IndexUserCourse getIndexUserCourse() {
+        return indexUserCourse;
+    }
+
+    public void setIndexUserCourse(IndexUserCourse indexUserCourse) {
+        this.indexUserCourse = indexUserCourse;
+    }
+
     @Override
     public String toString() {
         return "CourseChapterLessonPOJO{" +
                 "course=" + course +
                 ", chapterList=" + chapterList +
+                ", indexUserCourse=" + indexUserCourse +
                 '}';
     }
 }

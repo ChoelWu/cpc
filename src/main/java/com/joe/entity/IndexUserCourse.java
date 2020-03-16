@@ -3,13 +3,14 @@ package com.joe.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author joe
@@ -18,7 +19,7 @@ import java.util.Date;
 @TableName("cpc_index_user_course")
 public class IndexUserCourse implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户课程ID
@@ -40,6 +41,11 @@ public class IndexUserCourse implements Serializable {
      * 课程编号
      */
     private String courseNo;
+
+    /**
+     * 课程学习状态
+     */
+    private String status;
 
     /**
      * 最后学习时间
@@ -71,6 +77,9 @@ public class IndexUserCourse implements Serializable {
      */
     private String updateUserNo;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Long getUserCourseId() {
         return userCourseId;
@@ -102,6 +111,14 @@ public class IndexUserCourse implements Serializable {
 
     public void setCourseNo(String courseNo) {
         this.courseNo = courseNo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getLastTime() {
@@ -155,16 +172,17 @@ public class IndexUserCourse implements Serializable {
     @Override
     public String toString() {
         return "IndexUserCourse{" +
-        "userCourseId=" + userCourseId +
-        ", userCourseNo=" + userCourseNo +
-        ", userNo=" + userNo +
-        ", courseNo=" + courseNo +
-        ", lastTime=" + lastTime +
-        ", bak=" + bak +
-        ", addTime=" + addTime +
-        ", addUserNo=" + addUserNo +
-        ", updateTime=" + updateTime +
-        ", updateUserNo=" + updateUserNo +
-        "}";
+                "userCourseId=" + userCourseId +
+                ", userCourseNo='" + userCourseNo + '\'' +
+                ", userNo='" + userNo + '\'' +
+                ", courseNo='" + courseNo + '\'' +
+                ", status='" + status + '\'' +
+                ", lastTime=" + lastTime +
+                ", bak='" + bak + '\'' +
+                ", addTime=" + addTime +
+                ", addUserNo='" + addUserNo + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUserNo='" + updateUserNo + '\'' +
+                '}';
     }
 }

@@ -148,7 +148,7 @@ public class IndexUserController {
         indexUser.setUserPassword(CommonFunctions.encryptPassword("000000", indexUser.getUserNo()));
 
         // 用户状态-未激活
-        indexUser.setUserStatus("1");
+        indexUser.setUserStatus("2");
 
         // 操作信息
         indexUser.setAddUserNo(adminUser.getUserNo());
@@ -282,34 +282,44 @@ public class IndexUserController {
     /**
      * 启用用户
      *
-     * @param userNo 用户编号
+     * @param userNo  用户编号
+     * @param session session
      * @return 返回操作结果
      */
     @RequestMapping("/enable.do")
     @ResponseBody
-    public AppResponse<IndexUser> enable(String userNo) {
+    public AppResponse<IndexUser> enable(String userNo, HttpSession session) {
+        // 获取session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 查询用户
         QueryWrapper<IndexUser> indexUserQueryWrapper = new QueryWrapper<>();
         indexUserQueryWrapper.eq("user_no", userNo).eq("user_status", "0");
         IndexUser indexUser = indexUserService.getOne(indexUserQueryWrapper);
 
         // 更改状态为未激活
-        indexUser.setUserStatus("1");
+        indexUser.setUserStatus("2");
+        indexUser.setUpdateUserNo(adminUser.getUserNo());
+        indexUser.setUpdateTime(new Date());
 
         // 更新状态
         indexUserService.updateById(indexUser);
-        return AppResponse.success("启用用户成功，请通知用户激活账户！");
+        return AppResponse.success("启用用户成功！");
     }
 
     /**
      * 禁用用户
      *
-     * @param userNo 用户编号
+     * @param userNo  用户编号
+     * @param session session
      * @return 返回操作结果
      */
     @RequestMapping("/disable.do")
     @ResponseBody
-    public AppResponse<IndexUser> disable(String userNo) {
+    public AppResponse<IndexUser> disable(String userNo, HttpSession session) {
+        // 获取session
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
         // 查询用户
         QueryWrapper<IndexUser> indexUserQueryWrapper = new QueryWrapper<>();
         indexUserQueryWrapper.eq("user_no", userNo).ne("user_status", "0");
@@ -317,6 +327,8 @@ public class IndexUserController {
 
         // 更改状态为未激活
         indexUser.setUserStatus("0");
+        indexUser.setUpdateUserNo(adminUser.getUserNo());
+        indexUser.setUpdateTime(new Date());
 
         // 更新状态
         indexUserService.updateById(indexUser);

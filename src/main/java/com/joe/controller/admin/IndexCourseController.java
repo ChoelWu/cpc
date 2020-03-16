@@ -437,7 +437,7 @@ public class IndexCourseController {
                 return AppResponse.fail("文件上传失败！");
             }
 
-            return AppResponse.success("上传成功！", File.separator + "file_upload" + File.separator + "channel" + File.separator + fileName);
+            return AppResponse.success("上传成功！", File.separator + "file_upload" + File.separator + "course" + File.separator + fileName);
         }
 
         logger.error("文件不存在！");

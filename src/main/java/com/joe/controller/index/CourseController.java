@@ -130,11 +130,15 @@ public class CourseController {
      *
      * @param courseNo 课程编号
      * @param model    model
+     * @param session  session
      * @return 返回视图
      */
     @RequestMapping("/detail.do")
-    public String courseDetail(String courseNo, Model model) {
-        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(courseNo);
+    public String courseDetail(String courseNo, Model model, HttpSession session) {
+        // 获取session
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+
+        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(courseNo, indexUser.getUserNo());
 
         // 数据绑定
         model.addAttribute("course", courseChapterLessonPOJO);
@@ -148,24 +152,27 @@ public class CourseController {
      *
      * @param lessonNo 课程编号
      * @param model    model
+     * @param session  session
      * @return 返回页面视图
      */
     @RequestMapping("video.do")
     public String video(String lessonNo, Model model, HttpSession session) {
+        // 获取session
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+
         // 查询课程信息
         QueryWrapper<IndexLesson> indexLessonQueryWrapper = new QueryWrapper<>();
         indexLessonQueryWrapper.eq("lesson_no", lessonNo);
         IndexLesson indexLesson = indexLessonService.getOne(indexLessonQueryWrapper);
 
         // 查询课程章节和课时信息
-        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(indexLesson.getCourseNo());
+        CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(indexLesson.getCourseNo(), indexUser.getUserNo());
 
         // 绑定数据
         model.addAttribute("courseChapterLesson", courseChapterLessonPOJO);
         model.addAttribute("indexLesson", indexLesson);
 
         // 添加课程学习记录
-        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
         setUserCourse(indexLesson, indexUser.getUserNo());
 
         // 记录Log
@@ -229,9 +236,12 @@ public class CourseController {
             IndexCoursePOJO indexCoursePOJO = new IndexCoursePOJO();
 
             String courseTagNoString = indexCourse.getCourseTags();
+            courseTagNoString = null == courseTagNoString ? "" : courseTagNoString;
             Object[] courseTagNoArray = courseTagNoString.split(",");
             QueryWrapper<IndexCourseTag> indexCourseTagQueryWrapper = new QueryWrapper<>();
-            indexCourseTagQueryWrapper.in("course_tag_no", courseTagNoArray);
+            if (0 == courseTagNoArray.length) {
+                indexCourseTagQueryWrapper.in("course_tag_no", courseTagNoArray);
+            }
             List<IndexCourseTag> indexCourseTagList = indexCourseTagService.list(indexCourseTagQueryWrapper);
 
             indexCoursePOJO.setCourse(indexCourse);
@@ -262,7 +272,7 @@ public class CourseController {
      * @param courseNo 课程编号
      * @return 返回组装好的数据
      */
-    private CourseChapterLessonPOJO getCourseInfoList(String courseNo) {
+    private CourseChapterLessonPOJO getCourseInfoList(String courseNo, String userNo) {
         // 查询课程
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         indexCourseQueryWrapper.eq("course_no", courseNo);
@@ -289,10 +299,16 @@ public class CourseController {
             chapterLessonPOJOList.add(chapterLessonPOJO);
         }
 
+        // 组装学习状态
+        QueryWrapper<IndexUserCourse> indexUserCourseQueryWrapper = new QueryWrapper<>();
+        indexUserCourseQueryWrapper.eq("user_no", userNo).eq("course_no", courseNo);
+        IndexUserCourse indexUserCourse = indexUserCourseService.getOne(indexUserCourseQueryWrapper);
+
         // 组装前台格式
         CourseChapterLessonPOJO courseChapterLessonPOJO = new CourseChapterLessonPOJO();
         courseChapterLessonPOJO.setCourse(indexCourse);
         courseChapterLessonPOJO.setChapterList(chapterLessonPOJOList);
+        courseChapterLessonPOJO.setIndexUserCourse(indexUserCourse);
 
         // 返回数据
         return courseChapterLessonPOJO;
