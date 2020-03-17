@@ -14,30 +14,7 @@
     <link rel="stylesheet" href="/static/index/user/saved_resource" type="text/css">
     <link rel="stylesheet" href="/static/index/user/css/share_style0_16.css">
     <link rel="stylesheet" href="/static/index/user/css/base.css">
-    <script src="/static/index/user/js/push.js"></script>
-    <script type="text/javascript" async="" src="/static/index/user/js/rt.js"></script>
-    <script src="/static/index/user/js/hm.js"></script>
-    <script async="" type="text/javascript" id="zhuge-js" src="/static/index/user/js/zhuge.min.js"></script>
-    <script src="/static/index/user/js/init.js" async=""></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/seajs-text.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/common.js"></script>
     <script charset="utf-8" async="" src="/static/index/user/js/jquery.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/string.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/userinfo.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/cart.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/cookie.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/suggest.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/store.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/json.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/im.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/allcourses.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/advertiseCheck.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/socket.io.min.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/moco.min.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/u_common.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/modifystudyplan.js"></script>
-    <script charset="utf-8" async="" src="/static/index/user/js/layer.min.js"></script>
-    <script src="/static/index/user/js/share.js"></script>
 </head>
 
 <body>
@@ -319,38 +296,6 @@
 
 <div id="globalRightFloat"></div>
 
-
-<!--script-->
-<script src="/static/index/user/visual"></script>
-<script type="text/javascript" src="/static/index/user/js/error.js"></script>
-<script src="/static/index/user/js/ssologin.js"></script>
-<script type="text/javascript" src="/static/index/user/js/sea.js"></script>
-<script type="text/javascript" src="/static/index/user/js/sea_config.js"></script>
-<script type="text/javascript">seajs.use("/static/page/" + OP_CONFIG.module + "/" + OP_CONFIG.page);</script>
-
-<script type="text/javascript" src="/static/index/user/js/dist-zhuge.js"></script>
-
-<script type="text/javascript">seajs.use("/static/page/common/advertiseCheck.js");</script>
-
-<script>
-    //动态加载advertisementReportjs
-
-    var checkJQ = function () {
-        // console.log(typeof jQuery)
-        if (typeof jQuery != 'undefined') {
-            clearInterval(timer);
-            var scr = document.createElement('script');
-            scr.type = "text/javascript";
-            scr.src = "/static/page/common/advertisementReport.js";
-            document.body.appendChild(scr);
-
-        }
-    };
-    var timer = setInterval(checkJQ, 1000);
-
-</script>
-
-
 <style type="text/css">
     .myClassList table td dl dd {
         margin-top: 88px
@@ -376,24 +321,6 @@
 
 
 <div style="display: none">
-    <script type="text/javascript">
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?f0cfcccd7b1393990c78efdeebff3968";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-        (function (d) {
-            window.bd_cpro_rtid = "rHT4P1c";
-            var s = d.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = location.protocol + "//cpro.baidu.com/cpro/ui/rt.js";
-            var s0 = d.getElementsByTagName("script")[0];
-            s0.parentNode.insertBefore(s, s0);
-        })(document);
-    </script>
     <script>
         (function () {
             var bp = document.createElement('script');
@@ -408,8 +335,5 @@
         })();
     </script>
 </div>
-
-
-<script type="text/javascript" src="/static/index/user/js/advertisementReport.js"></script>
 </body>
 </html>

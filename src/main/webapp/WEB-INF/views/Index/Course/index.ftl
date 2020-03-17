@@ -49,17 +49,12 @@
             </ul>
         </div>
         <div class="search-warp clearfix" style="min-width: 32px; height: 72px;">
-
             <div class="search-area" data-search="top-banner">
-                <input class="search-input" data-suggest-trigger="suggest-trigger" placeholder="请输入关键字..." type="text"
+                <input class="search-input" id="search-input" data-suggest-trigger="suggest-trigger" placeholder="请输入关键字..." type="text"
                        autocomplete="off">
                 <input type="hidden" class="btn_search" data-search-btn="search-btn">
-                <div class="hotTags" style="display: block;">
-                    <a href="#/search/?words=Vue" target="_blank" class="">有机化学</a>
-                    <a href="#/search/?words=Python&amp;type=course" target="_blank" class="last">大学化学</a>
-                </div>
             </div>
-            <div class="showhide-search" data-show="no"><i class="icon-search"></i></div>
+            <div class="showhide-search" id="btn_search" data-show="no"><i class="icon-search"></i></div>
         </div>
     </div>
 </div>
@@ -80,7 +75,7 @@
                                     </div>
                                     <div class="tag-box l">
                                         <#list courseCate.childCourseCateList as childCourseCate>
-                                            <a target="_blank" href="#">${childCourseCate.courseCateName}</a>
+                                            <a target="_blank" href="/index/course/list.do?courseCateNo=${childCourseCate.courseCateNo}">${childCourseCate.courseCateName}</a>
                                         </#list>
                                     </div>
                                 </div>
@@ -318,6 +313,12 @@
     // 返回顶部
     $("#J_GotoTop").click(function () {
         $(document).scrollTop(0);
+    });
+
+    // 查询框
+    $("#btn_search").click(function() {
+        var courseName = $("#search-input").val();
+        window.location.href = "/index/course/list.do?currentPage=1&courseName=" + courseName;
     });
 </script>
 </body>

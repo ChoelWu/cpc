@@ -44,7 +44,7 @@
                 <ul class="header-unlogin clearfix">
                     <#if indexUser??>
                         <li class="user-card-box" id="header-user-card">
-                            <a id="header-avator" class="user-card-item js-header-avator" action-type="my_menu" href="https://www.imooc.com/u/index/allcourses" target="_self" title="个人中心">
+                            <a id="header-avator" class="user-card-item js-header-avator" action-type="my_menu" href="/index/user/index.do" target="_self" title="个人中心">
                                 <img width="40" height="40" src="//img2.mukewang.com/5cfb1b9e0001542e09600960-100-100.jpg" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
                             </a>
                         </li>

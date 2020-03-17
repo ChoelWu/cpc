@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -168,6 +169,37 @@ public class CourseController {
 
         // 返回页面视图
         return "Index/Course/detail";
+    }
+
+    /**
+     * 列表页面
+     *
+     * @param model        model
+     * @param courseCateNo 课程栏目编号
+     * @param currentPage  当前页
+     * @param courseName   课程名称
+     * @return 返回页面视图
+     */
+    @RequestMapping("/list.do")
+    public String list(Model model, String courseCateNo, String courseName, @RequestParam(required = false, defaultValue = "1") int currentPage) {
+        QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(courseCateNo)) {
+            indexCourseQueryWrapper.eq("course_cate_no", courseCateNo);
+        }
+        if (StringUtils.isNotBlank(courseName)) {
+            indexCourseQueryWrapper.like("course_name", courseName);
+        } else {
+            courseName = "";
+        }
+        indexCourseQueryWrapper.eq("course_status", "1").orderByDesc("publish_time");
+        List<IndexCourse> indexCourseList = indexCourseService.list(indexCourseQueryWrapper);
+
+        // 数据绑定
+        model.addAttribute("indexCourseList", indexCourseList);
+        model.addAttribute("courseName", courseName);
+
+        // 返回视图
+        return "Index/Course/course_list";
     }
 
     /**
