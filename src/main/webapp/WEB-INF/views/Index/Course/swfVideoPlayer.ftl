@@ -2,7 +2,7 @@
 <html xml:lang="zh" lang="zh" id="auto-id-1573148872711">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>物理化学（上）</title>
+    <title>${courseChapterLesson.course.courseName}</title>
     <link rel="stylesheet" href="/static/index/course/css/pt_newpages_common_head_6b95ec34c7e4083bcbf1986fcf77fadb.css">
     <link rel="stylesheet" name="cssUrl" href="/static/index/course/css/a75e718e9c6704281a16855bf43a5155.css">
     <link rel="stylesheet" name="cssUrl" href="/static/index/course/css/lessonVideo.css">
@@ -15,7 +15,7 @@
 <div class="coursebox f-cb" id="j-coursebox">
     <div class="m-courselb" id="auto-id-1573148872710">
         <div class="cl-bg"></div>
-        <a hidefocus="true" id="j-back" class="cl-back" href="lessonList.html">返回课程主页</a>
+        <a hidefocus="true" id="j-back" class="cl-back" href="/index/course/detail.do?courseNo=${courseChapterLesson.course.courseNo}">返回课程主页</a>
         <a hidefocus="true" id="j-prev" class="cl-pre" style=""></a>
         <a hidefocus="true" id="j-next" class="cl-next" style=""></a>
         <div id="course-learn-box" class="course-learn">
@@ -61,8 +61,8 @@
             <div class="f-fl courseTitle j-courseintro">
                 <div class="u-coursetitle f-fl"><a
                         href="https://study.163.com/course/courseMain.htm?courseId=1004570029" target="_blank"
-                        class="j-info f-thide">物理化学（上）</a>
-                    <p class="j-info f-thide">发布者：白守理</p></div>
+                        class="j-info f-thide">${courseChapterLesson.course.courseName}</a>
+                    <p class="j-info f-thide">讲师：${courseChapterLesson.course.courseAuthor}</p></div>
             </div>
             <a class="j-courseimg-link courseImgCover" target="_blank"
                href="#">
@@ -97,194 +97,42 @@
                 <div class="bd j-bd"></div>
                 <div id="tb-chapterlist-box" class="m-chapterlistBox">
                     <div class="m-chapterList" id="auto-id-1573148873048">
-                        <div class="chapter">
-                            <span class="f-fl ch">章节</span>
-                            <span class="f-fl f-thide chaptericon">
+                        <#list courseChapterLesson.chapterList as chapter>
+                            <div class="chapter">
+                                <span class="f-fl ch">章节</span>
+                                <span class="f-fl f-thide chaptericon">
                                 <span>1</span>
                             </span>
-                            <span class="f-fl f-thide chaptername">第1章 绪论与气体</span>
-                        </div>
-                        <div class="section" data-id="1049052745" data-lesson="0" id="auto-id-1573148873050">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">1-1</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">绪论 (02:13)</span>
-                            <span class="f-fr ksinfo"><span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">06:54</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">1-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">理想气体状态方程与理想气体 (05:58)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">1-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">理想气体状态方程与理想气体 (05:58)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="chapter">
-                            <span class="f-fl ch">章节</span>
-                            <span class="f-fl f-thide chaptericon">
-                                <span>2</span>
-                            </span>
-                            <span class="f-fl f-thide chaptername">第2章 热力学第一定律</span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">2-1</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">热力学基本概念及术语 (01:45)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">2-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">热力学第一定律 (10:41)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">2-3</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">恒容热、恒压热 (05:40)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="chapter">
-                            <span class="f-fl ch">章节</span>
-                            <span class="f-fl f-thide chaptericon">
-                                <span>3</span>
-                            </span>
-                            <span class="f-fl f-thide chaptername">第3章 热力学第二定律</span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">3-1</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">热机效率及卡诺热机效率 (01:31)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">3-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname"
-                                  style="color: rgb(153, 153, 153);">自发过程的共同特征与热力学第二定律 (08:08)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1049050791" data-lesson="1">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">3-3</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname"
-                                  style="color: rgb(153, 153, 153);">熵、亥姆霍兹函数、吉布斯函数及其判据 (06:22)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">07:14</span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="chapter">
-                            <span class="f-fl ch">章节</span>
-                            <span class="f-fl f-thide chaptericon">
-                                <span>4</span>
-                            </span>
-                            <span class="f-fl f-thide chaptername">多组分系统热力学</span>
-                        </div>
-                        <div class="section" data-id="1050514686" data-lesson="19" id="auto-id-1573148873126">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">4-1</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-20" title="进行中"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">多组分系统热力学概念 (02:22)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-3" title="文本"></span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1050514686" data-lesson="19">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">4-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-20" title="进行中"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">拉乌尔定律与亨利定律 (09:08)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-3" title="文本"></span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="chapter">
-                            <span class="f-fl ch">章节</span>
-                            <span class="f-fl f-thide chaptericon">
-                                <span>5</span>
-                            </span>
-                            <span class="f-fl f-thide chaptername">化学平衡</span>
-                        </div>
-                        <div class="section section-cur" data-id="1051773834" data-lesson="72">
-                            <span class="f-fl f-thide ks" style="color: rgb(255, 255, 255);">5-1</span>
-                            <span class="f-fl ksw" style="background: rgb(58, 62, 74);">
-                                <span class="u-clicon ksicon ksicon-30-mark" title="已完成"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(255, 255, 255);">热力学第三定律 (05:18)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
-                                <span class="f-fr kstime">11:59</span><span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
-                        <div class="section" data-id="1050514686" data-lesson="19">
-                            <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">5-2</span>
-                            <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
-                                <span class="u-clicon ksicon ksicon-20" title="进行中"></span>
-                            </span>
-                            <span class="f-fl ksname" style="color: rgb(153, 153, 153);">化学反应的吉布斯函数变化 (06:44)</span>
-                            <span class="f-fr ksinfo">
-                                <span class="f-fr ksinfoicon ksinfoicon-3" title="文本"></span>
-                                <span class="f-fr flag flag-10" title=""></span>
-                            </span>
-                        </div>
+                                <span class="f-fl f-thide chaptername">第${chapter_index + 1}章 ${chapter.chapter.chapterName}</span>
+                            </div>
+                            <#list chapter.lessonList as lesson>
+                                <#if indexLesson.lessonNo = lesson.lessonNo>
+                                    <div class="section section-cur" data-lesson="${lesson.lessonNo}">
+                                        <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">${chapter_index + 1}-${lesson_index + 1}</span>
+                                        <span class="f-fl ksw" style="background: rgb(58, 62, 74);">
+                                            <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
+                                        </span>
+                                        <span class="f-fl ksname" style="color: rgb(153, 153, 153);">${lesson.lessonName}</span>
+                                        <span class="f-fr ksinfo">
+                                            <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
+                                            <span class="f-fr flag flag-10" title=""></span>
+                                        </span>
+                                    </div>
+                                <#else>
+                                    <div class="section" data-lesson="${lesson.lessonNo}">
+                                        <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">${chapter_index + 1}-${lesson_index + 1}</span>
+                                        <span class="f-fl ksw" style="background: rgb(245, 247, 250);">
+                                            <span class="u-clicon ksicon ksicon-30" title="已完成"></span>
+                                        </span>
+                                        <span class="f-fl ksname" style="color: rgb(153, 153, 153);">${lesson.lessonName}</span>
+                                        <span class="f-fr ksinfo">
+                                            <span class="f-fr ksinfoicon ksinfoicon-2" title="视频"></span>
+                                            <span class="f-fr flag flag-10" title=""></span>
+                                        </span>
+                                    </div>
+                                </#if>
+                            </#list>
+                        </#list>
                     </div>
                 </div>
             </div>
@@ -298,5 +146,11 @@
         <div class="j-corner corner coursesprite f-pa"></div>
     </div>
 </div>
+<script>
+    $(".section").click(function() {
+        var lessonNo = $(this).data("lesson");
+        window.location.href = "/index/course/video.do?lessonNo=" + lessonNo;
+    });
+</script>
 </body>
 </html>

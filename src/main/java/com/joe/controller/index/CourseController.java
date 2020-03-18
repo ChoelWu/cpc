@@ -150,6 +150,7 @@ public class CourseController {
         QueryWrapper<IndexCourseCate> indexCourseCateQueryWrapper = new QueryWrapper<>();
         indexCourseCateQueryWrapper.eq("course_cate_no", courseChapterLessonPOJO.getCourse().getCourseCateNo());
         IndexCourseCate indexCourseCate = indexCourseCateService.getOne(indexCourseCateQueryWrapper);
+
         // 查询课程父栏目
         QueryWrapper<IndexCourseCate> parentIndexCourseCateQueryWrapper = new QueryWrapper<>();
         parentIndexCourseCateQueryWrapper.eq("course_cate_no", indexCourseCate.getParentCourseCateNo());
