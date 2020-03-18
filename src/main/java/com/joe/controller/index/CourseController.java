@@ -15,10 +15,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.*;
-import com.joe.pojo.ChapterLessonPOJO;
-import com.joe.pojo.CourseChapterLessonPOJO;
-import com.joe.pojo.IndexCourseCatePOJO;
-import com.joe.pojo.IndexCoursePOJO;
+import com.joe.pojo.*;
+import com.joe.service.common.PageService;
 import com.joe.service.system.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -58,6 +56,9 @@ public class CourseController {
 
     @Resource
     private IndexUserCourseService indexUserCourseService;
+
+    @Resource
+    private PageService pageService;
 
     /**
      * 课程首页
@@ -195,11 +196,25 @@ public class CourseController {
             courseName = "";
         }
         indexCourseQueryWrapper.eq("course_status", "1").orderByDesc("publish_time");
+
+        int courseNum = indexCourseService.count(indexCourseQueryWrapper);
+        // 分页
+        Page page = pageService.Pagination(currentPage, courseNum, 10);
+        int start = page.getRecordNum() * (page.getCurrentPage() - 1);
+
+        indexCourseQueryWrapper.last("limit " + start + "," + page.getRecordNum());
         List<IndexCourse> indexCourseList = indexCourseService.list(indexCourseQueryWrapper);
+
+        String conditionString = "";
+        conditionString += StringUtils.isBlank(courseCateNo) ? "" : "&courseCateNo=" + courseCateNo;
+        conditionString += StringUtils.isBlank(courseName) ? "" : "&courseName=" + courseName;
 
         // 数据绑定
         model.addAttribute("indexCourseList", indexCourseList);
         model.addAttribute("courseName", courseName);
+        model.addAttribute("page", page);
+        model.addAttribute("conditionString", conditionString);
+        model.addAttribute("courseNum", courseNum);
 
         // 返回视图
         return "Index/Course/course_list";
@@ -239,26 +254,26 @@ public class CourseController {
                     int lessonIndex = chapterLessonPOJO.getLessonList().indexOf(lesson);
 
                     // 前一节课
-                    if(0 == lessonIndex && 0 != chapterIndex) {
+                    if (0 == lessonIndex && 0 != chapterIndex) {
                         // 如果课时序号为0，章节序号不为0，前一节课程在上一章
                         List<IndexLesson> indexLessonList = courseChapterLessonPOJO.getChapterList().get(chapterIndex - 1).getLessonList();
-                        if(0 != indexLessonList.size()) {
+                        if (0 != indexLessonList.size()) {
                             preLesson = indexLessonList.get(indexLessonList.size() - 1);
                         }
-                    } else if(0 != lessonIndex) {
+                    } else if (0 != lessonIndex) {
                         // 如果课时序号不为0，章节序号不为0，前一节课在本章
                         preLesson = chapterLessonPOJO.getLessonList().get(lessonIndex - 1);
                     }
 
                     // 后一节课
-                    if((chapterLessonPOJO.getLessonList().size() - 1) == lessonIndex && (courseChapterLessonPOJO.getChapterList().size() - 1) != chapterIndex) {
+                    if ((chapterLessonPOJO.getLessonList().size() - 1) == lessonIndex && (courseChapterLessonPOJO.getChapterList().size() - 1) != chapterIndex) {
                         // 如果课时序号为课时数-1，章节序号不为章节数-1，后一节课程在后一章
                         List<IndexLesson> indexLessonList = courseChapterLessonPOJO.getChapterList().get(chapterIndex + 1).getLessonList();
 
-                        if(0 != indexLessonList.size()) {
+                        if (0 != indexLessonList.size()) {
                             nextLesson = indexLessonList.get(0);
                         }
-                    } else if((chapterLessonPOJO.getLessonList().size() - 1) != lessonIndex) {
+                    } else if ((chapterLessonPOJO.getLessonList().size() - 1) != lessonIndex) {
                         // 如果课时序号不为课时总数-1，后一节课在本章
                         nextLesson = chapterLessonPOJO.getLessonList().get(lessonIndex + 1);
                     }

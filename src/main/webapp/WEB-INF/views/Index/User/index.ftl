@@ -159,38 +159,21 @@
                         </div>
                         <div class="info-box course-list">
                             <div class="title">
-                                <span>免费课程</span>
                                 <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" class="hd" target="_blank">${courseLog.course.courseName}</a>
                             </div>
                             <div class="study-info">
-                                <span class="i-left span-common">已学100%</span>
-                                <span class="i-mid span-common">用时43分</span>
-                                <span class="i-right span-common">学习至1.01 课程介绍</span>
+                                <span class="i-mid span-common">课程时长 ${courseLog.course.courseDurationHour} 时 ${courseLog.course.courseDurationMinute} 分</span>
+                                <span class="i-right span-common">${courseLog.course.courseAuthor} 主讲</span>
                             </div>
                             <div class="catog-points">
                                 <span class="span-common">
-                                    <a href="https://www.imooc.com/u/2302092/notepad/988?frm=allcourses">笔记 <i>0</i></a>
+                                    <a>累计学习 <i>${courseLog.course.courseLearnNum}</i></a>
                                 </span>
                                 <span class="i-mid span-common">
-                                    <a href="https://www.imooc.com/u/2302092/course/988/codes?frm=allcourses">代码 <i>0</i></a>
+                                    <a>累计点击 <i>${courseLog.course.visitTimes}</i></a>
                                 </span>
-                                <span class="i-right span-common">
-                                    <a href="https://www.imooc.com/u/2302092/course/988/questions?frm=allcourses">问答 <i>0</i></a>
-                                </span>
-                                <div class="moco-ico-btn js-add-to-plan" style="position: absolute;right: 130px;"
-                                     data-type="1" data-tid="988">
-                                    加入课表
-                                </div>
-                                <a href="https://www.imooc.com/video/17139" target="_blank"
+                                <a href="/index/course/detail.do?courseNo=${courseLog.course.courseNo}" target="_blank"
                                    class="btn-red continute-btn">继续学习</a>
-                            </div>
-                            <div class="share-box clearfix course-one" data-courseid="988" data-uid="2302092">
-                                <div class="show-btn"><i class="icon-down2"></i></div>
-                                <div class="share-box-con">
-                                    <a href="javascript:;" title="删除" data-type="all" class="del">
-                                        <i class="icon icon-notdisplay"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,15 +182,34 @@
                 <!-- 分页 -->
                 <div class="qa-comment-page">
                     <div class="page">
-                        <span class="disabled_page">首页</span>
-                        <span class="disabled_page">上一页</span>
-                        <a href="javascript:void(0)" class="active text-page-tag">1</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=2">2</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=3">3</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=4">4</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=5">5</a>
-                        <a href="https://www.imooc.com/u/index/allcourses?page=2">下一页</a>
-                        <a href="https://www.imooc.com/u/index/allcourses?page=5">尾页</a>
+                        <#if -1 = page.prePage>
+                            <span class="disabled_page">首页</span>
+                            <span class="disabled_page">上一页</span>
+                        <#else>
+                            <a href="/index/user/index.do?currentPage=1">首页</a>
+                            <a href="/index/user/index.do?currentPage=${page.prePage}">上一页</a>
+                        </#if>
+                        <#if 0 lt page.currentPage - 2>
+                            <a class="text-page-tag" href="/index/user/index.do?currentPage=${page.currentPage - 2}">${page.currentPage - 2}</a>
+                        </#if>
+                        <#if 0 lt page.currentPage - 1>
+                            <a class="text-page-tag" href="/index/user/index.do?currentPage=${page.currentPage - 1}">${page.currentPage - 1}</a>
+                        </#if>
+                        <a href="javascript:void(0)" class="active text-page-tag">${page.currentPage}</a>
+                        <#if page.totalPage gte page.currentPage + 1>
+                            <a class="text-page-tag" href="/index/user/index.do?currentPage=${page.currentPage + 1}">${page.currentPage + 1}</a>
+                        </#if>
+                        <#if page.totalPage gte page.currentPage + 2>
+                            <a class="text-page-tag" href="/index/user/index.do?currentPage=${page.currentPage + 2}">${page.currentPage + 2}</a>
+                        </#if>
+
+                        <#if -1 = page.nextPage>
+                            <span class="disabled_page">下一页</span>
+                            <span class="disabled_page">尾页</span>
+                        <#else>
+                            <a href="/index/user/index.do?currentPage=${page.nextPage}">下一页</a>
+                            <a href="/index/user/index.do?currentPage=${page.totalPage}">尾页</a>
+                        </#if>
                     </div>
                 </div>
             </div>

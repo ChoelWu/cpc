@@ -59,14 +59,16 @@
 
         <div class="search-body">
             <div class="search-content">
-                <div class="search-classify">
-                    <div class="all_content">
-                        <a class="active">搜索结果</a>
+                <#if courseName?? && courseName != ''>
+                    <div class="search-classify">
+                        <div class="all_content">
+                            <a class="active">搜索结果</a>
+                        </div>
+                        <div class="tab_con">
+                            <span>搜索 “${courseName}” 找到相关内容 ${courseNum} 个</span>
+                        </div>
                     </div>
-                    <div class="tab_con">
-                        <span>搜索 “小鸟游六花” 找到相关内容 39 个</span>
-                    </div>
-                </div>
+                </#if>
                 <div class="search-course-list">
                     <#list indexCourseList as indexCourse>
                         <div class="search-item js-search-item clearfix">
@@ -99,12 +101,34 @@
                     </#list>
                 </div>
                 <div class="page">
-                    <span class="disabled_page">首页</span>
-                    <span class="disabled_page">上一页</span>
-                    <a href="javascript:void(0)" class="active text-page-tag">1</a>
-                    <a class="text-page-tag" href="https://www.imooc.com/search/?words=Vue&amp;page=2">2</a>
-                    <a href="https://www.imooc.com/search/?words=Vue&amp;page=2">下一页</a>
-                    <a href="https://www.imooc.com/search/?words=Vue&amp;page=2">尾页</a>
+                    <#if -1 = page.prePage>
+                        <span class="disabled_page">首页</span>
+                        <span class="disabled_page">上一页</span>
+                    <#else>
+                        <a href="/index/course/list.do?currentPage=1${conditionString}">首页</a>
+                        <a href="/index/course/list.do?currentPage=${page.prePage}${conditionString}">上一页</a>
+                    </#if>
+                    <#if 0 lt page.currentPage - 2>
+                    <a class="text-page-tag" href="/index/course/list.do?currentPage=${page.currentPage - 2}${conditionString}">${page.currentPage - 2}</a>
+                    </#if>
+                    <#if 0 lt page.currentPage - 1>
+                    <a class="text-page-tag" href="/index/course/list.do?currentPage=${page.currentPage - 1}${conditionString}">${page.currentPage - 1}</a>
+                    </#if>
+                    <a href="javascript:void(0)" class="active text-page-tag">${page.currentPage}</a>
+                    <#if page.totalPage gte page.currentPage + 1>
+                    <a class="text-page-tag" href="/index/course/list.do?currentPage=${page.currentPage + 1}${conditionString}">${page.currentPage + 1}</a>
+                    </#if>
+                    <#if page.totalPage gte page.currentPage + 2>
+                    <a class="text-page-tag" href="/index/course/list.do?currentPage=${page.currentPage + 2}${conditionString}">${page.currentPage + 2}</a>
+                    </#if>
+
+                    <#if -1 = page.nextPage>
+                        <span class="disabled_page">下一页</span>
+                        <span class="disabled_page">尾页</span>
+                    <#else>
+                        <a href="/index/course/list.do?currentPage=${page.nextPage}${conditionString}">下一页</a>
+                        <a href="/index/course/list.do?currentPage=${page.totalPage}${conditionString}">尾页</a>
+                    </#if>
                 </div>
             </div>
 

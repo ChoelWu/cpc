@@ -185,7 +185,7 @@
                                                 <a href="/index/course/detail.do?courseNo=${learnLogPOJO.indexCourse.courseNo}" class="nickname">${learnLogPOJO.indexCourse.courseName}</a> /
                                                 ${learnLogPOJO.indexChapter.chapterName} /
                                                 <a href="/index/course/video.do?lessonNo=${learnLogPOJO.indexLesson.lessonNo}" target="_blank" title="GXHCT"
-                                                        class="nickname">第 ${learnLogPOJO.indexLesson.lessonIndex} 课时</a>
+                                                        class="nickname">${learnLogPOJO.indexLesson.lessonName}</a>
                                             </span>
                                         </div>
                                     </div>
@@ -205,15 +205,34 @@
                 <!-- 分页 -->
                 <div class="qa-comment-page">
                     <div class="page">
-                        <span class="disabled_page">首页</span>
-                        <span class="disabled_page">上一页</span>
-                        <a href="javascript:void(0)" class="active text-page-tag">1</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=2">2</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=3">3</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=4">4</a>
-                        <a class="text-page-tag" href="https://www.imooc.com/u/index/allcourses?page=5">5</a>
-                        <a href="https://www.imooc.com/u/index/allcourses?page=2">下一页</a>
-                        <a href="https://www.imooc.com/u/index/allcourses?page=5">尾页</a>
+                        <#if -1 = page.prePage>
+                            <span class="disabled_page">首页</span>
+                            <span class="disabled_page">上一页</span>
+                        <#else>
+                            <a href="/index/user/learn_log.do?currentPage=1">首页</a>
+                            <a href="/index/user/learn_log.do?currentPage=${page.prePage}">上一页</a>
+                        </#if>
+                        <#if 0 lt page.currentPage - 2>
+                            <a class="text-page-tag" href="/index/user/learn_log.do?currentPage=${page.currentPage - 2}">${page.currentPage - 2}</a>
+                        </#if>
+                        <#if 0 lt page.currentPage - 1>
+                            <a class="text-page-tag" href="/index/user/learn_log.do?currentPage=${page.currentPage - 1}">${page.currentPage - 1}</a>
+                        </#if>
+                        <a href="javascript:void(0)" class="active text-page-tag">${page.currentPage}</a>
+                        <#if page.totalPage gte page.currentPage + 1>
+                            <a class="text-page-tag" href="/index/user/learn_log.do?currentPage=${page.currentPage + 1}">${page.currentPage + 1}</a>
+                        </#if>
+                        <#if page.totalPage gte page.currentPage + 2>
+                            <a class="text-page-tag" href="/index/user/learn_log.do?currentPage=${page.currentPage + 2}">${page.currentPage + 2}</a>
+                        </#if>
+
+                        <#if -1 = page.nextPage>
+                            <span class="disabled_page">下一页</span>
+                            <span class="disabled_page">尾页</span>
+                        <#else>
+                            <a href="/index/user/learn_log.do?currentPage=${page.nextPage}">下一页</a>
+                            <a href="/index/user/learn_log.do?currentPage=${page.totalPage}">尾页</a>
+                        </#if>
                     </div>
                 </div>
             </div>
