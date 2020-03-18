@@ -2,7 +2,7 @@
 <html xml:lang="zh" lang="zh" id="auto-id-1573148872711">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>${courseChapterLesson.course.courseName}</title>
+    <title>${courseChapterLesson.course.courseName}-${lessonInfo.indexLesson.lessonName}</title>
     <link rel="stylesheet" href="/static/index/course/css/pt_newpages_common_head_6b95ec34c7e4083bcbf1986fcf77fadb.css">
     <link rel="stylesheet" name="cssUrl" href="/static/index/course/css/a75e718e9c6704281a16855bf43a5155.css">
     <link rel="stylesheet" name="cssUrl" href="/static/index/course/css/lessonVideo.css">
@@ -16,15 +16,19 @@
     <div class="m-courselb" id="auto-id-1573148872710">
         <div class="cl-bg"></div>
         <a hidefocus="true" id="j-back" class="cl-back" href="/index/course/detail.do?courseNo=${courseChapterLesson.course.courseNo}">返回课程主页</a>
-        <a hidefocus="true" id="j-prev" class="cl-pre" style=""></a>
-        <a hidefocus="true" id="j-next" class="cl-next" style=""></a>
+        <#if lessonInfo.preLesson??>
+            <a hidefocus="true" id="j-prev" class="cl-pre" href="/index/course/video.do?lessonNo=${lessonInfo.preLesson.lessonNo}" style=""></a>
+        </#if>
+        <#if lessonInfo.nextLesson??>
+            <a hidefocus="true" id="j-next" class="cl-next" href="/index/course/video.do?lessonNo=${lessonInfo.nextLesson.lessonNo}" style=""></a>
+        </#if>
         <div id="course-learn-box" class="course-learn">
             <div class="m-courselearn" id="auto-id-1573148872709">
                 <p class="cl-title f-thide j-clTitle">
-                    <span class="cl-chapter j-chapter">章节5</span>
+                    <span class="cl-chapter j-chapter">章节${lessonInfo.chapterSort}</span>
                     <span class="cl-lesson j-lessonIndex">课时</span>
-                    <span class="cl-lessonnum j-lessonnum">5-1</span>
-                    <span class="cl-lessonname j-lessonname">热力学第三定律</span>
+                    <span class="cl-lessonnum j-lessonnum">${lessonInfo.chapterSort}-${lessonInfo.lessonSort}</span>
+                    <span class="cl-lessonname j-lessonname">${lessonInfo.indexLesson.lessonName}</span>
                 </p>
                 <div class="learn-total" id="auto-id-1573148872708">
                     <div id="lesson-learn-box" class="learn-box">
@@ -59,8 +63,8 @@
     <div class="m-ctb">
         <div class="courseintro">
             <div class="f-fl courseTitle j-courseintro">
-                <div class="u-coursetitle f-fl"><a
-                        href="https://study.163.com/course/courseMain.htm?courseId=1004570029" target="_blank"
+                <div class="u-coursetitle f-fl">
+                    <a href="/index/course/detail.do?courseNo=${courseChapterLesson.course.courseNo}" target="_blank"
                         class="j-info f-thide">${courseChapterLesson.course.courseName}</a>
                     <p class="j-info f-thide">讲师：${courseChapterLesson.course.courseAuthor}</p></div>
             </div>
@@ -73,7 +77,7 @@
         <div style=" height: 300px; background: #00b33b">
             <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="320" height="300"
                    poster="oceans.png">
-                <source src="${indexLesson.lessonVideo}" type="video/mp4">
+                <source src="${lessonInfo.indexLesson.lessonVideo}" type="video/mp4">
             </video>
         </div>
         <script>
@@ -101,12 +105,12 @@
                             <div class="chapter">
                                 <span class="f-fl ch">章节</span>
                                 <span class="f-fl f-thide chaptericon">
-                                <span>1</span>
+                                <span>${chapter_index + 1}</span>
                             </span>
                                 <span class="f-fl f-thide chaptername">第${chapter_index + 1}章 ${chapter.chapter.chapterName}</span>
                             </div>
                             <#list chapter.lessonList as lesson>
-                                <#if indexLesson.lessonNo = lesson.lessonNo>
+                                <#if lessonInfo.indexLesson.lessonNo = lesson.lessonNo>
                                     <div class="section section-cur" data-lesson="${lesson.lessonNo}">
                                         <span class="f-fl f-thide ks" style="color: rgb(153, 153, 153);">${chapter_index + 1}-${lesson_index + 1}</span>
                                         <span class="f-fl ksw" style="background: rgb(58, 62, 74);">

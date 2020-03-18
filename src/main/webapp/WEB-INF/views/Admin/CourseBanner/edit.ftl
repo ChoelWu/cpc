@@ -142,7 +142,7 @@
         form.on('submit(add)', function (data) {
             var rawData = data.field;
             $.ajax({
-                url: '/admin/course_banner/add.do',
+                url: '/admin/course_banner/edit.do',
                 type: 'post',
                 data: {data: JSON.stringify(rawData)},
                 success: function (res) {

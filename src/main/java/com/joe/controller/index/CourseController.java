@@ -12,6 +12,7 @@ package com.joe.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.*;
 import com.joe.pojo.ChapterLessonPOJO;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/index/course")
@@ -224,9 +226,62 @@ public class CourseController {
         // 查询课程章节和课时信息
         CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(indexLesson.getCourseNo());
 
+        // 前/后一课时
+        IndexLesson preLesson = null;
+        IndexLesson nextLesson = null;
+        int chapterSort = 0;
+        int lessonSort = 0;
+        for (ChapterLessonPOJO chapterLessonPOJO : courseChapterLessonPOJO.getChapterList()) {
+            int chapterIndex = courseChapterLessonPOJO.getChapterList().indexOf(chapterLessonPOJO);
+
+            for (IndexLesson lesson : chapterLessonPOJO.getLessonList()) {
+                if (StringUtils.equals(lesson.getLessonNo(), indexLesson.getLessonNo())) {
+                    int lessonIndex = chapterLessonPOJO.getLessonList().indexOf(lesson);
+
+                    // 前一节课
+                    if(0 == lessonIndex && 0 != chapterIndex) {
+                        // 如果课时序号为0，章节序号不为0，前一节课程在上一章
+                        List<IndexLesson> indexLessonList = courseChapterLessonPOJO.getChapterList().get(chapterIndex - 1).getLessonList();
+                        if(0 != indexLessonList.size()) {
+                            preLesson = indexLessonList.get(indexLessonList.size() - 1);
+                        }
+                    } else if(0 != lessonIndex) {
+                        // 如果课时序号不为0，章节序号不为0，前一节课在本章
+                        preLesson = chapterLessonPOJO.getLessonList().get(lessonIndex - 1);
+                    }
+
+                    // 后一节课
+                    if((chapterLessonPOJO.getLessonList().size() - 1) == lessonIndex && (courseChapterLessonPOJO.getChapterList().size() - 1) != chapterIndex) {
+                        // 如果课时序号为课时数-1，章节序号不为章节数-1，后一节课程在后一章
+                        List<IndexLesson> indexLessonList = courseChapterLessonPOJO.getChapterList().get(chapterIndex + 1).getLessonList();
+
+                        if(0 != indexLessonList.size()) {
+                            nextLesson = indexLessonList.get(0);
+                        }
+                    } else if((chapterLessonPOJO.getLessonList().size() - 1) != lessonIndex) {
+                        // 如果课时序号不为课时总数-1，后一节课在本章
+                        nextLesson = chapterLessonPOJO.getLessonList().get(lessonIndex + 1);
+                    }
+
+                    chapterSort = chapterIndex + 1;
+                    lessonSort = lessonIndex + 1;
+
+                    break;
+                }
+            }
+        }
+
+        // 课程信息集合
+        Map<String, Object> lessonInfo = Maps.newHashMap();
+        lessonInfo.put("indexLesson", indexLesson);
+        lessonInfo.put("preLesson", preLesson);
+        lessonInfo.put("nextLesson", nextLesson);
+        lessonInfo.put("chapterSort", chapterSort);
+        lessonInfo.put("lessonSort", lessonSort);
+
         // 绑定数据
         model.addAttribute("courseChapterLesson", courseChapterLessonPOJO);
-        model.addAttribute("indexLesson", indexLesson);
+        model.addAttribute("lessonInfo", lessonInfo);
 
         // 添加课程学习记录
         setUserCourse(indexLesson, indexUser.getUserNo());
@@ -237,9 +292,9 @@ public class CourseController {
         indexLearnLogService.save(indexLearnLog);
 
         // 返回对应的页面视图
-        if (StringUtils.equals(indexLesson.getLessonType(), "")) {
+        if (StringUtils.equals(indexLesson.getLessonType(), "1")) {
             return "Index/Course/videoPlayer";
-        } else if (StringUtils.equals(indexLesson.getLessonType(), "")) {
+        } else if (StringUtils.equals(indexLesson.getLessonType(), "2")) {
             return "Index/Course/swfPlayer";
         } else {
             return "Index/Course/swfVideoPlayer";

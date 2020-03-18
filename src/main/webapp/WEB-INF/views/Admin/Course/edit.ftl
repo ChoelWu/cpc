@@ -55,7 +55,7 @@
                     <select id="courseCateNo" name="courseCateNo" class="valid" lay-verify="required">
                         <option value="">无</option>
                         <#list courseCateList as courseCate>
-                            <option value="${courseCate.indexCourseCate.courseCateNo}" <#if courseCate.indexCourseCate.courseCateNo=indexCourse.courseCateNo>selected</#if>>${courseCate.indexCourseCate.courseCateName}</option>
+                            <option value="${courseCate.indexCourseCate.courseCateNo}" disabled <#if courseCate.indexCourseCate.courseCateNo=indexCourse.courseCateNo>selected</#if>>${courseCate.indexCourseCate.courseCateName}</option>
                             <#list courseCate.childCourseCateList as childCourseCate>
                                 <option value="${childCourseCate.courseCateNo}" <#if childCourseCate.courseCateNo=indexCourse.courseCateNo>selected</#if>>|--${childCourseCate.courseCateName}</option>
                             </#list>
@@ -191,11 +191,8 @@
         //自定义验证规则
         form.verify({
             courseName: function (value) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (value.length > 16) {
-                    return '用户名长度在 16 字符之内';
+                if (value.length > 30) {
+                    return '用户名长度在 30 字符之内';
                 }
                 var checkRel = checkCourseName("${indexCourse.courseNo}", value);
                 if ("false" === checkRel || !checkRel) {
