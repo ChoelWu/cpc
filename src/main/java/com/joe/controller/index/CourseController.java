@@ -63,17 +63,20 @@ public class CourseController {
     /**
      * 课程首页
      *
-     * @param model model
+     * @param model   model
+     * @param session session
      * @return 返回页面视图
      */
     @RequestMapping("/index.do")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+
         // 获取最新课程
-        List<IndexCourse> newCourseList = getNewCourse(null, 8);
+        List<IndexCourse> newCourseList = getNewCourse(null, 8, indexUser.getUserType());
         List<IndexCoursePOJO> newIndexCourseList = indexCourseToIndexCoursePOJO(newCourseList);
 
         // 获取热门课程
-        List<IndexCourse> hotCourseList = getHotCourse(null, 8);
+        List<IndexCourse> hotCourseList = getHotCourse(null, 8, indexUser.getUserType());
         List<IndexCoursePOJO> hotIndexCourseList = indexCourseToIndexCoursePOJO(hotCourseList);
 
         // 查询出所有的课程分类
@@ -139,14 +142,17 @@ public class CourseController {
      *
      * @param courseNo 课程编号
      * @param model    model
+     * @param session  session
      * @return 返回视图
      */
     @RequestMapping("/detail.do")
-    public String courseDetail(String courseNo, Model model) {
+    public String courseDetail(String courseNo, Model model, HttpSession session) {
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+
         CourseChapterLessonPOJO courseChapterLessonPOJO = getCourseInfoList(courseNo);
 
         // 获取热门课程
-        List<IndexCourse> hotCourseList = getHotCourse(null, 8);
+        List<IndexCourse> hotCourseList = getHotCourse(null, 8, indexUser.getUserType());
         List<IndexCoursePOJO> hotIndexCourseList = indexCourseToIndexCoursePOJO(hotCourseList);
 
         // 查询课程栏目
@@ -185,7 +191,9 @@ public class CourseController {
      * @return 返回页面视图
      */
     @RequestMapping("/list.do")
-    public String list(Model model, String courseCateNo, String courseName, @RequestParam(required = false, defaultValue = "1") int currentPage) {
+    public String list(Model model, String courseCateNo, String courseName, @RequestParam(required = false, defaultValue = "1") int currentPage, HttpSession session) {
+        IndexUser indexUser = (IndexUser) session.getAttribute("indexUser");
+
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(courseCateNo)) {
             indexCourseQueryWrapper.eq("course_cate_no", courseCateNo);
@@ -195,7 +203,7 @@ public class CourseController {
         } else {
             courseName = "";
         }
-        indexCourseQueryWrapper.eq("course_status", "1").orderByDesc("publish_time");
+        indexCourseQueryWrapper.eq("course_status", "1").apply(" CONCAT(',',role,',') like '%," + indexUser.getUserType() + ",%'").orderByDesc("publish_time");
 
         int courseNum = indexCourseService.count(indexCourseQueryWrapper);
         // 分页
@@ -321,14 +329,15 @@ public class CourseController {
      *
      * @param cateNo    所属栏目
      * @param courseNum 获取条数
+     * @param userType  用户角色
      * @return 返回list
      */
-    private List<IndexCourse> getNewCourse(String cateNo, int courseNum) {
+    private List<IndexCourse> getNewCourse(String cateNo, int courseNum, String userType) {
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNoneBlank(cateNo)) {
             indexCourseQueryWrapper.eq("course_cate_no", cateNo);
         }
-        indexCourseQueryWrapper.eq("course_status", "1").orderByDesc("publish_time").last("limit " + courseNum);
+        indexCourseQueryWrapper.eq("course_status", "1").apply(" CONCAT(',',role,',') like '%," + userType + ",%'").orderByDesc("publish_time").last("limit " + courseNum);
 
         return indexCourseService.list(indexCourseQueryWrapper);
     }
@@ -338,14 +347,15 @@ public class CourseController {
      *
      * @param cateNo    所属栏目
      * @param courseNum 获取条数
+     * @param userType  用户角色
      * @return 返回list
      */
-    private List<IndexCourse> getHotCourse(String cateNo, int courseNum) {
+    private List<IndexCourse> getHotCourse(String cateNo, int courseNum, String userType) {
         QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNoneBlank(cateNo)) {
             indexCourseQueryWrapper.eq("course_cate_no", cateNo);
         }
-        indexCourseQueryWrapper.eq("course_status", "1").orderByDesc("course_learn_num").last("limit " + courseNum);
+        indexCourseQueryWrapper.eq("course_status", "1").apply(" CONCAT(',',role,',') like '%," + userType + ",%'").orderByDesc("course_learn_num").last("limit " + courseNum);
 
         return indexCourseService.list(indexCourseQueryWrapper);
     }

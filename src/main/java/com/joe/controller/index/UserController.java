@@ -62,7 +62,7 @@ public class UserController {
 
         // 查询课时记录，倒序排序
         QueryWrapper<IndexUserCourse> indexUserCourseQueryWrapper = new QueryWrapper<>();
-        indexUserCourseQueryWrapper.orderByDesc("last_time");
+        indexUserCourseQueryWrapper.eq("user_no", indexUser.getUserNo()).orderByDesc("last_time");
 
         int userCourseNum = indexUserCourseService.count(indexUserCourseQueryWrapper);
 
@@ -72,7 +72,7 @@ public class UserController {
 
         indexUserCourseQueryWrapper.last("limit " + start + "," + page.getRecordNum());
 
-        List<IndexUserCourse> indexUserCourseList = indexUserCourseService.list();
+        List<IndexUserCourse> indexUserCourseList = indexUserCourseService.list(indexUserCourseQueryWrapper);
 
         List<CourseLogPOJO> courseLogPOJOList = Lists.newArrayList();
         for (IndexUserCourse indexUserCourse : indexUserCourseList) {
