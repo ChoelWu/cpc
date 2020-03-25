@@ -44,7 +44,11 @@
         <div class="user-info clearfix">
             <div class="user-pic" data-is-fans="0" data-is-follows="">
                 <div class="user-pic-bg">
+                    <#if indexUser.userHeadSculpture?? && indexUser.userHeadSculpture=''>
                     <img class="img" src="${indexUser.userHeadSculpture!''}" alt="">
+                    <#else>
+                        <img class="img" src="/static/index/user/image/unkonw-user.jpg" alt="">
+                    </#if>
                 </div><!--user-pic-big end-->
             </div>
             <div class="user-info-right">
@@ -88,8 +92,9 @@
                     <a href="https://www.imooc.com/u/index/fans"><em>0</em></a>
                     <span>粉丝</span>
                 </div>
-                <div class="item follows"><a href="https://www.imooc.com/user/setbindsns" class="set-btn"><i
-                                class="icon-set"></i>个人设置</a></div>
+                <div class="item follows">
+                    <a href="/index/user/config.do" class="set-btn"><i class="icon-set"></i>个人设置</a>
+                </div>
 
             </div><!--.study-info end-->
         </div><!-- .user-info end -->
