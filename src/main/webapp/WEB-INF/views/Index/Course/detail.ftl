@@ -10,34 +10,14 @@
     <link rel="stylesheet" href="/static/index/course/css/lessonList.css">
     <script src="/static/index/course/js/jquery.js"></script>
 <body>
-<!-- 窄条导航 -->
-<div id="globalTopBanner" style="display: none;">
-    <div>
-        <div class="close-adv imv2-close"></div>
-        <img src="/static/index/course/images/course07.jpg"></div>
-    <div>
-        <div class="topInnerCon js-topInnerCon">
-            <div class="topInnerTimeCon js-topInnerTimeCon"><span>距结束</span>
-                <div class="timeout">06</div>
-                <span>天</span>
-                <div class="timeout">23</div>
-                <span>时</span>
-                <div class="timeout">20</div>
-                <span>分</span>
-                <div class="timeout">50</div>
-                <span>秒</span></div>
-        </div>
-    </div>
-</div>
 <div id="new_header">
     <div class="page-container new-header clearfix" id="nav">
         <ul class="nav-item">
-            <li><a href="#//www.imooc.com/" target="_self" class="imooc">课程网站首页</a></li>
-            <li><a href="#//www.imooc.com/course/list" class="active" target="_self">原创课程</a></li>
-            <li><a href="#//coding.imooc.com/" target="_self">引进课程</a></li>
-            <li><a href="#//class.imooc.com/" class="" target="_self">就业培训</a></li>
-            <li><a href="#//www.imooc.com/read" target="_self">其他链接</a></li>
-            <li><a href="#//www.imooc.com/wenda" target="_self">其他链接</a></li>
+            <li><a href="#" target="_self" class="imooc">专题页面1</a></li>
+            <li><a href="#" class="active" target="_self">专题页面2</a></li>
+            <li><a href="#" target="_self">专题页面3</a></li>
+            <li><a href="#" class="" target="_self">专题页面4</a></li>
+            <li><a href="#" target="_self">专题页面5</a></li>
         </ul>
         <div class="header-right">
             <div id="login-area">
@@ -45,7 +25,11 @@
                     <#if indexUser??>
                         <li class="user-card-box" id="header-user-card">
                             <a id="header-avator" class="user-card-item js-header-avator" action-type="my_menu" href="/index/user/index.do" target="_self" title="个人中心">
-                                <img width="40" height="40" src="//img2.mukewang.com/5cfb1b9e0001542e09600960-100-100.jpg" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                <#if indexUser.userHeadSculpture?? && indexUser.userHeadSculpture!=''>
+                                    <img width="40" height="40" src="${indexUser.userHeadSculpture!''}" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                <#else>
+                                    <img width="40" height="40" src="/static/index/user/image/unkonw-user.jpg" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                </#if>
                             </a>
                         </li>
                     <#else>
@@ -223,16 +207,15 @@
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
-                        <li><a href="#//www.imooc.com/" target="_blank">西北师范大学</a></li>
-                        <li><a href="#//www.imooc.com/index/companytrain" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a>
+                        <li><a href="https://www.nwnu.edu.cn/" target="_blank" title="西北师范大学">西北师范大学</a></li>
+                        <li><a href="https://chem.nwnu.edu.cn/" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a>
                         </li>
-                        <li><a href="#//www.imooc.com/about/job" target="_blank">快速连接二</a></li>
-                        <li><a href="#//www.imooc.com/about/contact" target="_blank">快速连接三</a></li>
-                        <li><a href="#//www.imooc.com/about/recruit" target="_blank">快速连接四</a></li>
+                        <li><a href="#" target="_blank">快速连接二</a></li>
+                        <li><a href="#" target="_blank">快速连接三</a></li>
+                        <li><a href="#" target="_blank">快速连接四</a></li>
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="course/files/a9.png"> 2019 imooc.com All
-                    Rights Reserved | 京ICP备 12003892号-11 北京奥鹏文化传媒有限公司</p>
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="course/files/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1</p>
             </div>
         </div>
     </div>

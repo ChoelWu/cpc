@@ -22,26 +22,30 @@
         </button>
         <ul class="nav-item">
             <li>
-                <a href="#/course/list" target="_self">原创课程</a>
+                <a href="#" target="_self">专题页面1</a>
             </li>
             <li>
-                <a href="#" target="_self">引进课程</a>
+                <a href="#" target="_self">专题页面2</a>
             </li>
             <li>
-                <a href="#.com/" target="_self">就业培训</a>
+                <a href="#" target="_self">专题页面3</a>
             </li>
             <li>
-                <a href="#/read" target="_self">其他链接<i class="icn-new"></i></a>
+                <a href="#" target="_self">专题页面4</a>
             </li>
             <li>
-                <a href="#/read" target="_self">其他链接<i class="icn-new"></i></a>
+                <a href="#" target="_self">专题页面5</a>
             </li>
         </ul>
         <div id="login-area">
             <ul class="header-unlogin clearfix">
                 <li class="header-signin">
                     <#if indexUser??>
-                        <a href="/index/user/index.do" id="js-signin-btn" title="个人中心"><img width="40" height="40" src="${indexUser.userHeadSculpture!''}"></a>
+                        <#if indexUser.userHeadSculpture?? && indexUser.userHeadSculpture!=''>
+                            <a href="/index/user/index.do" id="js-signin-btn" title="个人中心"><img width="40" height="40" src="${indexUser.userHeadSculpture!''}"></a>
+                        <#else>
+                            <a href="/index/user/index.do" id="js-signin-btn" title="个人中心"><img width="40" height="40" src="/static/index/user/image/unkonw-user.jpg"></a>
+                        </#if>
                     <#else>
                         <a href="/index/login/login_page.do" id="js-signin-btn">登录&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     </#if>
@@ -252,23 +256,24 @@
     <div class="container">
         <div class="footer-wrap idx-width">
             <div class="footer-sns clearfix">
-                <div class="l"><a href="javascript:void(0);" class="footer-sns-weixin" target="_blank" title="微信"> <i
-                        class="footer-sns-weixin-expand"></i> </a>
-                    <p>官方公众号</p></div>
-                <div class="l"><a href="http://weibo.com/u/3306361973" class="footer-sns-weibo hide-text"
-                                  target="_blank" title="新浪微博">新浪微博</a>
-                    <p>官方微博</p></div>
+<#--                <div class="l"><a href="javascript:void(0);" class="footer-sns-weixin" target="_blank" title="微信"> <i-->
+<#--                        class="footer-sns-weixin-expand"></i> </a>-->
+<#--                    <p>官方公众号</p></div>-->
+<#--                <div class="l">-->
+<#--                    <a href="http://weibo.com/u/3306361973" class="footer-sns-weibo hide-text"-->
+<#--                                  target="_blank" title="新浪微博">新浪微博</a>-->
+<#--                    <p>官方微博</p>-->
+<#--                </div>-->
             </div>
         </div>
         <div class="footer-link">
-            <a href="#/index/companytrain" target="_blank" title="西北师范大学">西北师范大学</a>
-            <a href="#/about/job" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a>
-            <a href="#/about/contact" target="_blank" title="快速连接二">快速连接二</a>
-            <a href="#/about/recruit" target="_blank" title="快速连接三">快速连接二</a>
-            <a href="#/help" target="_blank" title="快速连接四">快速连接四</a>
+            <a href="https://www.nwnu.edu.cn/" target="_blank" title="西北师范大学">西北师范大学</a>
+            <a href="https://chem.nwnu.edu.cn/" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a>
+            <a href="#" target="_blank" title="快速连接二">快速连接二</a>
+            <a href="#" target="_blank" title="快速连接三">快速连接二</a>
+            <a href="#" target="_blank" title="快速连接四">快速连接四</a>
         </div>
-        <div class="footer-copyright"><p><img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/images/a9.png">&nbsp;2019&nbsp;nwnu.ed.cn&nbsp;&nbsp;陇ICP备
-            17000462号-1 Joe</p></div>
+        <div class="footer-copyright"><p><img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/images/a9.png">西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1</p></div>
     </div>
 </div>
 <div id="J_GotoTop" class="elevator">

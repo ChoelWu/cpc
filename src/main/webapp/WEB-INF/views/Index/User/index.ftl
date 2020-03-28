@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>拾叁的鱼书的课程</title>
+    <title>教学课程平台-${indexUser.userName}的个人中心</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
     <meta property="qc:admins" content="77103107776157736375">
@@ -24,12 +24,11 @@
 <div id="new_header">
     <div class="page-container new-header clearfix" id="nav">
         <ul class="nav-item">
-            <li><a href="https://www.imooc.com/" target="_self" class="imooc">课程网站首页</a></li>
-            <li><a href="https://www.imooc.com/course/list" target="_self">原创课程</a></li>
-            <li><a href="https://coding.imooc.com/" target="_self">引进课程</a></li>
-            <li><a href="https://class.imooc.com/" class="" target="_self">就业培训<i class="icn-new"></i></a></li>
-            <li><a href="https://www.imooc.com/read" target="_self">其他链接</a></li>
-            <li><a href="https://www.imooc.com/wenda" target="_self">其他链接</a></li>
+            <li><a href="#" target="_self" class="imooc">专题页面1</a></li>
+            <li><a href="#" target="_self">专题页面2</a></li>
+            <li><a href="#" target="_self">专题页面3</a></li>
+            <li><a href="#" class="" target="_self">专题页面4</a></li>
+            <li><a href="#" target="_self">专题页面5</a></li>
         </ul>
         <div class="header-right">
             <div class="app-download" id="js-app-load">
@@ -63,35 +62,32 @@
                     <span>
                         <#if indexUser.userType='1'>校内学生<#elseif indexUser.userType='2'>校外学生<#elseif indexUser.userType='3'>老师</#if>
                     </span>
-                    <a class="more-user-info" href=""><i class="imv2-edit"></i> 编辑信息</a>
+                    <a class="more-user-info" href="/index/user/config.do"><i class="imv2-edit"></i> 编辑信息</a>
                 </p>
             </div>
-            <div class="user-sign hide">
-                <p class="user-desc" title="疯狂。。。">疯狂。。。</p>
-            </div>
             <div class="study-info clearfix">
-                <div class="item follows">
-                    <div class="u-info-learn" title="学习时长224小时5分" style="cursor:pointer;">
-                        <em>224h</em>
-                        <span>学习时长 </span>
-                    </div>
-                </div>
-                <div class="item follows">
-                    <a href="https://www.imooc.com/u/index/experience"><em>10611</em></a>
-                    <span>经验</span>
-                </div>
-                <div class="item follows">
-                    <a href="https://www.imooc.com/u/index/credit"><em>1</em></a>
-                    <span>积分</span>
-                </div>
-                <div class="item follows">
-                    <a href="https://www.imooc.com/u/index/follows"><em>1</em></a>
-                    <span>关注</span>
-                </div>
-                <div class="item follows">
-                    <a href="https://www.imooc.com/u/index/fans"><em>0</em></a>
-                    <span>粉丝</span>
-                </div>
+<#--                <div class="item follows">-->
+<#--                    <div class="u-info-learn" title="学习时长224小时5分" style="cursor:pointer;">-->
+<#--                        <em>224h</em>-->
+<#--                        <span>学习时长 </span>-->
+<#--                    </div>-->
+<#--                </div>-->
+<#--                <div class="item follows">-->
+<#--                    <a href="https://www.imooc.com/u/index/experience"><em>10611</em></a>-->
+<#--                    <span>经验</span>-->
+<#--                </div>-->
+<#--                <div class="item follows">-->
+<#--                    <a href="https://www.imooc.com/u/index/credit"><em>1</em></a>-->
+<#--                    <span>积分</span>-->
+<#--                </div>-->
+<#--                <div class="item follows">-->
+<#--                    <a href="https://www.imooc.com/u/index/follows"><em>1</em></a>-->
+<#--                    <span>关注</span>-->
+<#--                </div>-->
+<#--                <div class="item follows">-->
+<#--                    <a href="https://www.imooc.com/u/index/fans"><em>0</em></a>-->
+<#--                    <span>粉丝</span>-->
+<#--                </div>-->
                 <div class="item follows">
                     <a href="/index/user/config.do" class="set-btn"><i class="icon-set"></i>个人设置</a>
                 </div>
@@ -225,36 +221,24 @@
 <div id="footer" data="u,allcourses">
     <div class="waper">
         <div class="footerwaper clearfix">
-            <div class="followus r">
-                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">
-                    <div class="flw-weixin-box"></div>
-                </a>
-                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>
-                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>
-            </div>
+<#--            <div class="followus r">-->
+<#--                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">-->
+<#--                    <div class="flw-weixin-box"></div>-->
+<#--                </a>-->
+<#--                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>-->
+<#--                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>-->
+<#--            </div>-->
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
-                        <li><a href="https://www.imooc.com/" target="_blank">网站首页</a></li>
-                        <li><a href="https://www.imooc.com/index/companytrain" target="_blank" title="企业合作">企业合作</a>
-                        </li>
-                        <li><a href="https://www.imooc.com/about/job" target="_blank">人才招聘</a></li>
-                        <li><a href="https://www.imooc.com/about/contact" target="_blank">联系我们</a></li>
-                        <li><a href="https://www.imooc.com/about/recruit" target="_blank">讲师招募</a></li>
-                        <li><a href="https://www.imooc.com/help" target="_blank">帮助中心</a></li>
-                        <li><a href="https://www.imooc.com/user/feedback" target="_blank">意见反馈</a></li>
-                        <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>
-                        <li><a href="https://git.imooc.com/" target="_blank">代码托管</a></li>
-                        <li><a href="https://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>
-                        <!--  <li><a href="/corp/index" target="_blank">合作专区</a></li>
-                         <li><a href="/about/us" target="_blank">关于我们</a></li> -->
+                        <li><a href="https://www.nwnu.edu.cn/" target="_blank" title="西北师范大学">西北师范大学</a></li>
+                        <li><a href="https://chem.nwnu.edu.cn/" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a></li>
+                        <li><a href="#" target="_blank" title="快速连接二">快速连接二</a></li>
+                        <li><a href="#" target="_blank" title="快速连接三">快速连接三</a></li>
+                        <li><a href="#" target="_blank" title="快速连接四">快速连接四</a></li>
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/user/image/a9.png"> 2020
-                    imooc.com All Rights Reserved | 京ICP备 12003892号-11 <a
-                            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802030151"
-                            style="color: #93999F;margin:0 5px;" target="_blank"><i class="beian"></i>京公网安备11010802030151号</a>
-                </p>
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/user/image/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1 </p>
             </div>
         </div>
     </div>
@@ -304,18 +288,6 @@
         z-index: 99999999
     }
 </style>
-
-<div id="layer_sendmsg" class="font-colorg" style="display:none">
-    <div class="sendadd">
-        <h4>发送好友申请<span class="tipclose"></span></h4>
-        <div class="sendcon">
-            <textarea class="chatInput" id="textInput" type="text" name="说点什么吧" cols="1"></textarea>
-        </div>
-        <div class="sendsq">
-            <a href="javascript:void(0)" id="sendBtn" class="sendInvite btn btn-green">发送申请</a>
-        </div>
-    </div>
-</div>
 <div style="display: none">
     <script>
         (function () {

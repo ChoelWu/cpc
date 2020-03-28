@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Vue_搜索_慕课网</title>
+    <title>教学课程平台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
     <link rel="stylesheet" href="/static/index/course/css/base.css" type="text/css">
@@ -18,12 +18,11 @@
 <div id="new_header">
     <div class="page-container new-header clearfix" id="nav">
         <ul class="nav-item">
-            <li><a href="#//www.imooc.com/" target="_self" class="imooc">课程网站首页</a></li>
-            <li><a href="#//www.imooc.com/course/list" class="active" target="_self">原创课程</a></li>
-            <li><a href="#//coding.imooc.com/" target="_self">引进课程</a></li>
-            <li><a href="#//class.imooc.com/" class="" target="_self">就业培训</a></li>
-            <li><a href="#//www.imooc.com/read" target="_self">其他链接</a></li>
-            <li><a href="#//www.imooc.com/wenda" target="_self">其他链接</a></li>
+            <li><a href="#" target="_self" class="imooc">专题页面1</a></li>
+            <li><a href="#" class="active" target="_self">专题页面2</a></li>
+            <li><a href="#" target="_self">专题页面3</a></li>
+            <li><a href="#" class="" target="_self">专题页面4</a></li>
+            <li><a href="#" target="_self">专题页面5</a></li>
         </ul>
         <div class="header-right">
             <div id="login-area">
@@ -31,7 +30,11 @@
                     <#if indexUser??>
                         <li class="user-card-box" id="header-user-card">
                             <a id="header-avator" class="user-card-item js-header-avator" action-type="my_menu" href="/index/user/index.do" target="_self" title="个人中心">
-                                <img width="40" height="40" src="//img2.mukewang.com/5cfb1b9e0001542e09600960-100-100.jpg" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                <#if indexUser.userHeadSculpture?? && indexUser.userHeadSculpture!=''>
+                                    <img width="40" height="40" src="${indexUser.userHeadSculpture!''}" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                <#else>
+                                    <img width="40" height="40" src="/static/index/user/image/unkonw-user.jpg" style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle;">
+                                </#if>
                             </a>
                         </li>
                     <#else>
@@ -229,35 +232,31 @@
 <div id="footer" data="search,index">
     <div class="waper">
         <div class="footerwaper clearfix">
-            <div class="followus r">
-                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">
-                    <div class="flw-weixin-box"></div>
-                </a>
-                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>
-                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>
-            </div>
+<#--            <div class="followus r">-->
+<#--                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">-->
+<#--                    <div class="flw-weixin-box"></div>-->
+<#--                </a>-->
+<#--                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>-->
+<#--                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>-->
+<#--            </div>-->
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
-                        <li><a href="https://www.imooc.com/" target="_blank">网站首页</a></li>
-                        <li><a href="https://www.imooc.com/about/cooperate" target="_blank" title="企业合作">企业合作</a></li>
-                        <li><a href="https://www.imooc.com/about/job" target="_blank">人才招聘</a></li>
-                        <li><a href="https://www.imooc.com/about/contact" target="_blank">联系我们</a></li>
-                        <li><a href="https://www.imooc.com/about/recruit" target="_blank">讲师招募</a></li>
-                        <li><a href="https://www.imooc.com/help" target="_blank">帮助中心</a></li>
-                        <li><a href="https://www.imooc.com/user/feedback" target="_blank">意见反馈</a></li>
-                        <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>
-                        <li><a href="https://git.imooc.com/" target="_blank">代码托管</a></li>
-                        <li><a href="https://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>
+                        <li><a href="https://www.nwnu.edu.cn/" target="_blank" title="西北师范大学">西北师范大学</a></li>
+                        <li><a href="https://chem.nwnu.edu.cn/" target="_blank" title="西北师范大学化学化工学院">西北师范大学化学化工学院</a></li>
+                        <li><a href="#" target="_blank" title="快速连接二">快速连接二</a></li>
+                        <li><a href="#" target="_blank" title="快速连接三">快速连接三</a></li>
+                        <li><a href="#" target="_blank" title="快速连接四">快速连接四</a></li>
+<#--                        <li><a href="https://www.imooc.com/help" target="_blank">帮助中心</a></li>-->
+<#--                        <li><a href="https://www.imooc.com/user/feedback" target="_blank">意见反馈</a></li>-->
+<#--                        <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>-->
+<#--                        <li><a href="https://git.imooc.com/" target="_blank">代码托管</a></li>-->
+<#--                        <li><a href="https://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>-->
                         <!--  <li><a href="/corp/index" target="_blank">合作专区</a></li>
                          <li><a href="/about/us" target="_blank">关于我们</a></li> -->
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/a9.png"> 2020
-                    imooc.com All Rights Reserved | 京ICP备 12003892号-11 <a
-                            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802030151"
-                            style="color: #93999F;margin:0 5px;" target="_blank"><i class="beian"></i>京公网安备11010802030151号</a>
-                </p>
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1 </p>
             </div>
         </div>
     </div>
