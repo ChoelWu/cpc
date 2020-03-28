@@ -32,7 +32,7 @@
         </ul>
         <div class="header-right">
             <div class="app-download" id="js-app-load">
-                <a href="/index/login/logout.do" target="_blank">退出登录</a>
+                <a onclick="logout();" style="cursor: pointer;">退出登录</a>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
             <div class="user-pic" data-is-fans="0" data-is-follows="">
                 <div class="user-pic-bg">
                     <#if indexUser.userHeadSculpture?? && indexUser.userHeadSculpture=''>
-                    <img class="img" src="${indexUser.userHeadSculpture!''}" alt="">
+                        <img class="img" src="${indexUser.userHeadSculpture!''}" alt="">
                     <#else>
                         <img class="img" src="/static/index/user/image/unkonw-user.jpg" alt="">
                     </#if>
@@ -110,35 +110,6 @@
                                 class="icon-drop_right"></b>
                     </a>
                 </li>
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/allfollows">-->
-<#--                        <i class="imv2-tick"></i><span>收藏</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
-                <!-- 只能自己看的 -->
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/notebook">-->
-<#--                        <i class="imv2-nav_note"></i><span>笔记</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
-
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/bbs">-->
-<#--                        <i class="icon-yuanwen"></i><span>猿问</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
-
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/articles">-->
-<#--                        <i class="icon-blog"></i><span>手记</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
-
-<#--                <li>-->
-<#--                    <a href="https://www.imooc.com/u/index/read">-->
-<#--                        <i class="imv2-feather-o"></i><span>专栏</span><b class="icon-drop_right"></b>-->
-<#--                    </a>-->
-<#--                </li>-->
             </ul>
         </div>
         <div class="u-container">
@@ -221,13 +192,6 @@
 <div id="footer" data="u,allcourses">
     <div class="waper">
         <div class="footerwaper clearfix">
-<#--            <div class="followus r">-->
-<#--                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">-->
-<#--                    <div class="flw-weixin-box"></div>-->
-<#--                </a>-->
-<#--                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>-->
-<#--                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>-->
-<#--            </div>-->
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
@@ -244,39 +208,6 @@
     </div>
 </div>
 
-<div id="J_GotoTop" class="elevator">
-    <a href="https://www.imooc.com/user/feedback" class="elevator-msg" target="_blank">
-        <i class="icon-feedback"></i>
-        <span class="">意见反馈</span>
-    </a>
-    <a href="https://order.imooc.com/pay/sharegoods" class="elevator-dist" style="display: none;" target="_blank">
-        <i class=""></i>
-        <span class="">分销返利</span>
-    </a>
-    <!-- <a href="//www.imooc.com/act/invite" class="elevator-dist" target="_blank">
-        <i class=""></i>
-        <span class="">邀请有奖</span>
-    </a> -->
-    <a href="https://www.imooc.com/help" class="elevator-faq" target="_blank">
-        <i class="icon-ques"></i>
-        <span class="">帮助中心</span>
-    </a>
-    <a href="https://www.imooc.com/mobile/app" target="_blank" class="elevator-app">
-        <i class="icon-appdownload"></i>
-        <span class="">APP下载</span>
-        <div class="elevator-app-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin">
-        <i class="icon-wxgzh"></i>
-        <span class="">官方微信</span>
-        <div class="elevator-weixin-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-top no-goto" style="display:none" id="backTop">
-        <i class="icon-up2"></i>
-        <span class="">返回顶部</span>
-    </a>
-</div>
-
 <div id="globalRightFloat"></div>
 
 <style type="text/css">
@@ -290,6 +221,27 @@
 </style>
 <div style="display: none">
     <script>
+        function logout() {
+            $.ajax({
+                url: '/index/login/logout.do',
+                type: 'post',
+                success: function (res) {
+                    // 退出登录失败
+                    if('1' !== res.status && 1 !== res.status) {
+                        setTimeout(function() {
+                            layui.use(['layer'], function(){
+                                var layer = layui.layer;
+                                layer.msg("操作失败！");
+                            });
+                        }, 1000);
+                    }
+
+                    // 跳转至课程首页
+                    window.location.href = "/index/course/index.do";
+                }
+            });
+        }
+
         (function () {
             var bp = document.createElement('script');
             var curProtocol = window.location.protocol.split(':')[0];

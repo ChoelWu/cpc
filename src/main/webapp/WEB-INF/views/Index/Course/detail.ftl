@@ -13,10 +13,10 @@
 <div id="new_header">
     <div class="page-container new-header clearfix" id="nav">
         <ul class="nav-item">
-            <li><a href="#" target="_self" class="imooc">专题页面1</a></li>
-            <li><a href="#" class="active" target="_self">专题页面2</a></li>
+            <li><a href="#" target="_self">专题页面1</a></li>
+            <li><a href="#" target="_self">专题页面2</a></li>
             <li><a href="#" target="_self">专题页面3</a></li>
-            <li><a href="#" class="" target="_self">专题页面4</a></li>
+            <li><a href="#" target="_self">专题页面4</a></li>
             <li><a href="#" target="_self">专题页面5</a></li>
         </ul>
         <div class="header-right">
@@ -215,7 +215,7 @@
                         <li><a href="#" target="_blank">快速连接四</a></li>
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="course/files/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1</p>
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/images/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1 </p>
             </div>
         </div>
     </div>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0039)https://www.imooc.com/search/?words=Vue -->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,10 +17,10 @@
 <div id="new_header">
     <div class="page-container new-header clearfix" id="nav">
         <ul class="nav-item">
-            <li><a href="#" target="_self" class="imooc">专题页面1</a></li>
-            <li><a href="#" class="active" target="_self">专题页面2</a></li>
+            <li><a href="#" target="_self">专题页面1</a></li>
+            <li><a href="#" target="_self">专题页面2</a></li>
             <li><a href="#" target="_self">专题页面3</a></li>
-            <li><a href="#" class="" target="_self">专题页面4</a></li>
+            <li><a href="#" target="_self">专题页面4</a></li>
             <li><a href="#" target="_self">专题页面5</a></li>
         </ul>
         <div class="header-right">
@@ -232,13 +231,6 @@
 <div id="footer" data="search,index">
     <div class="waper">
         <div class="footerwaper clearfix">
-<#--            <div class="followus r">-->
-<#--                <a class="followus-weixin" href="javascript:;" target="_blank" title="微信">-->
-<#--                    <div class="flw-weixin-box"></div>-->
-<#--                </a>-->
-<#--                <a class="followus-weibo" href="http://weibo.com/u/3306361973" target="_blank" title="新浪微博"></a>-->
-<#--                <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>-->
-<#--            </div>-->
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
@@ -247,47 +239,12 @@
                         <li><a href="#" target="_blank" title="快速连接二">快速连接二</a></li>
                         <li><a href="#" target="_blank" title="快速连接三">快速连接三</a></li>
                         <li><a href="#" target="_blank" title="快速连接四">快速连接四</a></li>
-<#--                        <li><a href="https://www.imooc.com/help" target="_blank">帮助中心</a></li>-->
-<#--                        <li><a href="https://www.imooc.com/user/feedback" target="_blank">意见反馈</a></li>-->
-<#--                        <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>-->
-<#--                        <li><a href="https://git.imooc.com/" target="_blank">代码托管</a></li>-->
-<#--                        <li><a href="https://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>-->
-                        <!--  <li><a href="/corp/index" target="_blank">合作专区</a></li>
-                         <li><a href="/about/us" target="_blank">关于我们</a></li> -->
                     </ul>
                 </div>
-                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1 </p>
+                <p>Copyright <img draggable="false" class="moco-emoji" alt="©" src="/static/index/course/images/a9.png"> 西北师范大学-化工学院 Copyright © 2019-2030 All Rights Reserved 　陇ICP备17000462号-1 </p>
             </div>
         </div>
     </div>
-</div>
-<div id="J_GotoTop" class="elevator">
-    <a href="https://www.imooc.com/user/feedback" class="elevator-msg" target="_blank">
-        <i class="icon-feedback"></i>
-        <span class="">意见反馈</span>
-    </a>
-    <a href="https://order.imooc.com/pay/sharegoods" class="elevator-dist" target="_blank">
-        <i class=""></i>
-        <span class="">分销返利</span>
-    </a>
-    <a href="https://www.imooc.com/help" class="elevator-faq" target="_blank">
-        <i class="icon-ques"></i>
-        <span class="">帮助中心</span>
-    </a>
-    <a href="https://www.imooc.com/mobile/app" target="_blank" class="elevator-app">
-        <i class="icon-appdownload"></i>
-        <span class="">APP下载</span>
-        <div class="elevator-app-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin">
-        <i class="icon-wxgzh"></i>
-        <span class="">官方微信</span>
-        <div class="elevator-weixin-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-top no-goto" style="display:none" id="backTop">
-        <i class="icon-up2"></i>
-        <span class="">返回顶部</span>
-    </a>
 </div>
 <script src="/static/index/course/js/jquery.js"></script>
 <div style="display: none">
