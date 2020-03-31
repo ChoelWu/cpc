@@ -159,14 +159,14 @@
                 <label for="courseCaution" class="layui-form-label">课程须知</label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入内容" id="courseCaution" name="courseCaution"
-                              class="layui-textarea">${indexCourse.courseCaution}</textarea>
+                              class="layui-textarea">${indexCourse.courseCaution!''}</textarea>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label for="courseGoal" class="layui-form-label">课程目标</label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入内容" id="courseGoal" name="courseGoal"
-                              class="layui-textarea">${indexCourse.courseGoal}</textarea>
+                              class="layui-textarea">${indexCourse.courseGoal!''}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">

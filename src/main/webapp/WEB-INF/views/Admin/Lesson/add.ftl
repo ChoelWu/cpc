@@ -183,20 +183,24 @@
             field: "multipartSwf",
             accept: "file",
             ext: 'swf',
+            data: {
+                courseNo: "${courseNo}",
+                chapterNo: "${chapterNo}",
+            },
             before: function (obj) {
                 //loading层
-                videoIndex = parent.layer.load(1, {
+                swfIndex = parent.layer.load(1, {
                     shade: [0.1,'#fff'] //0.1透明度的白色背景
                 });
 
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#multipartVideoText').html(file.name);
+                    $('#multipartSwfText').html(file.name);
                 });
             },
             done: function (res) {
                 parent.layer.close(swfIndex);
-                $("#lessonVideo").val(res.data);
+                $("#lessonSwf").val(res.data);
                 return layer.msg(res.message);
             },
             error: function () {

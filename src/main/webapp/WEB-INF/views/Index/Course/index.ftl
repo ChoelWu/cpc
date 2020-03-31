@@ -90,16 +90,24 @@
                         <#if courseCate.presentCourseList??>
                             <#list courseCate.presentCourseList as presentCourse>
                                 <div class="l banner-course-card">
-                                    <a href="#/217.html?mc_marking=26dd86266f55cfc7a3b8b624af302664&amp;mc_channel=qianduankaifa1"
-                                       target="_blank" title="大学化学实验" class="clearfix">
+                                    <a href="/index/course/detail.do?courseNo=${presentCourse.courseNo}"
+                                       target="_blank" title="${presentCourse.courseName}" class="clearfix">
                                         <img src="${presentCourse.courseCover}" class="l">
                                         <div class="l course-card">
                                             <h3 class="course-card-name">${presentCourse.courseName}</h3>
-                                            <div class="course-card-price l">大三（下）</div>
+                                            <div class="course-card-price l">${presentCourse.courseFitPeople}</div>
                                             <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                            <div class="course-card-info l">普通</div>
+                                            <div class="course-card-info l">
+                                                <#if presentCourse.courseDifficultLevel = "1">
+                                                    简单
+                                                <#elseif presentCourse.courseDifficultLevel = "2">
+                                                    普通
+                                                <#elseif presentCourse.courseDifficultLevel = "3">
+                                                    困难
+                                                </#if>
+                                            </div>
                                             <div class="course-card-dot l"><i class="imv2-dot_samll"></i></div>
-                                            <div class="course-card-info l"><i class="icon-set_sns"></i>1708</div>
+                                            <div class="course-card-info l"><i class="icon-set_sns"></i>${presentCourse.courseLearnNum}</div>
                                         </div>
                                     </a>
                                 </div>

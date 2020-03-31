@@ -41,7 +41,7 @@
                                 <param name="menu" value="false"/>
                                 <param name="quality" value="high"/>
                                 <param name="bgcolor" value="#000000"/>
-                                <embed id="mySwf" src="./flash1022.swf" menu="false" quality="high" bgcolor="#000000" width="100%"
+                                <embed id="mySwf" src="${lessonInfo.indexLesson.lessonSwf}" menu="false" quality="high" bgcolor="#000000" width="100%"
                                        height="100%" name="movie" align="middle" allowScriptAccess="sameDomain"
                                        type="application/x-shockwave-flash"
                                        pluginspage="http://www.macromedia.com/go/getflashplayer"/>
@@ -50,9 +50,9 @@
                         </div>
                     </div>
                     <div class="cl-info f-cb j-info" id="auto-id-1573149662855">
-                        <a class="cli-base cli-intro j-introbox" title="暂停" onClick="movie.IsPlaying()?movie.StopPlay():movie.Play()">
-                            <span class="j-introbtntxt" title="暂停">暂停</span>
-                        </a>
+<#--                        <a class="cli-base cli-intro j-introbox" title="暂停" onClick="movie.IsPlaying()?movie.StopPlay():movie.Play()">-->
+<#--                            <span class="j-introbtntxt" title="暂停">暂停</span>-->
+<#--                        </a>-->
                     </div>
                 </div>
             </div>

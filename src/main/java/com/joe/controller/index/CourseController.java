@@ -101,7 +101,7 @@ public class CourseController {
                 for (IndexCourseCate adminChildCourseCate : indexCourseCateList) {
                     if (StringUtils.equals(indexCourseCate.getCourseCateNo(), adminChildCourseCate.getParentCourseCateNo())) {
                         adminChildCourseCateList.add(adminChildCourseCate);
-                        childCateNoList.add(indexCourseCate.getCourseCateNo());
+                        childCateNoList.add(adminChildCourseCate.getCourseCateNo());
                     }
                 }
 
@@ -114,7 +114,7 @@ public class CourseController {
                 if (!childCateNoList.isEmpty()) {
                     // 查询父分类的推荐课程
                     QueryWrapper<IndexCourse> indexCourseQueryWrapper = new QueryWrapper<>();
-                    indexCourseQueryWrapper.in("course_cate_no", childCateNoList).orderByDesc("visit_times").last("limit 0, 4");
+                    indexCourseQueryWrapper.eq("is_top", "1").in("course_cate_no", childCateNoList).orderByDesc("visit_times").last("limit 0, 4");
                     List<IndexCourse> indexCourseList = indexCourseService.list(indexCourseQueryWrapper);
 
                     indexCourseCatePOJO.setPresentCourseList(indexCourseList);

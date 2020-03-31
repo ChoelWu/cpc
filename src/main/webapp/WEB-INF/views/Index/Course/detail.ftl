@@ -57,9 +57,9 @@
 
             <div class="statics clearfix">
                 <div class="teacher-info l">
-                    <a href="#//www.imooc.com/u/7459484/courses?sort=publish" target="_blank">
+                    <a href="" target="_blank">
                         <img data-userid="7459484" class="js-usercard-dialog"
-                             src="/static/index/course/images/course07.jpg" width="80" height="80">
+                             src="${course.course.courseCover}" width="80" height="80">
                     </a>
                     <span class="tit">
                         <a>${course.course.courseAuthor!''}</a>
