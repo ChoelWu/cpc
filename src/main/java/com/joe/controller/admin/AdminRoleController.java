@@ -310,7 +310,13 @@ public class AdminRoleController {
      * @return 返回页面视图
      */
     @RequestMapping("/auth_page.do")
-    public String authPage(String roleNo, Model model) {
+    public String authPage(String roleNo, Model model, HttpSession session) {
+        // 查询出当前用户角色
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+        QueryWrapper<AdminRole> currentAdminRoleQueryWrapper = new QueryWrapper<>();
+        currentAdminRoleQueryWrapper.eq("role_no", adminUser.getRoleNo());
+        AdminRole currentAdminRole = adminRoleService.getOne(currentAdminRoleQueryWrapper);
+
         // 查询出已经有的权限
         QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
         adminRoleQueryWrapper.eq("role_no", roleNo);
@@ -351,40 +357,95 @@ public class AdminRoleController {
                             level3Tree.setId(adminAuth.getAuthNo());
                             level3Tree.setField(adminAuth.getAuthNo());
 
+                            // 如果当前循环到的权限已经存在，将checked属性设置为true
                             if (StringUtils.contains("," + authString + ",", "," + adminAuth.getAuthNo() + ",")) {
                                 level3Tree.setChecked(true);
                             }
-                            level3TreeList.add(level3Tree);
+
+                            // 只显示当前用户拥有的权限：如果当前登录的用户是超级账户，直接显示所有权限，否则过滤权限
+                            if (1 == currentAdminRole.getRoleId()) {
+                                level3TreeList.add(level3Tree);
+                            } else {
+                                if (StringUtils.contains("," + currentAdminRole.getRoleAuth() + ",", "," + adminAuth.getAuthNo() + ",")) {
+                                    level3TreeList.add(level3Tree);
+                                }
+                            }
                         }
 
-                        level2Tree.setChildren(level3TreeList);
-                        level2TreeList.add(level2Tree);
+                        // 只有分支存在时才加入树中
+                        if (!level3TreeList.isEmpty()) {
+                            level2Tree.setChildren(level3TreeList);
+                            level2TreeList.add(level2Tree);
+                        }
                     }
                 }
 
-                level1Tree.setChildren(level2TreeList);
-                level1TreeList.add(level1Tree);
+                // 只有分支存在时才加入树中
+                if (!level2TreeList.isEmpty()) {
+                    level1Tree.setChildren(level2TreeList);
+                    level1TreeList.add(level1Tree);
+                }
             }
         }
 
-
+        // 转化为 json 字符串
         Gson gson = new Gson();
         String tree = gson.toJson(level1TreeList);
+
         // 绑定数据
         model.addAttribute("tree", tree);
+        model.addAttribute("roleNo", roleNo);
 
         // 返回页面视图
         return "/Admin/Role/auth_page";
     }
 
+    /**
+     * 修改/分配权限
+     *
+     * @param auth    权限字符串
+     * @param roleNo  角色NO
+     * @param session session
+     * @return 返回操作结果
+     */
     @RequestMapping("/edit_auth.do")
     @ResponseBody
-    public AppResponse<AdminRole> editAuth(String auth) {
-        String a = "[{\\\"title\\\":\\\"个人中心\\\",\\\"id\\\":\\\"AMNO20191211230142T78011\\\",\\\"field\\\":\\\"AMNO20191211230142T78011\\\",\\\"spread\\\":true,\\\"checked\\\":false,\\\"disabled\\\":false,\\\"children\\\":[{\\\"title\\\":\\\"个人信息\\\",\\\"id\\\":\\\"AMNO20191211230245L20373\\\",\\\"field\\\":\\\"AMNO20191211230245L20373\\\",\\\"spread\\\":true,\\\"checked\\\":false,\\\"disabled\\\":false,\\\"children\\\":[]}]}]";
-        String b = "{\"title\":\"张三\",\"id\":\"24\"}";
+    public AppResponse<AdminRole> editAuth(String auth, String roleNo, HttpSession session) {
+        // session 信息
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
+        // 将前端的数据转化为实例
         Gson gson = new Gson();
-        List<Map<String, Object>> treeList = gson.fromJson(auth, new TypeToken<List<Map<String, Object>>>() {
+        List<Tree> treeList = gson.fromJson(auth, new TypeToken<List<Tree>>() {
         }.getType());
-        return AppResponse.success();
+
+        // 循环实例，生成权限编号list
+        List<String> authNoList = Lists.newArrayList();
+        for (Tree tree : treeList) {
+            if (null != tree.getChildren()) {
+                for (Tree childTree : tree.getChildren()) {
+                    if (null != childTree.getChildren()) {
+                        for (Tree babyTree : childTree.getChildren()) {
+                            authNoList.add(babyTree.getId());
+                        }
+                    }
+                }
+            }
+        }
+
+        // 更新角色权限
+        String authNoString = StringUtils.join(authNoList, ",");
+
+        QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
+        adminRoleQueryWrapper.eq("role_no", roleNo);
+        AdminRole adminRole = adminRoleService.getOne(adminRoleQueryWrapper);
+
+        adminRole.setRoleAuth(authNoString);
+        adminRole.setUpdateUserNo(adminUser.getUserNo());
+        adminRole.setUpdateTime(new Date());
+        adminRoleService.updateById(adminRole);
+
+        // 返回操作结果
+        return AppResponse.success("权限分配成功！");
     }
 }

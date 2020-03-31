@@ -26,14 +26,13 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <label class="layui-form-label">选择权限</label>
-            <div class="layui-input-block">
+            <div class="layui-input-block" id="test12">
                 <div id="LAY-auth-tree-index"></div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" type="submit" lay-submit lay-filter="LAY-auth-tree-submit">提交</button>
-                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                <button class="layui-btn" type="submit" id="sb-button">提交</button>
             </div>
         </div>
     </div>
@@ -47,7 +46,6 @@
             tree = layui.tree,
             //模拟数据
             data = ${tree};
-
         // 基本演示
         tree.render({
             elem: '#test12',
@@ -72,30 +70,14 @@
 
         $("#sb-button").click(function() {
             var checkData = tree.getChecked('demoId1');
-            // console.log(checkData);
-            // var auth = [];
-            // checkData.forEach((item,index,array)=>{
-            //     if("undefined" !== typeof(item.children)) {
-            //         item.children.forEach((item1,index1,array1)=>{
-            //             if("undefined" !== typeof(item1.children)) {
-            //                 item1.children.forEach((item2,index2,array2)=>{
-            //                     console.log();
-            //                     if(item2.checked) {
-            //                         console.log(item2);
-            //                         auth.push(item2.id);
-            //                     }
-            //                 });
-            //             }
-            //         });
-            //     }
-            // });
-
-
-            // console.log(JSON.stringify(auth));
+            console.log(checkData);
             $.ajax({
                 url: '/admin/role/edit_auth.do',
                 type: 'post',
-                data: {auth: JSON.stringify(checkData)},
+                data: {
+                    auth: JSON.stringify(checkData),
+                    roleNo: "${roleNo}"
+                },
                 success: function (res) {
                     var icon = 5;
                     if(1 === res.status || "1" === res.status) {
