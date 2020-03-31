@@ -59,10 +59,10 @@
         form.verify({
             roleName: function (value) {
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
+                    return '角色名不能有特殊字符';
                 }
-                if (value.length > 16 || value.length < 6) {
-                    return '用户名长度在6 - 16字符之间';
+                if (value.length > 16) {
+                    return '角色名长度在 16 字符之内';
                 }
             }
         });
