@@ -15,10 +15,13 @@
 
     <aop:aspectj-autoproxy/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 开启shiro中aop注解 -->
+    <aop:config proxy-target-class="true"/>
 
     <!-- 将一部分配置进行分离 -->
     <import resource="applicationContext-datasource.xml"/>
     <import resource="applicationContext-freemarker.xml"/>
+    <import resource="applicationContext-shiro.xml"/>
 
     <mvc:interceptors>
         <mvc:interceptor>

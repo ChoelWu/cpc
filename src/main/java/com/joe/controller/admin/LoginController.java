@@ -18,6 +18,12 @@ import com.joe.commons.app.CommonFunctions;
 import com.joe.entity.AdminUser;
 import com.joe.service.system.AdminUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -48,8 +54,8 @@ public class LoginController {
     /**
      * 登录
      *
-     * @param data    前台表单数据
-     * @param session session
+     * @param data 前端传入的对象
+     * @param session   session
      * @return 返回登录结果
      */
     @RequestMapping("/login.do")
@@ -57,35 +63,48 @@ public class LoginController {
     public AppResponse<String> login(String data, HttpSession session) {
         // 将表单数据转化为对象
         Gson gson = new Gson();
-        AdminUser user = gson.fromJson(data, new TypeToken<AdminUser>() {
+        AdminUser adminUser = gson.fromJson(data, new TypeToken<AdminUser>() {
         }.getType());
 
         // 查询用户
         QueryWrapper<AdminUser> adminUserQueryWrapper = new QueryWrapper<>();
-        adminUserQueryWrapper.eq("user_account", user.getUserAccount());
-        AdminUser adminUser = adminUserService.getOne(adminUserQueryWrapper);
+        adminUserQueryWrapper.eq("user_account", adminUser.getUserAccount());
+        AdminUser existAdminUser = adminUserService.getOne(adminUserQueryWrapper);
 
-        // 用户不存在
-        if (null == adminUser) {
-            logger.error("用户登录账号为 " + user.getUserAccount() + " 的后端用户账户不存在，登录失败");
-            return AppResponse.fail("此用户不存在，请检查帐号是否正确！");
+        // 加密
+        String userNo = (null == existAdminUser || StringUtils.isBlank(existAdminUser.getUserNo())) ? "" : existAdminUser.getUserNo();
+        String password = CommonFunctions.encryptPassword(adminUser.getUserPassword(), userNo);
+
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(adminUser.getUserAccount(), password);
+
+        // 登录
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(usernamePasswordToken);
+
+            // 验证通过，生成 session 信息
+            session.setAttribute("adminUser", existAdminUser);
+
+            // 登陆成功
+            logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆成功");
+            return AppResponse.success("登录成功！");
+        } catch (UnknownAccountException ex) {
+            // 登陆失败
+            logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，账号不存在！");
+            return AppResponse.fail("帐号不存在，请检查帐号是否正确！");
+        } catch (IncorrectCredentialsException ex) {
+            // 登陆失败
+            logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，密码不正确！");
+            return AppResponse.fail("密码错误，请检查后重新登录！");
+        } catch (AuthenticationException ex) {
+            // 登陆失败
+            logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，验证失败！");
+            return AppResponse.fail("登录失败！");
+        } catch (Exception e) {
+            // 登陆失败
+            logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，内部异常！");
+            return AppResponse.fail("登录失败！");
         }
-
-        // 生成加密后的密码
-        String password = CommonFunctions.encryptPassword(user.getUserPassword(), adminUser.getUserNo());
-        // 用户密码不正确
-        if (!StringUtils.equals(adminUser.getUserPassword(), password)) {
-            logger.error("用户名为 " + adminUser.getUserName() + " 的后端用户密码不正确，登录失败");
-            return AppResponse.fail("密码错误，请检查重新输入！");
-        }
-
-        // 验证通过，生成 session 信息
-        session.setAttribute("adminUser", adminUser);
-
-        // 登陆成功
-        logger.info("用户名为 " + adminUser.getUserName() + " 的后端用户登陆成功");
-
-        return AppResponse.success("登录成功！");
     }
 
     /**
@@ -100,8 +119,23 @@ public class LoginController {
         // 销毁 session 信息
         AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
         session.removeAttribute("adminUser");
-        // 返回操作结果
-        logger.info("用户名为 " + adminUser.getUserName() + " 的后端用户退出登录！");
-        return AppResponse.success("用户退出登录！");
+
+        Subject subject = SecurityUtils.getSubject();
+
+        if (subject != null) {
+            try{
+                subject.logout();
+
+                // 返回操作结果
+                logger.info("用户名为 " + adminUser.getUserAccount() + " 的后端用户退出登录！");
+                return AppResponse.success("用户退出登录！");
+            }catch(Exception ex){
+                // 退出失败
+                logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，内部异常！");
+                return AppResponse.fail("退出登录失败！");
+            }
+        }
+
+        return AppResponse.fail("退出登录失败！");
     }
 }

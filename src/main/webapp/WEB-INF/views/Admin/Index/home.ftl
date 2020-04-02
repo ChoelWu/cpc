@@ -30,7 +30,7 @@
                 </div>
                 <div class="layui-col-md12">
                     <div class="layui-card">
-                        <div class="layui-card-header">数据统计</div>
+                        <div class="layui-card-header"><@shiro.hasPermission name="adminMenu:view">数据统计1</@shiro.hasPermission><@shiro.hasPermission name="adminMenu:add">数据统计2</@shiro.hasPermission></div>
                         <div class="layui-card-body ">
                             <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
                                 <li class="layui-col-md3 layui-col-xs6">

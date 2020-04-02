@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 需要登录成功后跳转的页面 -->
+        <property name="loginUrl" value="/admin/login/login_page.do"/>
+        <property name="filterChainDefinitions">
+            <!-- 静态资源需要设置为anon，否则找不到 -->
+            <!-- authc:经过认证之后才能访问的路径-->
+            <!-- anon: 不需要任何验证直接可以访问的 -->
+            <value>
+                /admin/login/login_page.do = anon
+                /admin/login/login.do = anon
+                /admin/login/logout.do = anon
+                /admin/* = authc
+            </value>
+        </property>
+    </bean>
+
+    <!-- 配置shiro的核心securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--        <property name="cacheManager" ref="cacheManager"/>-->
+        <!-- 配置realm -->
+        <property name="realm" ref="realm"/>
+        <!-- 配置记住我的时长 -->
+        <!--        <property name="rememberMeManager.cookie.maxAge" value="60"></property>-->
+    </bean>
+
+    <bean id="realm" class="com.joe.commons.shiro.CustomRealm">
+
+    </bean>
+</beans>
