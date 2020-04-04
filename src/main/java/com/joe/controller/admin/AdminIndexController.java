@@ -13,6 +13,7 @@ package com.joe.controller.admin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.joe.entity.AdminAuth;
 import com.joe.entity.AdminMenu;
 import com.joe.entity.AdminUser;
 import com.joe.pojo.Menu;
@@ -42,10 +43,23 @@ public class AdminIndexController {
      *
      * @param model   model
      * @param session session
-     * @return 返回页面视图
+     * @return 返回页面视图  --- 在循环菜单的时候同时查询权限列表，如果这个菜单（子菜单下面有权限，则允许显示，否则不显示）
      */
     @RequestMapping("index.do")
     public String index(Model model, HttpSession session) {
+        // 根据session获取用户信息
+        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
+
+        // 查询出所有的权限
+        List<AdminAuth> adminAuthList = (List<AdminAuth>) session.getAttribute("adminAuthList");
+        List<String> permissionMenuNoList = Lists.newArrayList();
+        for (AdminAuth adminAuth : adminAuthList) {
+            permissionMenuNoList.add(adminAuth.getMenuNo());
+        }
+
+        String permissionMenuNoString = StringUtils.join(permissionMenuNoList, ",");
+        permissionMenuNoString = "," + permissionMenuNoString + ",";
+
         // 查询出所有的菜单
         QueryWrapper<AdminMenu> adminMenuQueryWrapper = new QueryWrapper<>();
         adminMenuQueryWrapper.orderByAsc("menu_level", "menu_index");
@@ -64,23 +78,25 @@ public class AdminIndexController {
 
                 // 循环组织子菜单
                 for (AdminMenu adminChildMenu : adminMenuList) {
-                    if (StringUtils.equals(adminMenu.getMenuNo(), adminChildMenu.getParentMenuNo())) {
-                        adminChildMenuList.add(adminChildMenu);
-                    }
+                    // 查看此菜单是否在授权的菜单里
+//                    if (StringUtils.contains(permissionMenuNoString, "," + adminChildMenu.getMenuNo() + ",")) {
+                        if (StringUtils.equals(adminMenu.getMenuNo(), adminChildMenu.getParentMenuNo())) {
+                            adminChildMenuList.add(adminChildMenu);
+                        }
+//                    }
                 }
 
-                // 存储父菜单
-                menu.setAdminMenu(adminMenu);
-                // 存储子菜单
-                menu.setChildMenuList(adminChildMenuList);
-
-                // 存储菜单
-                menuList.add(menu);
+                // 如果子菜单为空说明没有授权的子菜单，子菜单list不为空时才加入menu的list
+                if (!adminChildMenuList.isEmpty()) {
+                    // 存储父菜单
+                    menu.setAdminMenu(adminMenu);
+                    // 存储子菜单
+                    menu.setChildMenuList(adminChildMenuList);
+                    // 存储菜单
+                    menuList.add(menu);
+                }
             }
         }
-
-        // 查询用户信息
-        AdminUser adminUser = (AdminUser) session.getAttribute("adminUser");
 
         // 绑定菜单数据到前台
         model.addAttribute("menuList", menuList);

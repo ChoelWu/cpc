@@ -51,23 +51,23 @@ public class IndexController {
         // 获取内容模块
         List<IndexChannel> blockList = getBlockList();
 
-        // 查询出新闻所有内容块的文章
-        List<IndexArticle> newArticleList = getArticleListByChannelNo("ICNO20191223205146D59614", "6", false);
+        // 新闻
+        List<IndexArticle> newsList = getArticleListByChannelNo("ICNO20200405011634M39547", "6", false);
 
-        // 查询出新闻所有内容块的文章
-        List<IndexArticle> trendArticleList = getArticleListByChannelNo("ICNO20191224165632X76631", "5", false);
+        // 通知
+        List<IndexArticle> noticeList = getArticleListByChannelNo("ICNO20200405011547T22779", "5", false);
 
-        // 查询出首页轮播图所有内容块的文章
-        List<IndexArticle> sliderArticleList = getArticleListByChannelNo("ICNO20191224175705V72125", "3", true);
+        // 轮播图
+        List<IndexArticle> sliderArticleList = getArticleListByChannelNo("ICNO20200405011700B97682", "3", true);
 
         // 查询栏目 更多信息
         QueryWrapper<IndexChannel> indexChannelQueryWrapper = new QueryWrapper<>();
-        indexChannelQueryWrapper.eq("channel_no", "ICNO20191224175107Y66991");
+        indexChannelQueryWrapper.eq("channel_no", "ICNO20200405011855L49997");
         IndexChannel indexMoreInfoChannel = indexChannelService.getOne(indexChannelQueryWrapper);
 
         // 绑定文章列表数据
-        model.addAttribute("newArticleList", newArticleList);
-        model.addAttribute("trendArticleList", trendArticleList);
+        model.addAttribute("newsList", newsList);
+        model.addAttribute("noticeList", noticeList);
         model.addAttribute("indexMoreInfoChannel", indexMoreInfoChannel);
         model.addAttribute("sliderArticleList", sliderArticleList);
         model.addAttribute("navList", navList);

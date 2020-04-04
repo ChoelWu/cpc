@@ -35,7 +35,7 @@
                 <label for="channelLevel" class="layui-form-label">
                     <span class="x-red">*</span>栏目级别</label>
                 <div class="layui-input-inline">
-                    <select id="channelLevel" name="channelLevel" class="valid">
+                    <select id="channelLevel" name="channelLevel" class="valid" lay-verify="checkParentChannel">
                         <#list channelLevelDictList as channelLevelDict>
                             <option value="${channelLevelDict.dictKey}">${channelLevelDict.dictValue}</option>
                         </#list>
@@ -58,7 +58,7 @@
                 <label for="parentChannelNo" class="layui-form-label">
                     <span class="x-red">*</span>父级栏目</label>
                 <div class="layui-input-inline">
-                    <select id="parentChannelNo" name="parentChannelNo" class="valid">
+                    <select id="parentChannelNo" name="parentChannelNo" class="valid" lay-verify="checkParentChannel">
                         <option value="0">无</option>
                         <#list parentIndexChannelList as parentIndexChannel>
                             <option value="${parentIndexChannel.channelNo}">${parentIndexChannel.channelName}</option>
@@ -149,6 +149,14 @@
                 }
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
                     return '栏目地址不能有特殊字符';
+                }
+            },
+            checkParentChannel: function(value) {
+                if("0" === $("#parentChannelNo").val() && "1" !== $("#channelLevel").val()) {
+                    return '请选择正确的栏目级别和父级栏目';
+                }
+                if("0" !== $("#parentChannelNo").val() && "1" === $("#channelLevel").val()) {
+                    return '请选择正确的栏目级别和父级栏目';
                 }
             }
         });
@@ -248,13 +256,6 @@
         });
     });
 </script>
-<script>var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();</script>
 </body>
 
 </html>

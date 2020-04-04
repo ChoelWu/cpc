@@ -15,7 +15,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joe.commons.app.AppResponse;
 import com.joe.commons.app.CommonFunctions;
+import com.joe.entity.AdminAuth;
+import com.joe.entity.AdminRole;
 import com.joe.entity.AdminUser;
+import com.joe.service.system.AdminAuthService;
+import com.joe.service.system.AdminRoleService;
 import com.joe.service.system.AdminUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/login")
@@ -40,6 +45,12 @@ public class LoginController {
 
     @Resource
     private AdminUserService adminUserService;
+
+    @Resource
+    private AdminRoleService adminRoleService;
+
+    @Resource
+    private AdminAuthService adminAuthService;
 
     /**
      * 显示登录页
@@ -54,8 +65,8 @@ public class LoginController {
     /**
      * 登录
      *
-     * @param data 前端传入的对象
-     * @param session   session
+     * @param data    前端传入的对象
+     * @param session session
      * @return 返回登录结果
      */
     @RequestMapping("/login.do")
@@ -82,8 +93,27 @@ public class LoginController {
         try {
             subject.login(usernamePasswordToken);
 
+            // 根据角色编号查询角色，获取权限
+            QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
+            adminRoleQueryWrapper.eq("role_no", existAdminUser.getRoleNo());
+            AdminRole adminRole = adminRoleService.getOne(adminRoleQueryWrapper);
+
+            // 查询用户的权限信息
+            List<AdminAuth> adminAuthList;
+            if (1 == adminRole.getRoleId()) {
+                // 非超级管理员
+                String[] permissionArray = adminRole.getRoleAuth().split(",");
+                QueryWrapper<AdminAuth> adminAuthQueryWrapper = new QueryWrapper<>();
+                adminAuthQueryWrapper.in("auth_no", permissionArray);
+                adminAuthList = adminAuthService.list(adminAuthQueryWrapper);
+            } else {
+                // 超级管理员拥有所有权限
+                adminAuthList = adminAuthService.list();
+            }
+
             // 验证通过，生成 session 信息
             session.setAttribute("adminUser", existAdminUser);
+            session.setAttribute("adminAuthList", adminAuthList);
 
             // 登陆成功
             logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆成功");
@@ -123,13 +153,13 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
 
         if (subject != null) {
-            try{
+            try {
                 subject.logout();
 
                 // 返回操作结果
                 logger.info("用户名为 " + adminUser.getUserAccount() + " 的后端用户退出登录！");
                 return AppResponse.success("用户退出登录！");
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 // 退出失败
                 logger.info("账户为 " + adminUser.getUserAccount() + " 的后端用户登陆失败，内部异常！");
                 return AppResponse.fail("退出登录失败！");

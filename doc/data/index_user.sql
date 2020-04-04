@@ -10,7 +10,7 @@ CREATE TABLE `cpc_index_user`
     `user_email`          varchar(50) COMMENT '用户电子邮件',
     `user_head_sculpture` varchar(100) COMMENT '用户头像',
     `user_type`           char(1)     NOT NULL COMMENT '用户类型 1-校内学生 2-校外学生 3-老师',
-    `user_status`         char(1)     NOT NULL COMMENT '用户状态 0-禁止使用 1-等待激活 2-正常使用',
+    `user_status`         char(1)     NOT NULL COMMENT '用户状态 用户状态 0-禁用  1-正常',
     `bak`                 varchar(50) COMMENT '备用字段',
     `add_time`            datetime COMMENT '添加时间',
     `add_user_no`         varchar(24) COMMENT '添加人',

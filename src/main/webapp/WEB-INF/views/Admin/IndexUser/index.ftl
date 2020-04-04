@@ -47,8 +47,7 @@
                             <select name="userStatus" lay-filter="status-select" id="userStatus">
                                 <option value="">用户状态</option>
                                 <option value="0">禁止使用</option>
-                                <option value="1">等待激活</option>
-                                <option value="2">正常使用</option>
+                                <option value="1">正常使用</option>
                             </select>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
@@ -102,15 +101,12 @@
                                 <td>${indexUser.userMobile}</td>
                                 <td>${indexUser.userEmail}</td>
                                 <td class="td-status">
-                                    <#if indexUser.userStatus == "1">
+                                    <#if indexUser.userStatus == "0">
                                         <a class="layui-btn layui-btn-warm layui-btn-mini"
-                                           onclick="changeStatus('disable', '${indexUser.userNo}')">等待激活</a>
-                                    <#elseif indexUser.userStatus == "2">
+                                           onclick="changeStatus('enable', '${indexUser.userNo}')">禁止使用</a>
+                                    <#elseif indexUser.userStatus == "1">
                                         <a class="layui-btn layui-btn-normal layui-btn-mini"
                                            onclick="changeStatus('disable', '${indexUser.userNo}')">正常使用</a>
-                                    <#else>
-                                        <a class="layui-btn layui-btn-danger layui-btn-mini"
-                                           onclick="changeStatus('enable', '${indexUser.userNo}')">禁止使用</a>
                                     </#if>
                                 <td class="td-manage">
                                     <a title="编辑"

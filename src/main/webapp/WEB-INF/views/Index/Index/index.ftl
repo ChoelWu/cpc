@@ -43,15 +43,23 @@
 <div class="head">
     <div>
         <div class="shangb">
-            <div class="logo"><a href="index.html"><img src="/static/index/index/images/logo.png"></a></div>
+            <div class="logo"><a href="/index/index/index.do"><img src="/static/index/index/images/logo.png"></a></div>
         </div>
         <div class="dh">
             <ul>
                 <#list navList as nav>
                     <li>
-                        <a href="<#if nav.indexChannel.channelType='3'>${nav.indexChannel.channelUrl}<#else>/index/index/cate.do?no=${nav.indexChannel.channelNo}</#if>"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a>
+                        <#if nav.indexChannel.channelType='3'>
+                            <a href="${nav.indexChannel.channelUrl}" target="_blank"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a>
+                        <#else>
+                            <a href="/index/index/cate.do?no=${nav.indexChannel.channelNo}"><p>${nav.indexChannel.channelName?substring(0,2)}</p><p>${nav.indexChannel.channelName?substring(2,4)}</p></a>
+                        </#if>
                         <#list nav.childChannelList as childNav>
-                            <dl><dd><a href="<#if childNav.channelType='3'>${childNav.channelUrl}<#else>/index/index/cate.do?no=${childNav.channelNo}</#if>">${childNav.channelName}</a></dd></dl>
+                            <#if childNav.channelType='3'>
+                                <dl><dd><a href="${childNav.channelUrl}" target="_blank">${childNav.channelName}</a></dd></dl>
+                            <#else>
+                                <dl><dd><a href="/index/index/cate.do?no=${childNav.channelNo}">${childNav.channelName}</a></dd></dl>
+                            </#if>
                         </#list>
                     </li>
                 </#list>
@@ -83,7 +91,7 @@
             <div class="bd">
                 <ul>
                     <#list sliderArticleList as article>
-                    <li><a href="/index/index/article.do?no=${article.articleNo}" target="_blank"><img src="${article.articleCover}"/></a></li>
+                    <li><a href="/index/index/article.do?no=${article.articleNo}" target="_blank" title="${article.articleName!''}"><img src="${article.articleCover}"/></a></li>
                     </#list>
                 </ul>
             </div>
@@ -95,29 +103,34 @@
         </div>
     </div>
     <div class="left" style="float: left;border:0; margin-left: 140px; padding-right: 0;" aos="fade-left">
-        <div><a href="/index/index/cate.do?no=${newArticleList[0].channelNo}"><h2>新闻通知</h2></a></div>
-        <div class="below-left-text">
-            <div class="left-text-1">
-                <dl>
-                    <dt> <a href="/index/index/article.do?no=${newArticleList[0].articleNo}"><img src="<#if !(newArticleList[0].articleCover?? && "" != newArticleList[0].articleCover)>/static/index/index/images/IMG_1243.JPG<#else>${newArticleList[0].articleCover}</#if>" width="145" height="73"></a> </dt>
-                    <dd>
-                        <p class="text-title"><a href="/index/index/article.do?no=${newArticleList[0].articleNo}" target="_blank" title="${newArticleList[0].articleName}">${newArticleList[0].articleName}</a></p>
-                        <p class="text-elli"><a href="/index/index/article.do?no=${newArticleList[0].articleNo}" target="_blank">${newArticleList[0].articleSummary}...</a></p>
-                        <p style="color: #ccc; font-size: 12px;">[${newArticleList[0].publishTime?string("yyyy-MM-dd")}]</p>
-                    </dd>
-                </dl>
-
+        <#if (noticeList??) && (noticeList?size gt 0)>
+            <div><a href="/index/index/cate.do?no=${noticeList[0].channelNo}"><h2>通知公告</h2></a></div>
+            <div class="below-left-text">
+                <div class="left-text-1">
+                    <dl>
+                        <dt> <a href="/index/index/article.do?no=${noticeList[0].articleNo}"><img src="<#if !(noticeList[0].articleCover?? && "" != noticeList[0].articleCover)>/static/index/index/images/default_notice.jpg<#else>${noticeList[0].articleCover}</#if>" width="145" height="73"></a> </dt>
+                        <dd>
+                            <p class="text-title"><a href="/index/index/article.do?no=${noticeList[0].articleNo}" target="_blank" title="${noticeList[0].articleName}">${noticeList[0].articleName}</a></p>
+                            <p class="text-elli"><a href="/index/index/article.do?no=${noticeList[0].articleNo}" target="_blank">${noticeList[0].articleSummary}...</a></p>
+                            <p style="color: #ccc; font-size: 12px;">[${noticeList[0].publishTime?string("yyyy-MM-dd")}]</p>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="left-text-2">
+                    <ul>
+                        <#list noticeList as article>
+                            <#if article_index != 0>
+                                <#if article.articleType="2">
+                                    <li><a href="${article.articleUrl!''}" target="_blank" title="${article.articleName}"><#if (article.articleName?length > 24)>${article.articleName?substring(0,24)} ...<#else>${article.articleName}</#if> <span style="height: 35px;display: block;line-height: 50px;">[${article.publishTime?string("yyyy-MM-dd")}]</span></a></li>
+                                <#else>
+                                    <li><a href="/index/index/article.do?no=${article.articleNo}" title="${article.articleName}"><#if (article.articleName?length > 24)>${article.articleName?substring(0,24)} ...<#else>${article.articleName}</#if> <span style="height: 35px;display: block;line-height: 50px;">[${article.publishTime?string("yyyy-MM-dd")}]</span></a></li>
+                                </#if>
+                            </#if>
+                        </#list>
+                    </ul>
+                </div>
             </div>
-            <div class="left-text-2">
-                <ul>
-                    <#list newArticleList as article>
-                        <#if article_index != 0>
-                            <li><a href="/index/index/article.do?no=${article.articleNo}" target="_blank" title="${article.articleName}"><#if (article.articleName?length > 24)>${article.articleName?substring(0,24)} ...<#else>${article.articleName}</#if> <span style="height: 35px;display: block;line-height: 50px;">[${article.publishTime?string("yyyy-MM-dd")}]</span></a></li>
-                        </#if>
-                    </#list>
-                </ul>
-            </div>
-        </div>
+        </#if>
     </div>
 </div>
 
@@ -130,18 +143,28 @@
 <div class="px1200 cgNews" style="margin-top: 30px;">
     <div class="newsTop">
         <div class="left" aos="fade-right">
-            <div><a href="/index/index/cate.do?no=${trendArticleList[0].channelNo}"><h2>社会服务</h2></a></div>
-            <div class="gonggao-list" id="gonggao-list">
-                <#list trendArticleList as article>
-                <dl>
-                    <a href="/index/index/article.do?no=${article.articleNo}">
-                        <dt><p class="riqi">${article.publishTime?string("dd")}</p><p class="nian">${article.publishTime?string("yyyy-MM")}</p></dt>
-                        <dd><p class="hd-title">&nbsp;${article.articleName}</p></dd>
-                        <div class="clear"></div>
-                    </a>
-                </dl>
-                </#list>
-            </div>
+            <#if (newsList??) && (newsList?size gt 0)>
+                <div><a href="/index/index/cate.do?no=${newsList[0].channelNo}"><h2>中心新闻</h2></a></div>
+                <div class="gonggao-list" id="gonggao-list">
+                    <#list newsList as article>
+                        <dl>
+                            <#if article.articleType="2">
+                                <a href="${article.articleUrl!''}" target="_blank">
+                                    <dt><p class="riqi">${article.publishTime?string("dd")}</p><p class="nian">${article.publishTime?string("yyyy-MM")}</p></dt>
+                                    <dd><p class="hd-title">&nbsp;${article.articleName}</p></dd>
+                                    <div class="clear"></div>
+                                </a>
+                            <#else>
+                                <a href="/index/index/article.do?no=${article.articleNo}">
+                                    <dt><p class="riqi">${article.publishTime?string("dd")}</p><p class="nian">${article.publishTime?string("yyyy-MM")}</p></dt>
+                                    <dd><p class="hd-title">&nbsp;${article.articleName}</p></dd>
+                                    <div class="clear"></div>
+                                </a>
+                            </#if>
+                        </dl>
+                    </#list>
+                </div>
+            </#if>
         </div>
         <div class="left" style="float: right;border:0; padding-right: 0;" aos="fade-left">
             <div><h2>更多信息</h2></div>

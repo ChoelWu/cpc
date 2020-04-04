@@ -98,7 +98,7 @@ public class CustomRealm extends AuthorizingRealm {
         adminUserQueryWrapper.eq("user_account", userAccount);
         AdminUser adminUser = adminUserService.getOne(adminUserQueryWrapper);
 
-        List<AdminAuth> adminAuthList = Lists.newArrayList();
+        List<AdminAuth> adminAuthList;
         if (StringUtils.equals("ARNO20191212092022P78908", adminUser.getRoleNo())) {
             adminAuthList = adminAuthService.list();
         } else {

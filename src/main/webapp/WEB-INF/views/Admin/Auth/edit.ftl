@@ -53,9 +53,9 @@
                     <select id="menuNo" name="menuNo" class="valid" lay-verify="required">
                         <option value="">无</option>
                         <#list menuList as menu>
-                            <option value="${menu.adminMenu.menuNo}" <#if adminAuth.menuNo = menu.adminMenu.menuNo>selected</#if>>${menu.adminMenu.menuName}</option>
+                            <option value="${menu.adminMenu.menuNo}" disabled>${menu.adminMenu.menuName}</option>
                             <#list menu.childMenuList as childMenu>
-                                <option value="${childMenu.menuNo}" <#if adminAuth.menuNo = menu.adminMenu.menuNo>selected</#if>>|--${childMenu.menuName}</option>
+                                <option value="${childMenu.menuNo}" <#if adminAuth.menuNo = childMenu.menuNo>selected</#if>>|--${childMenu.menuName}</option>
                             </#list>
                         </#list>
                     </select>
@@ -114,15 +114,6 @@
             });
         });
     });
-</script>
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
 </script>
 </body>
 </html>

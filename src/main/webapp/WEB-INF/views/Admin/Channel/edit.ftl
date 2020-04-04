@@ -36,9 +36,9 @@
                 <label for="channelLevel" class="layui-form-label">
                     <span class="x-red">*</span>栏目级别</label>
                 <div class="layui-input-inline">
-                    <select id="channelLevel" name="channelLevel" class="valid">
+                    <select id="channelLevel" name="channelLevel" class="valid" lay-verify="checkParentChannel">
                         <#list channelLevelDictList as channelLevelDict>
-                            <option value="${channelLevelDict.dictKey}" <#if channelLevelDict.dictKey = indexChannel.channelLevel>checked</#if>>${channelLevelDict.dictValue}</option>
+                            <option value="${channelLevelDict.dictKey}" <#if channelLevelDict.dictKey = indexChannel.channelLevel>selected</#if>>${channelLevelDict.dictValue}</option>
                         </#list>
                     </select>
                 </div>
@@ -49,21 +49,21 @@
                 <div class="layui-input-inline">
                     <select id="channelType" name="channelType" class="valid" lay-filter="channelTypeSelect">
                         <#list channelTypeDictList as channelTypeDict>
-                            <option value="${channelTypeDict.dictKey}" <#if channelTypeDict.dictKey = indexChannel.channelType>checked</#if>>${channelTypeDict.dictValue}</option>
+                            <option value="${channelTypeDict.dictKey}" <#if channelTypeDict.dictKey = indexChannel.channelType>selected</#if>>${channelTypeDict.dictValue}</option>
                         </#list>
                     </select>
                 </div>
             </div>
             <div class="layui-form-item" id="channelUrl" style="display: none;">
-                <label for="channelUrl" class="layui-form-label">
-                    <span class="x-red">*</span>栏目链接</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="channelUrl" name="channelUrl" required="" lay-verify="required"
-                           autocomplete="off" class="layui-input" placeholder="请填写栏目地址" value="<#if indexChannel.channelUrl??>${indexChannel.channelUrl}</#if>">
-                </div>
-                <div class="layui-form-mid layui-word-aux">
-                    例: /admin/index/index.do
-                </div>
+<#--                <label for="channelUrl" class="layui-form-label">-->
+<#--                    <span class="x-red">*</span>栏目链接</label>-->
+<#--                <div class="layui-input-inline">-->
+<#--                    <input type="text" id="channelUrl" name="channelUrl" required="" lay-verify="required"-->
+<#--                           autocomplete="off" class="layui-input" placeholder="请填写栏目地址" value="<#if indexChannel.channelUrl??>${indexChannel.channelUrl}</#if>">-->
+<#--                </div>-->
+<#--                <div class="layui-form-mid layui-word-aux">-->
+<#--                    例: /admin/index/index.do-->
+<#--                </div>-->
             </div>
             <div class="layui-form-item">
                 <label for="channelIndex" class="layui-form-label">
@@ -88,7 +88,7 @@
                 <label for="parentChannelNo" class="layui-form-label">
                     <span class="x-red">*</span>父级栏目</label>
                 <div class="layui-input-inline">
-                    <select id="parentChannelNo" name="parentChannelNo" class="valid">
+                    <select id="parentChannelNo" name="parentChannelNo" class="valid" lay-verify="checkParentChannel">
                         <option value="0">无</option>
                         <#list parentIndexChannelList as parentIndexChannel>
                             <option value="${parentIndexChannel.channelNo}" <#if parentIndexChannel.channelNo = indexChannel.parentChannelNo>checked</#if>>${parentIndexChannel.channelName}</option>
@@ -137,7 +137,7 @@
         $("#channelUrl").css("display", "block");
         var html = '<label for="channelUrl" ' +
             'class="layui-form-label"> <span class="x-red">*</span>栏目链接</label> <div class="layui-input-inline"> ' +
-            '<input type="text" id="channelUrl" name="channelUrl" required="" lay-verify="required" ' +
+            '<input type="text" id="channelUrl" name="channelUrl" value="${indexChannel.channelUrl!''}" required="" lay-verify="required" ' +
             'autocomplete="off" class="layui-input" placeholder="请填写栏目地址"> </div> <div class="layui-form-mid ' +
             'layui-word-aux">例: /admin/index/index.do </div>';
         $("#channelUrl").html(html);
@@ -171,6 +171,14 @@
                 }
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
                     return '栏目地址不能有特殊字符';
+                }
+            },
+            checkParentChannel: function(value) {
+                if("0" === $("#parentChannelNo").val() && "1" !== $("#channelLevel").val()) {
+                    return '请选择正确的栏目级别和父级栏目';
+                }
+                if("0" !== $("#parentChannelNo").val() && "1" === $("#channelLevel").val()) {
+                    return '请选择正确的栏目级别和父级栏目';
                 }
             }
         });
@@ -229,7 +237,7 @@
         // select 开关监听
         // select 开关监听
         form.on('select(channelTypeSelect)', function (data) {
-            if ("2" === data.value) {
+            if ("3" === data.value) {
                 $("#channelUrl").css("display", "block");
                 var html = '<label for="channelUrl" ' +
                     'class="layui-form-label"> <span class="x-red">*</span>栏目链接</label> <div class="layui-input-inline"> ' +
@@ -270,13 +278,6 @@
         });
     });
 </script>
-<script>var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();</script>
 </body>
 
 </html>

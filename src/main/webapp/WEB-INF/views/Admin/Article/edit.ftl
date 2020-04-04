@@ -97,7 +97,7 @@
             </div>
             <div class="layui-form-item">
                 <label for="isTop" class="layui-form-label">
-                    <span class="x-red">*</span>是否制定</label>
+                    <span class="x-red">*</span>是否置顶</label>
                 <div class="layui-input-inline">
                     <select id="isTop" name="isTop" class="valid" lay-verify="required">
                         <#list isTopAdminDictList as isTopAdminDict>
@@ -178,16 +178,13 @@
         //自定义验证规则
         form.verify({
             articleName: function (value) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '文章标题不能有特殊字符';
-                }
                 if (value.length > 40) {
                     return '文章标题长度在 40 字符之内';
                 }
             },
             articleUrl: function (value) {
-                if (value.length > 50) {
-                    return '链接地址长度在 50 字符之内';
+                if (value.length > 90) {
+                    return '链接地址长度在 90 字符之内';
                 }
             },
             articleSource: function (value) {
@@ -395,15 +392,6 @@
         //设置编辑器内容
         layedit.setContent(ieditor, "${indexArticle.articleContent!''}", false);
     });
-</script>
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
 </script>
 </body>
 </html>

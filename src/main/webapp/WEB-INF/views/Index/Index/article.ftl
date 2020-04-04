@@ -22,7 +22,7 @@
 		<div class="head head_style">
 			<div>
 				<div class="shangb">
-					<div class="logo"><a href="../index.html"><img src="/static/index/index/images/logo.png"></a></div>
+					<div class="logo"><a href="/index/index/index.do"><img src="/static/index/index/images/logo.png"></a></div>
 				</div>
 				<div class="dh">
 					<ul>
@@ -72,7 +72,7 @@ $(".head .dh ul li").hover(function(){
 			 <div class="jianj_k">
 				 <h2 style="text-align: center;padding-bottom: 30px;color: #666;">${indexArticle.articleName}</h2>
 				 <span style="color: #666; display: block; font-size: 1em; line-height: 24px; border-bottom: 1px solid #CCC; padding-bottom: 5px; text-align: center; width: 100%;">[来源：${indexArticle.articleSource}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：${indexArticle.publishTime?string('yyyy-MM-dd')}]</span>
-				 <div style="padding-top: 20px;">${indexArticle.articleContent}</div>
+				 <div style="padding-top: 20px; text-indent: 2em;" class="article-content">${indexArticle.articleContent}</div>
 			 </div>
 			 <!-- 详情内容介绍 -->
 		</div>

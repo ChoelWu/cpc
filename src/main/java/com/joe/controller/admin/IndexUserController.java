@@ -148,7 +148,7 @@ public class IndexUserController {
         indexUser.setUserPassword(CommonFunctions.encryptPassword("000000", indexUser.getUserNo()));
 
         // 用户状态-未激活
-        indexUser.setUserStatus("2");
+        indexUser.setUserStatus("1");
 
         // 操作信息
         indexUser.setAddUserNo(adminUser.getUserNo());
