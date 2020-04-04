@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>内容管理</a>
+        <a><cite>文章管理</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="window.location.href='/admin/article/view.do'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -88,11 +86,13 @@
                         </div>
                     </form>
                 </div>
-                <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/article/add_page.do',900,700)"><i
-                                class="layui-icon"></i>添加
-                    </button>
-                </div>
+                <@shiro.hasPermission name="indexArticle:add">
+                    <div class="layui-card-header">
+                        <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/article/add_page.do',900,700)">
+                            <i class="layui-icon"></i>添加
+                        </button>
+                    </div>
+                </@shiro.hasPermission>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
@@ -130,21 +130,27 @@
                                     </#list>
                                 </td>
                                 <td class="td-status">
-                                    <#if article.articleStatus == "1">
-                                        <a class="layui-btn layui-btn-normal layui-btn-mini" onclick="changeStatus('dis_audit','${article.articleNo}')">已发布</a>
-                                    <#else>
-                                        <a class="layui-btn layui-btn-danger layui-btn-mini" onclick="changeStatus('audit','${article.articleNo}')">待审核</a>
-                                    </#if>
+                                    <@shiro.hasPermission name="indexArticle:changeStatus">
+                                        <#if article.articleStatus == "1">
+                                            <a class="layui-btn layui-btn-normal layui-btn-mini" onclick="changeStatus('dis_audit','${article.articleNo}')">已发布</a>
+                                        <#else>
+                                            <a class="layui-btn layui-btn-danger layui-btn-mini" onclick="changeStatus('audit','${article.articleNo}')">待审核</a>
+                                        </#if>
+                                    </@shiro.hasPermission>
                                 </td>
                                 <td>${article.articleSource}</td>
                                 <td>${article.publishTime?string('yyyy-MM-dd')}</td>
                                 <td class="td-manage">
-                                    <a title="编辑" onclick="xadmin.open('编辑文章','/admin/article/edit_page.do?articleNo=${article.articleNo}',900,700)" href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteArticle('${article.articleNo}')" href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="indexArticle:edit">
+                                        <a title="编辑" onclick="xadmin.open('编辑文章','/admin/article/edit_page.do?articleNo=${article.articleNo}',900,700)" href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexArticle:delete">
+                                        <a title="删除" onclick="deleteArticle('${article.articleNo}')" href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

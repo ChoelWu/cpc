@@ -79,11 +79,11 @@ public class AdminIndexController {
                 // 循环组织子菜单
                 for (AdminMenu adminChildMenu : adminMenuList) {
                     // 查看此菜单是否在授权的菜单里
-//                    if (StringUtils.contains(permissionMenuNoString, "," + adminChildMenu.getMenuNo() + ",")) {
+                    if (StringUtils.contains(permissionMenuNoString, "," + adminChildMenu.getMenuNo() + ",")) {
                         if (StringUtils.equals(adminMenu.getMenuNo(), adminChildMenu.getParentMenuNo())) {
                             adminChildMenuList.add(adminChildMenu);
                         }
-//                    }
+                    }
                 }
 
                 // 如果子菜单为空说明没有授权的子菜单，子菜单list不为空时才加入menu的list

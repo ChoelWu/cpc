@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="/admin/index/home.do">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>管理员设置</a>
+        <a><cite>用户管理</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="/admin/user/view.do" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -47,8 +45,7 @@
                             <select name="userStatus" lay-filter="status-select" id="userStatus">
                                 <option value="">用户状态</option>
                                 <option value="0">禁止使用</option>
-                                <option value="1">等待激活</option>
-                                <option value="2">正常使用</option>
+                                <option value="1">正常使用</option>
                             </select>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
@@ -58,11 +55,16 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
-                    </button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/user/add_page.do',600,400)"><i
-                                class="layui-icon"></i>添加
-                    </button>
+                    <@shiro.hasPermission name="adminUser:batchDelete">
+                        <button class="layui-btn layui-btn-danger" onclick="delAll()">
+                            <i class="layui-icon"></i>批量删除
+                        </button>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="adminUser:add">
+                        <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/user/add_page.do',600,400)">
+                            <i class="layui-icon"></i>添加
+                        </button>
+                    </@shiro.hasPermission>
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
                     <table class="layui-table layui-form">
@@ -94,32 +96,37 @@
                                 <td>${adminUser.userMobile}</td>
                                 <td>${adminUser.userEmail}</td>
                                 <td class="td-status">
-                                    <#if adminUser.userStatus == "1">
-                                        <a class="layui-btn layui-btn-warm layui-btn-mini"
-                                           onclick="changeStatus('disable', '${adminUser.userNo}')">等待激活</a>
-                                    <#elseif adminUser.userStatus == "2">
-                                        <a class="layui-btn layui-btn-normal layui-btn-mini"
-                                           onclick="changeStatus('disable', '${adminUser.userNo}')">正常使用</a>
-                                    <#else>
-                                        <a class="layui-btn layui-btn-danger layui-btn-mini"
-                                           onclick="changeStatus('enable', '${adminUser.userNo}')">禁止使用</a>
-                                    </#if>
+                                    <@shiro.hasPermission name="adminUser:changeStatus">
+                                        <#if adminUser.userStatus == "0">
+                                            <a class="layui-btn layui-btn-warm layui-btn-mini"
+                                               onclick="changeStatus('disable', '${adminUser.userNo}')">禁用</a>
+                                        <#elseif adminUser.userStatus == "1">
+                                            <a class="layui-btn layui-btn-normal layui-btn-mini"
+                                               onclick="changeStatus('disable', '${adminUser.userNo}')">启用</a>
+                                        </#if>
+                                    </@shiro.hasPermission>
                                 </td>
                                 <td class="td-manage">
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑','/admin/user/edit_page.do?userNo=${adminUser.userNo}',600,400)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a onclick="recoveryPassword('${adminUser.userNo}')"
-                                       title="重置密码"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe669;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteUser('${adminUser.userNo}')"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="adminUser:edit">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑','/admin/user/edit_page.do?userNo=${adminUser.userNo}',600,400)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="adminUser:resetPassword">
+                                        <a onclick="recoveryPassword('${adminUser.userNo}')"
+                                           title="重置密码"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe669;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="adminUser:delete">
+                                        <a title="删除" onclick="deleteUser('${adminUser.userNo}')"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

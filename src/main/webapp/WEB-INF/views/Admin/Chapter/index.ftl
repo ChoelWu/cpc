@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>课程管理</a>
+        <a><cite>章节课时</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="window.location.href='/admin/chapter/view.do?courseNo=${courseNo}'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -34,10 +32,12 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <button class="layui-btn"
-                            onclick="xadmin.open('添加章节','/admin/chapter/add_page.do?courseNo=${courseNo}',500,310)"><i
-                                class="layui-icon"></i>添加章节
-                    </button>
+                    <@shiro.hasPermission name="indexCourse:addChapter">
+                        <button class="layui-btn"
+                                onclick="xadmin.open('添加章节','/admin/chapter/add_page.do?courseNo=${courseNo}',500,310)"><i
+                                    class="layui-icon"></i>添加章节
+                        </button>
+                    </@shiro.hasPermission>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -57,18 +57,24 @@
                                 <td>${chapterLesson.chapter.courseName}</td>
                                 <td>${chapterLesson.chapter.chapterIndex}</td>
                                 <td class="td-manage">
-                                    <a title="新增课时" onclick="xadmin.open('新增课时','/admin/lesson/add_page.do?chapterNo=${chapterLesson.chapter.chapterNo}',600,500)"
-                                       href="javascript:;">
-                                        <i class="iconfont">&#xe6b9;</i>
-                                    </a>
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑章节','/admin/chapter/edit_page.do?chapterNo=${chapterLesson.chapter.chapterNo}',500,310)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteChapter('${chapterLesson.chapter.chapterNo}')" href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="indexCourse:addLesson">
+                                        <a title="新增课时" onclick="xadmin.open('新增课时','/admin/lesson/add_page.do?chapterNo=${chapterLesson.chapter.chapterNo}',600,500)"
+                                           href="javascript:;">
+                                            <i class="iconfont">&#xe6b9;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexCourse:editChapter">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑章节','/admin/chapter/edit_page.do?chapterNo=${chapterLesson.chapter.chapterNo}',500,310)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexCourse:deleteChapter">
+                                        <a title="删除" onclick="deleteChapter('${chapterLesson.chapter.chapterNo}')" href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                             <#if chapterLesson.indexLessonList?? && (chapterLesson.indexLessonList?size > 0)>
@@ -104,15 +110,19 @@
                                                         </#list>
                                                     </td>
                                                     <td class="td-manage">
-                                                        <a title="编辑"
-                                                           onclick="xadmin.open('编辑课时','/admin/lesson/edit_page.do?lessonNo=${indexLesson.lessonNo}',600,500)"
-                                                           href="javascript:;">
-                                                            <i class="layui-icon">&#xe642;</i>
-                                                        </a>
-                                                        <a title="删除" onclick="deleteLesson('${indexLesson.lessonNo}')"
-                                                           href="javascript:;">
-                                                            <i class="layui-icon">&#xe640;</i>
-                                                        </a>
+                                                        <@shiro.hasPermission name="indexCourse:editLesson">
+                                                            <a title="编辑"
+                                                               onclick="xadmin.open('编辑课时','/admin/lesson/edit_page.do?lessonNo=${indexLesson.lessonNo}',600,500)"
+                                                               href="javascript:;">
+                                                                <i class="layui-icon">&#xe642;</i>
+                                                            </a>
+                                                        </@shiro.hasPermission>
+                                                        <@shiro.hasPermission name="indexCourse:deleteLesson">
+                                                            <a title="删除" onclick="deleteLesson('${indexLesson.lessonNo}')"
+                                                               href="javascript:;">
+                                                                <i class="layui-icon">&#xe640;</i>
+                                                            </a>
+                                                        </@shiro.hasPermission>
                                                     </td>
                                                 </tr>
                                             </#list>

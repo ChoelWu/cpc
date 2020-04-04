@@ -20,12 +20,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>课程管理</a>
+        <a><cite>课程推荐位</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="window.location.href='/admin/course_banner/view.do'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -54,11 +52,13 @@
                         </div>
                     </form>
                 </div>
-                <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加课程推荐位','/admin/course_banner/add_page.do',600,550)"><i
-                                class="layui-icon"></i>添加
-                    </button>
-                </div>
+                <@shiro.hasPermission name="indexCourseBanner:add">
+                    <div class="layui-card-header">
+                        <button class="layui-btn" onclick="xadmin.open('添加课程推荐位','/admin/course_banner/add_page.do',600,550)"><i
+                                    class="layui-icon"></i>添加
+                        </button>
+                    </div>
+                </@shiro.hasPermission>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
@@ -85,14 +85,18 @@
                                     </#list>
                                 </td>
                                 <td class="td-manage">
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑课程推荐位','/admin/course_banner/edit_page.do?courseBannerNo=${courseBanner.courseBannerNo}',600,600)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteCourse('${courseBanner.courseBannerNo}')" href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="indexCourseBanner:edit">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑课程推荐位','/admin/course_banner/edit_page.do?courseBannerNo=${courseBanner.courseBannerNo}',600,600)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexCourseBanner:delete">
+                                        <a title="删除" onclick="deleteCourse('${courseBanner.courseBannerNo}')" href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

@@ -40,7 +40,7 @@
         cau.update_user_no
         FROM cpc_admin_user cau LEFT JOIN cpc_admin_role car ON cau.role_no = car.role_no
         <where>
-            1=1
+            cau.user_id != 1
             <if test="userName != null and userName != ''">
                 AND cau.user_name like concat("%", #{userName}, "%")
             </if>
@@ -76,7 +76,7 @@
         cau.update_user_no
         FROM cpc_admin_user cau LEFT JOIN cpc_admin_role car ON cau.role_no = car.role_no
         <where>
-            1=1
+            cau.user_id != 1
             <if test="userName != null and userName != ''">
                 AND cau.user_name like concat("%", #{userName}, "%")
             </if>

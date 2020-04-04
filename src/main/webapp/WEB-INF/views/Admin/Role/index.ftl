@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>管理员设置</a>
+        <a><cite>角色管理</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="window.location.href='/admin/role/view.do'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -53,11 +51,16 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
-                    </button>
-                    <button class="layui-btn" onclick="xadmin.open('添加角色','/admin/role/add_page.do',450,300)"><i
-                                class="layui-icon"></i>添加
-                    </button>
+                    <@shiro.hasPermission name="adminRole:batchDelete">
+                        <button class="layui-btn layui-btn-danger" onclick="delAll()">
+                            <i class="layui-icon"></i>批量删除
+                        </button>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="adminRole:add">
+                        <button class="layui-btn" onclick="xadmin.open('添加角色','/admin/role/add_page.do',450,300)"><i
+                                    class="layui-icon"></i>添加
+                        </button>
+                    </@shiro.hasPermission>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -81,23 +84,31 @@
                                 <td>${adminRole_index + 1}</td>
                                 <td>${adminRole.roleName}</td>
                                 <td>
-                                    <#if adminRole.roleId != 1>
-                                        <a class="layui-btn layui-btn-primary layui-btn-mini" onclick="xadmin.open('管理角色权限','/admin/role/auth_page.do?roleNo=${adminRole.roleNo}',500,600)">权限管理</a></td>
-                                    </#if>
+                                    <@shiro.hasPermission name="adminRole:configAuth">
+                                        <#if adminRole.roleId != 1>
+                                            <a class="layui-btn layui-btn-primary layui-btn-mini" onclick="xadmin.open('管理角色权限','/admin/role/auth_page.do?roleNo=${adminRole.roleNo}',500,600)">权限管理</a></td>
+                                        </#if>
+                                    </@shiro.hasPermission>
                                 <td class="td-status">
-                                    <#if adminRole.roleStatus == "1">
-                                        <a class="layui-btn layui-btn-normal layui-btn-mini" onclick="changeStatus('disable','${adminRole.roleNo}')">已启用</a>
-                                    <#else>
-                                        <a class="layui-btn layui-btn-danger layui-btn-mini" onclick="changeStatus('enable','${adminRole.roleNo}')">未启用</a>
-                                    </#if>
+                                    <@shiro.hasPermission name="adminRole:changeStatus">
+                                        <#if adminRole.roleStatus == "1">
+                                            <a class="layui-btn layui-btn-normal layui-btn-mini" onclick="changeStatus('disable','${adminRole.roleNo}')">已启用</a>
+                                        <#else>
+                                            <a class="layui-btn layui-btn-danger layui-btn-mini" onclick="changeStatus('enable','${adminRole.roleNo}')">未启用</a>
+                                        </#if>
+                                    </@shiro.hasPermission>
                                 </td>
                                 <td class="td-manage">
-                                    <a title="编辑" onclick="xadmin.open('编辑角色','/admin/role/edit_page.do?roleNo=${adminRole.roleNo}',450,300)" href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="member_del(this,' ')" href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="adminRole:edit">
+                                        <a title="编辑" onclick="xadmin.open('编辑角色','/admin/role/edit_page.do?roleNo=${adminRole.roleNo}',450,300)" href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="adminRole:delete">
+                                        <a title="删除" onclick="member_del(this,' ')" href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

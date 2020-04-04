@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>管理员设置</a>
+        <a><cite>权限管理</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="window.location.href = '/admin/auth/view.do'" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -57,11 +55,15 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
-                    </button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/auth/add_page.do',500,350)">
-                        <i class="layui-icon"></i>添加
-                    </button>
+                    <@shiro.hasPermission name="adminAuth:batchDelete">
+                        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
+                        </button>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="adminAuth:add">
+                        <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/auth/add_page.do',500,350)">
+                            <i class="layui-icon"></i>添加
+                        </button>
+                    </@shiro.hasPermission>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -87,12 +89,16 @@
                                 <td>${auth.authPermission}</td>
                                 <td>${auth.menuName}</td>
                                 <td class="td-manage">
-                                    <a title="编辑" onclick="xadmin.open('添加用户','/admin/auth/edit_page.do?authNo=${auth.authNo}',500,350)" href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteAuth('${auth.authNo}')" href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="adminAuth:edit">
+                                        <a title="编辑" onclick="xadmin.open('添加用户','/admin/auth/edit_page.do?authNo=${auth.authNo}',500,350)" href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="adminAuth:delete">
+                                        <a title="删除" onclick="deleteAuth('${auth.authNo}')" href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

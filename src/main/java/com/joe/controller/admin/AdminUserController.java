@@ -98,7 +98,7 @@ public class AdminUserController {
     public String addPage(Model model) {
         // 获取角色列表
         QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
-        adminRoleQueryWrapper.eq("role_status", "1");
+        adminRoleQueryWrapper.eq("role_status", "1").ne("role_id", 1);
         List<AdminRole> adminRoleList = adminRoleService.list(adminRoleQueryWrapper);
 
         // 绑定数据

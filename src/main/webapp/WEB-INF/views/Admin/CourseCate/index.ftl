@@ -23,9 +23,8 @@
 <body>
 <div class="x-nav">
     <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
-        <a><cite>导航元素</cite></a>
+        <a>课程管理</a>
+        <a><cite>课程分类</cite></a>
     </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="/admin/course_cate/view.do" title="刷新">
@@ -36,12 +35,14 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">
-                    <button class="layui-btn"
-                            onclick="xadmin.open('添加课程分类','/admin/course_cate/add_page.do',500,400)">
-                        <i class="layui-icon"></i>添加
-                    </button>
-                </div>
+                <@shiro.hasPermission name="indexCourseCate:add">
+                    <div class="layui-card-header">
+                        <button class="layui-btn"
+                                onclick="xadmin.open('添加课程分类','/admin/course_cate/add_page.do',500,400)">
+                            <i class="layui-icon"></i>添加
+                        </button>
+                    </div>
+                </@shiro.hasPermission>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
@@ -50,7 +51,7 @@
                             <th>分类名称</th>
                             <th>分类级别</th>
                             <th>排序</th>
-                            <th>推荐课程</th>
+<#--                            <th>推荐课程</th>-->
                             <th>操作</th>
                         </thead>
                         <tbody class="x-cate">
@@ -70,21 +71,27 @@
                                     </#list>
                                 </td>
                                 <td>
-                                    <input type="text" class="layui-input x-sort" name="order"
-                                           value="${courseCate.indexCourseCate.courseCateIndex}"
-                                           onchange="updateIndex('${courseCate.indexCourseCate.courseCateNo}', this.value)">
+                                    <@shiro.hasPermission name="indexCourseCate:sort">
+                                        <input type="text" class="layui-input x-sort" name="order"
+                                               value="${courseCate.indexCourseCate.courseCateIndex}"
+                                               onchange="updateIndex('${courseCate.indexCourseCate.courseCateNo}', this.value)">
+                                    </@shiro.hasPermission>
                                 </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<#--                                <td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                                 <td class="td-manage">
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑课程分类','/admin/course_cate/edit_page.do?courseCateNo=${courseCate.indexCourseCate.courseCateNo}',500,400)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteCate('${courseCate.indexCourseCate.courseCateNo}')"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="indexCourseCate:edit">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑课程分类','/admin/course_cate/edit_page.do?courseCateNo=${courseCate.indexCourseCate.courseCateNo}',500,400)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexCourseCate:delete">
+                                        <a title="删除" onclick="deleteCate('${courseCate.indexCourseCate.courseCateNo}')"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                             <#list courseCate.childCourseCateList as childCourseCate>
@@ -103,21 +110,26 @@
                                         </#list>
                                     </td>
                                     <td>
-                                        <input type="text" class="layui-input x-sort" name="order"
+                                        <@shiro.hasPermission name="indexCourseCate:sort">
+                                            <input type="text" class="layui-input x-sort" name="order"
                                                value="${childCourseCate.courseCateIndex}"
                                                onchange="updateIndex('${childCourseCate.courseCateNo}', this.value)">
+                                        </@shiro.hasPermission>
                                     </td>
-                                    <td></td>
                                     <td class="td-manage">
-                                        <a title="编辑"
-                                           onclick="xadmin.open('编辑','/admin/course_cate/edit_page.do?courseCateNo=${childCourseCate.courseCateNo}',500,400)"
-                                           href="javascript:;">
-                                            <i class="layui-icon">&#xe642;</i>
-                                        </a>
-                                        <a title="删除" onclick="deleteCate('${childCourseCate.courseCateNo}')"
-                                           href="javascript:;">
-                                            <i class="layui-icon">&#xe640;</i>
-                                        </a>
+                                        <@shiro.hasPermission name="indexCourseCate:edit">
+                                            <a title="编辑"
+                                               onclick="xadmin.open('编辑','/admin/course_cate/edit_page.do?courseCateNo=${childCourseCate.courseCateNo}',500,400)"
+                                               href="javascript:;">
+                                                <i class="layui-icon">&#xe642;</i>
+                                            </a>
+                                        </@shiro.hasPermission>
+                                        <@shiro.hasPermission name="indexCourseCate:delete">
+                                            <a title="删除" onclick="deleteCate('${childCourseCate.courseCateNo}')"
+                                               href="javascript:;">
+                                                <i class="layui-icon">&#xe640;</i>
+                                            </a>
+                                        </@shiro.hasPermission>
                                     </td>
                                 </tr>
                             </#list>

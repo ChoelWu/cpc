@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="/admin/index/home.do">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
+    <span class="layui-breadcrumb">
+        <a>课程管理</a>
+        <a><cite>课程标签</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="/admin/course_tag/view.do" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -46,11 +44,15 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
-                    </button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/course_tag/add_page.do',400,300)"><i
-                                class="layui-icon"></i>添加
-                    </button>
+                    <@shiro.hasPermission name="indexCourseTag:batchDelete">
+                        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
+                        </button>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="indexCourseTag:add">
+                        <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/course_tag/add_page.do',400,300)"><i
+                                    class="layui-icon"></i>添加
+                        </button>
+                    </@shiro.hasPermission>
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
                     <table class="layui-table layui-form">
@@ -73,15 +75,19 @@
                                 <td>${indexCourseTag_index + 1}</td>
                                 <td><span class="layui-badge layui-bg-blue">${indexCourseTag.courseTagName}</span></td>
                                 <td class="td-manage">
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑','/admin/course_tag/edit_page.do?courseTagNo=${indexCourseTag.courseTagNo}',400,300)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteCourseTag('${indexCourseTag.courseTagNo}')"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="indexCourseTag:edit">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑','/admin/course_tag/edit_page.do?courseTagNo=${indexCourseTag.courseTagNo}',400,300)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="indexCourseTag:delete">
+                                        <a title="删除" onclick="deleteCourseTag('${indexCourseTag.courseTagNo}')"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

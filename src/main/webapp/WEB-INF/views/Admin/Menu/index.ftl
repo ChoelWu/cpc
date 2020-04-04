@@ -23,10 +23,8 @@
 <body>
 <div class="x-nav">
             <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
-                <a>
-                    <cite>导航元素</cite></a>
+                <a>系统管理</a>
+                <a><cite>菜单管理</cite></a>
             </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="/admin/menu/view.do" title="刷新">
@@ -37,12 +35,13 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">
-                    <button class="layui-btn"
-                            onclick="xadmin.open('添加用户','/admin/menu/add_page.do',600,500)">
-                        <i class="layui-icon"></i>添加
-                    </button>
-                </div>
+                <@shiro.hasPermission name="adminMenu:add">
+                    <div class="layui-card-header">
+                        <button class="layui-btn" onclick="xadmin.open('添加用户','/admin/menu/add_page.do',600,500)">
+                            <i class="layui-icon"></i>添加
+                        </button>
+                    </div>
+                </@shiro.hasPermission>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
@@ -71,25 +70,33 @@
                                     ${menu.adminMenu.menuUrl}
                                 </td>
                                 <td>
-                                    <input type="text" class="layui-input x-sort" name="order"
+                                    <@shiro.hasPermission name="adminMenu:changeIndex">
+                                        <input type="text" class="layui-input x-sort" name="order"
                                            value="${menu.adminMenu.menuIndex}"
                                            onchange="updateIndex('${menu.adminMenu.menuNo}', this.value)">
+                                    </@shiro.hasPermission>
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="switch" lay-text="开启|停用"
+                                    <@shiro.hasPermission name="adminMenu:changeStatus">
+                                        <input type="checkbox" name="switch" lay-text="开启|停用"
                                            data-no="${menu.adminMenu.menuNo}" lay-filter="switch"
                                            <#if '1' = menu.adminMenu.menuStatus>checked=""</#if> lay-skin="switch">
+                                    </@shiro.hasPermission>
                                 </td>
                                 <td class="td-manage">
-                                    <a title="编辑"
-                                       onclick="xadmin.open('编辑','/admin/menu/edit_page.do?menuNo=${menu.adminMenu.menuNo}',600,500)"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="deleteMenu('${menu.adminMenu.menuNo}')"
-                                       href="javascript:;">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
+                                    <@shiro.hasPermission name="adminMenu:edit">
+                                        <a title="编辑"
+                                           onclick="xadmin.open('编辑','/admin/menu/edit_page.do?menuNo=${menu.adminMenu.menuNo}',600,500)"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe642;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
+                                    <@shiro.hasPermission name="adminMenu:delete">
+                                        <a title="删除" onclick="deleteMenu('${menu.adminMenu.menuNo}')"
+                                           href="javascript:;">
+                                            <i class="layui-icon">&#xe640;</i>
+                                        </a>
+                                    </@shiro.hasPermission>
                                 </td>
                             </tr>
                             <#list menu.childMenuList as childMenu>

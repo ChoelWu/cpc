@@ -101,14 +101,14 @@ public class LoginController {
             // 查询用户的权限信息
             List<AdminAuth> adminAuthList;
             if (1 == adminRole.getRoleId()) {
+                // 超级管理员拥有所有权限
+                adminAuthList = adminAuthService.list();
+            } else {
                 // 非超级管理员
                 String[] permissionArray = adminRole.getRoleAuth().split(",");
                 QueryWrapper<AdminAuth> adminAuthQueryWrapper = new QueryWrapper<>();
                 adminAuthQueryWrapper.in("auth_no", permissionArray);
                 adminAuthList = adminAuthService.list(adminAuthQueryWrapper);
-            } else {
-                // 超级管理员拥有所有权限
-                adminAuthList = adminAuthService.list();
             }
 
             // 验证通过，生成 session 信息
