@@ -444,7 +444,7 @@ public class IndexUserController {
         // 循环处理数据
         for (List<Object> recordList : originObjectList) {
             // 前两行不进行处理
-            if (0 == originObjectList.indexOf(recordList) || 1 == originObjectList.indexOf(recordList)) {
+            if (0 == originObjectList.indexOf(recordList)) {
                 continue;
             }
 

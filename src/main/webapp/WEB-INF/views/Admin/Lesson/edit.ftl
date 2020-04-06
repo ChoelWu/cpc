@@ -94,11 +94,8 @@
         //自定义验证规则
         form.verify({
             lessonName: function (value) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '课时名称不能有特殊字符';
-                }
-                if (value.length > 16) {
-                    return '课时名称长度在 16 字符之内';
+                if (value.length > 40) {
+                    return '课时名称长度在 40 字符之内';
                 }
             }
         });
@@ -184,18 +181,18 @@
             ext: 'swf',
             before: function (obj) {
                 //loading层
-                videoIndex = parent.layer.load(1, {
+                swfIndex = parent.layer.load(1, {
                     shade: [0.1,'#fff'] //0.1透明度的白色背景
                 });
 
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#multipartVideoText').html(file.name);
+                    $('#multipartSwfText').html(file.name);
                 });
             },
             done: function (res) {
                 parent.layer.close(swfIndex);
-                $("#lessonVideo").val(res.data);
+                $("#lessonSwf").val(res.data);
                 return layer.msg(res.message);
             },
             error: function () {

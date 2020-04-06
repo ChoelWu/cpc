@@ -65,7 +65,7 @@
                 $("#channelPic").val(res.data);
                 layer.msg(res.message);
                 setTimeout(function () {
-                    parent.layer.close(parent.layer.index);
+                    parent.window.location.reload();
                 }, 1500);
             },
             error: function () {
